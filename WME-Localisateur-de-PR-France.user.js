@@ -42,6 +42,7 @@
     const SUPABASE_URL = "https://ygdyaciibfyqldlejyuu.supabase.co";
     const SUPABASE_PUBLIC_KEY = "sb_publishable_0q-t5iSyWijEAOj79VEmng_MOEM8Fuu";
     const PR_REQUEST_TIMEOUT_MS = 20000;
+    const PR_DIRECT_REQUEST_TIMEOUT_MS = 8000;
     const WME_ROUTE_LOAD_TIMEOUT_MS = 20000;
     const WME_ROUTE_LOAD_POLL_MS = 250;
     const ROUTE_SNAPSHOT_CACHE_TTL_MS = 1200;
@@ -4698,6 +4699,30 @@
         });
     }
 
+    function parseServiceJson(response, sourceLabel) {
+        if (response.status < 200 || response.status >= 300) {
+            let detail = "";
+            try {
+                const payload = JSON.parse(response.responseText || "{}");
+                const nested = payload?.error;
+                detail = [payload?.message, payload?.hint, nested?.message,
+                    typeof nested === "string" ? nested : "", nested?.code]
+                    .find(value => typeof value === "string" && value.trim()) || "";
+            } catch (error) { /* Le statut suffit si la réponse n'est pas JSON. */ }
+            const requestError = new Error(`Le ${sourceLabel} a répondu avec le statut ${response.status}${detail ? ` : ${detail}` : ""}.`);
+            requestError.httpStatus = response.status;
+            requestError.remoteDetail = detail;
+            throw requestError;
+        }
+        try {
+            return response.responseText ? JSON.parse(response.responseText) : null;
+        } catch (error) {
+            const requestError = new Error(`La réponse du ${sourceLabel} est illisible.`);
+            requestError.isInvalidResponse = true;
+            throw requestError;
+        }
+    }
+
     function requestJson(url, sourceLabel = "service distant", options = {}) {
         return new Promise((resolve, reject) => {
             const request = getRequestFunction();
@@ -4712,30 +4737,10 @@
                 data: options.body,
                 timeout: options.timeout || PR_REQUEST_TIMEOUT_MS,
                 onload: (response) => {
-                    if (response.status < 200 || response.status >= 300) {
-                        let detail = "";
-                        try {
-                            const payload = JSON.parse(response.responseText || "{}");
-                            const nested = payload?.error;
-                            const candidates = [
-                                payload?.message, payload?.hint, nested?.message,
-                                typeof nested === "string" ? nested : "",
-                                nested?.code,
-                            ];
-                            detail = candidates.find((value) => typeof value === "string" && value.trim()) || "";
-                        } catch (error) {
-                            // Réponse non JSON : le statut reste suffisant.
-                        }
-                        const requestError = new Error(`Le ${sourceLabel} a répondu avec le statut ${response.status}${detail ? ` : ${detail}` : ""}.`);
-                        requestError.httpStatus = response.status;
-                        requestError.remoteDetail = detail;
-                        reject(requestError);
-                        return;
-                    }
                     try {
-                        resolve(response.responseText ? JSON.parse(response.responseText) : null);
+                        resolve(parseServiceJson(response, sourceLabel));
                     } catch (error) {
-                        reject(new Error(`La réponse du ${sourceLabel} est illisible.`));
+                        reject(error);
                     }
                 },
                 ontimeout: () => {
@@ -4750,6 +4755,78 @@
                 },
             });
         });
+    }
+
+    function prRequestFailureReason(error) {
+        if (error?.isTimeout) return "délai dépassé";
+        if (error?.httpStatus) return `HTTP ${error.httpStatus}`;
+        if (error?.isNetworkError) return "erreur réseau";
+        return "réponse invalide";
+    }
+
+    async function requestSupabaseJson(url, options) {
+        const sourceLabel = "API Supabase PR";
+        // Appelé seulement par la liste fixe de RPC ci-dessous. Aucune URL de
+        // page, redirection ou configuration externe ne peut recevoir la clé.
+        const address = new URL(url);
+        if (address.origin !== SUPABASE_URL || address.username || address.password || address.search || address.hash
+            || !/^\/rest\/v1\/rpc\/[a-z0-9_]+$/.test(address.pathname)) {
+            throw new Error("Adresse Supabase invalide.");
+        }
+        if (typeof fetch !== "function" || typeof AbortController !== "function") {
+            return await requestJson(url, sourceLabel, options);
+        }
+        const started = Date.now();
+        const budget = options.timeout || PR_REQUEST_TIMEOUT_MS;
+        const controller = new AbortController();
+        let watchdog;
+        const expired = new Promise((resolve, reject) => {
+            watchdog = root.setTimeout(() => {
+                const error = new Error("La connexion directe à Supabase a dépassé son délai.");
+                error.isTimeout = true;
+                reject(error);
+                controller.abort();
+            }, Math.min(PR_DIRECT_REQUEST_TIMEOUT_MS, budget));
+        });
+        try {
+            // CORS est autorisé par Supabase. Le corps POST, la clé publique et
+            // l'absence de cookies sont identiques au transport Tampermonkey.
+            const direct = (async () => {
+                const response = await fetch(url, {
+                    method: options.method || "POST",
+                    headers: { Accept: "application/json", ...(options.headers || {}) },
+                    body: options.body,
+                    credentials: "omit", mode: "cors", redirect: "error",
+                    referrerPolicy: "no-referrer", cache: "no-store", signal: controller.signal,
+                });
+                const responseText = await response.text();
+                return parseServiceJson({ status: response.status, responseText }, sourceLabel);
+            })();
+            return await Promise.race([direct, expired]);
+        } catch (error) {
+            error.transport = "connexion directe";
+            // Une réponse HTTP ou JSON invalide vient bien du serveur : ne pas
+            // rejouer ces erreurs via un autre transport (notamment 401/403).
+            if (error.httpStatus || error.isInvalidResponse) throw error;
+            if (!error.isTimeout) error.isNetworkError = true;
+            root.clearTimeout(watchdog);
+            controller.abort();
+            const remaining = budget - (Date.now() - started);
+            if (remaining <= 0 || !getRequestFunction()) throw error;
+            console.warn(`${SCRIPT_NAME}: connexion directe indisponible — secours Tampermonkey`, {
+                reason: prRequestFailureReason(error), elapsedMs: Date.now() - started,
+            });
+            try {
+                // Partager le même budget, sans ajouter 20 s à l'attente initiale.
+                return await requestJson(url, sourceLabel, { ...options, timeout: remaining });
+            } catch (fallbackError) {
+                fallbackError.transport = "connexion directe puis Tampermonkey";
+                fallbackError.directFailure = prRequestFailureReason(error);
+                throw fallbackError;
+            }
+        } finally {
+            root.clearTimeout(watchdog);
+        }
     }
 
     function readSetting(key) {
@@ -5086,7 +5163,7 @@
                 p_start_chainage: integer(params.start, "début"),
                 p_end_chainage: integer(params.end, "fin") };
         }
-        const data = await requestJson(SUPABASE_URL + "/rest/v1/rpc/" + rpc, "API Supabase PR", {
+        const data = await requestSupabaseJson(SUPABASE_URL + "/rest/v1/rpc/" + rpc, {
             method: "POST",
             headers: { apikey: SUPABASE_PUBLIC_KEY, "Content-Type": "application/json" },
             body: JSON.stringify(body),
@@ -6307,8 +6384,13 @@
                 if (!Core.isRetryablePrIndexError(error) || attempt >= PR_INDEX_RETRY_DELAYS_MS.length) throw error;
                 const nextAttempt = attempt + 2;
                 const totalAttempts = PR_INDEX_RETRY_DELAYS_MS.length + 1;
+                const reason = prRequestFailureReason(error);
+                console.warn(`${SCRIPT_NAME}: échec de chargement PR avant nouvelle tentative`, {
+                    attempt: attempt + 1, reason, transport: error.transport || "Tampermonkey",
+                    directFailure: error.directFailure || null,
+                });
                 setPrIndexStatus(
-                    `Chargement du calque — nouvelle tentative ${nextAttempt}/${totalAttempts}… Les PR déjà chargés restent affichés.`,
+                    `Chargement du calque — nouvelle tentative ${nextAttempt}/${totalAttempts} (${reason})… Les PR déjà chargés restent affichés.`,
                     "info",
                 );
                 await new Promise((resolve) => root.setTimeout(resolve, PR_INDEX_RETRY_DELAYS_MS[attempt]));

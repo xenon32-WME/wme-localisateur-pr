@@ -2,10 +2,10 @@
 const fs=require('node:fs'),path=require('node:path'),vm=require('node:vm');
 const filename=path.join(__dirname,'../WME-Localisateur-de-PR-France.user.js');
 const source=fs.readFileSync(filename,'utf8');
-function harness(request){
+function harness(request,globals={}){
  const root={document:{},setTimeout,clearTimeout};
  const context={unsafeWindow:root,module:{exports:{}},console,URL,URLSearchParams,Promise,Date,JSON,
-  GM_getValue:()=>'',GM_setValue:()=>{},GM_xmlhttpRequest:request};
+  GM_getValue:()=>'',GM_setValue:()=>{},GM_xmlhttpRequest:request,...globals};
  const hooks='root.__TEST__={requestPrData, searchPrPoints, searchPrLayerPoints,searchColombiaTarget,searchColombiaGuides,requestJson,prIndexRequestContext,prIndexRequestKey,resetPrIndexScope,setCountry,applyPrIndexAxisFilter,Core,'
  +'setCountryRaw:v=>{currentCountry=v},setFilterRaw:v=>{prIndexAxisFilter=v},setUi:v=>{ui=v},setSdk:v=>{sdk=v},setPrLayer:v=>{prIndexLayerEnabled=v},setPrCache:v=>{prIndexCache=v},getPrCache:()=>prIndexCache,getGeneration:()=>prIndexRefreshGeneration,'
  +'getCountry:()=>currentCountry,getFilter:()=>prIndexAxisFilter};';
