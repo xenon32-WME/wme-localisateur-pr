@@ -2,6 +2,14 @@
 
 ## 1.2.0 — 12 novembre 2026
 
+### Information au démarrage du calque PR
+
+- Ajoute une popup courte au premier chargement effectif du calque PR pour signaler un délai possible selon le nombre de scripts actifs.
+- Adapte le message et les contrôles à la langue choisie : français, espagnol ou anglais.
+- Limite l’affichage à une fois par ouverture de WME, avec fermeture par bouton ou Échap et option mémorisée « Ne plus afficher ce message ».
+- Laisse les requêtes et la carte fonctionner pendant l’affichage. Le transport, les délais et le moteur de localisation restent identiques.
+- Révision `20261112-startup-notice`, version **1.2.0** conservée. L’essai utilisateur avec uniquement le Localisateur actif ne montre plus de lenteur ; l’identification d’un éventuel script déclencheur n’est pas poursuivie.
+
 ### Requêtes sans redirection — lenteurs résiduelles en diagnostic
 
 - Interdit les redirections pour les huit RPC Supabase, dont les adresses sont finales. Tampermonkey 5.5.1 peut ainsi restreindre ses règles d’en-têtes à l’URL demandée plutôt que préparer une règle globale après les autres transferts.

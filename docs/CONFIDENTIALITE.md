@@ -16,6 +16,8 @@ La console locale peut indiquer le nom de la fonction RPC, le transport, le temp
 
 Tampermonkey conserve les préférences locales et le cache de vérification de version. Le script ne constitue pas d’historique de recherches. Une vérification de version GreasyFork n’est possible que pour une installation identifiée comme provenant de l’URL autorisée du script 590425, au plus une fois par 24 heures. Pour les installations provenant du dépôt officiel, Tampermonkey consulte les métadonnées sur `raw.githubusercontent.com` et y télécharge les mises à jour selon ses réglages. Ces accès transmettent à GitHub les informations habituelles de connexion, dont l’adresse IP ; ils ne contiennent pas les critères de recherche PR. Le dépôt GitHub est la référence de développement et de distribution.
 
+Le choix « Ne plus afficher ce message » pour la popup de démarrage du calque PR est une préférence locale supplémentaire, mémorisée dans Tampermonkey. Cette popup n’analyse pas les autres scripts installés et n’ajoute aucune requête réseau.
+
 Les liens du panneau ouvrent les sites officiels uniquement sur action de l’utilisateur. Ils n’ajoutent aucune collecte automatique ni dépendance distante. Il n’existe pas de `@require`.
 
 Le SDK WME est acquis avec `mode: "async"`. Le démarrage attend `SDK_INITIALIZED`, vérifie le retour asynchrone et refuse un SDK synchrone avant de créer l’interface et les calques. Aucune acquisition synchrone de secours n’est conservée.
