@@ -2,7 +2,7 @@
 // Explicit live read-only RPC checks. Never called by the offline test runner.
 const assert=require('node:assert/strict'),fs=require('node:fs');
 const {harness,fetchRequest}=require('./harness.cjs');
-const t=harness(fetchRequest);
+const t=harness(fetchRequest,{fetch,AbortController});
 async function run(){
  const report={tested_at:new Date().toISOString(),version:'1.2.0',checks:[]};
  async function check(name,run){const started=Date.now();await run();report.checks.push({name,pass:true,ms:Date.now()-started});console.log(name+': PASS');}

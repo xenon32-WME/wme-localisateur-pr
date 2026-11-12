@@ -14,6 +14,8 @@
 - Regroupe les événements de navigation avec une première échéance de 120 ms, sans la repousser à chaque paquet WME et sans attente d'inactivité du navigateur.
 - Conserve la réponse et le dessin en cours lorsque la vue ne change pas ; une nouvelle zone, un nouveau filtre ou un nouveau pays invalide toujours les résultats précédents.
 - Diffère la conversion des segments/rues servant aux étiquettes après le premier affichage et la rafale de données WME, pour éviter de refaire ce travail à chaque paquet.
+- Utilise une connexion directe à Supabase sans cookies ni référent, avec le transport anonyme Tampermonkey en secours si la connexion directe échoue ou dépasse 8 secondes. Les deux transports partagent le même délai maximal de 20 secondes par tentative, réception du corps incluse.
+- Affiche la raison d'une nouvelle tentative du calque (délai dépassé, erreur réseau ou statut HTTP) et consigne localement le transport utilisé. Les erreurs HTTP et les réponses JSON invalides ne déclenchent pas de secours par un autre transport.
 
 Réinstaller le userscript pour recevoir ce correctif sur une installation 1.2.0 antérieure.
 

@@ -6,7 +6,7 @@ const path = require('node:path');
 
 const source = fs.readFileSync(path.join(__dirname, '../WME-Localisateur-de-PR-France.user.js'), 'utf8');
 function fixture() {
-    const requests = [], draws = [], status = {};
+    const requests = [], draws = [], warnings = [], status = {};
     const root = { document: {}, setTimeout: fn => setTimeout(fn, 0), clearTimeout };
     const hooks = `root.__TEST__ = {
         refreshPrIndexLayer,
@@ -20,7 +20,7 @@ function fixture() {
         cache: () => prIndexCache,
     };`;
     vm.runInNewContext(source.replace('    initialize();', hooks), {
-        unsafeWindow: root, module: { exports: {} }, console: { ...console, error() {} },
+        unsafeWindow: root, module: { exports: {} }, console: { ...console, error() {}, warn(...args) { warnings.push(args); } },
         URL, URLSearchParams, Promise, Date, JSON,
     });
     const t = root.__TEST__;
@@ -31,7 +31,7 @@ function fixture() {
         Map: { getZoomLevel: async () => 16, getMapExtent: async () => extent },
     }, status);
     return {
-        t, requests, draws, status,
+        t, requests, draws, warnings, status,
         start: (nextExtent = extent) => {
             extent = nextExtent; t.generation(++generation);
             return t.refreshPrIndexLayer(generation);
@@ -95,6 +95,19 @@ const networkError = () => Object.assign(new Error('temporary network failure'),
     assert.equal(recovery.requests.length, 2);
     recovery.requests[1].resolve(result('recovered')); await retry;
     assert.equal(recovery.t.cache().points[0].id, 'recovered');
+
+    // A transient failure reports its cause before retrying, then recovers normally.
+    const transient = fixture();
+    const retried = transient.start(); await settle();
+    transient.requests[0].reject(Object.assign(networkError(), { transport: 'connexion directe puis Tampermonkey' }));
+    await settle();
+    assert.match(transient.status.textContent, /nouvelle tentative 2\/4 \(erreur réseau\)/);
+    assert.equal(transient.warnings[0][1].transport, 'connexion directe puis Tampermonkey');
+    await new Promise(resolve => setTimeout(resolve, 5)); await settle();
+    assert.equal(transient.requests.length, 2);
+    transient.requests[1].resolve(result('retry-success')); await retried;
+    assert.equal(transient.t.cache().points[0].id, 'retry-success');
+    assert.match(transient.status.textContent, /1 PR chargés/);
 
     // Disabling the layer while a request is pending must suppress its late error.
     const disabled = fixture();
