@@ -11,6 +11,9 @@
 - Lit le zoom et l'emprise en parallèle et réutilise cette vue pour le dessin, sans les redemander au SDK. Une vue devenue obsolète reste ignorée.
 - Vérifie également la zone à la fin du chargement des données WME, même sans étiquettes : les nouvelles vues peuvent charger leurs PR au lieu de seulement redessiner le cache précédent.
 - Invalide les clés de rendu avant le retrait des points : un dessin interrompu ne peut plus laisser un calque vide considéré à tort comme déjà affiché.
+- Regroupe les événements de navigation avec une première échéance de 120 ms, sans la repousser à chaque paquet WME et sans attente d'inactivité du navigateur.
+- Conserve la réponse et le dessin en cours lorsque la vue ne change pas ; une nouvelle zone, un nouveau filtre ou un nouveau pays invalide toujours les résultats précédents.
+- Diffère la conversion des segments/rues servant aux étiquettes après le premier affichage et la rafale de données WME, pour éviter de refaire ce travail à chaque paquet.
 
 Réinstaller le userscript pour recevoir ce correctif sur une installation 1.2.0 antérieure.
 
