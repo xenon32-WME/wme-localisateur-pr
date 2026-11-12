@@ -76,7 +76,7 @@
     const PR_INDEX_MIN_ZOOM_LEVEL = 15;
     const PR_INDEX_FILTERED_MIN_ZOOM_LEVEL = 14;
     const PR_INDEX_MAX_FEATURES = 1000;
-    const PR_INDEX_DEBOUNCE_MS = 450;
+    const PR_INDEX_DEBOUNCE_MS = 120;
     const PR_INDEX_BBOX_PADDING_RATIO = 0.65;
     const PR_INDEX_BBOX_PADDING_ZOOM15_RATIO = 1.25;
     const PR_INDEX_RENDER_PADDING_RATIO = 0.18;
@@ -3331,8 +3331,12 @@
     let prIndexLayerInitialized = false;
     let prIndexLayerEnabled = false;
     let prIndexRefreshTimer = null;
-    let prIndexRefreshIdleHandle = null;
+    let prIndexRefreshPendingForce = false;
+    let prIndexViewReadRevision = 0;
+    let prIndexActiveViewKey = "";
+    let prIndexActiveRefresh = null;
     let prIndexLayoutTimer = null;
+    let prLabelIndexTimer = null;
     let prLabelSegmentSpatialIndex = null;
     let prLabelSegmentSpatialIndexReady = null;
     let prLabelPlacementRevision = 0;
@@ -5581,6 +5585,24 @@
         return { cells, overflow };
     }
 
+    function schedulePrLabelIndexRefresh() {
+        if (prLabelIndexTimer !== null) root.clearTimeout(prLabelIndexTimer);
+        prLabelIndexTimer = null;
+        if (!prIndexLayerEnabled || !prIndexCache?.points?.length
+            || prIndexCurrentZoom < prIndexEffectiveMinZoomLevel()
+            || !prIndexLabelsVisibleAtZoom(prIndexCurrentZoom)) return;
+        // La conversion de tous les segments/rues est facultative pour afficher
+        // les PR. La lancer après le premier dessin et après la rafale de données.
+        prLabelIndexTimer = root.setTimeout(() => {
+            prLabelIndexTimer = null;
+            if (prIndexLayerEnabled && prIndexCache?.points?.length
+                && prIndexCurrentZoom >= prIndexEffectiveMinZoomLevel()
+                && prIndexLabelsVisibleAtZoom(prIndexCurrentZoom) && !prLabelSegmentSpatialIndex) {
+                observeAsync(getPrLabelSegmentSpatialIndex(), "placement des étiquettes PR");
+            }
+        }, 300);
+    }
+
     async function getPrLabelSegmentSpatialIndex() {
         if (!prLabelSegmentSpatialIndex) {
             const pending = createPrLabelSegmentSpatialIndex().then((index) => {
@@ -5843,13 +5865,13 @@
         // Pendant un déplacement, schedulePrIndexRefresh() va déjà redessiner le
         // sous-ensemble de PR correspondant à la nouvelle vue. Ne pas programmer
         // en parallèle une reconstruction de layout issue de wme-map-data-loaded.
-        if (prIndexRefreshTimer !== null || prIndexRefreshIdleHandle !== null) return;
+        if (prIndexRefreshTimer !== null || prIndexActiveRefresh !== null) return;
 
         if (prIndexLayoutTimer !== null) root.clearTimeout(prIndexLayoutTimer);
         prIndexLayoutTimer = root.setTimeout(() => {
             prIndexLayoutTimer = null;
             if (!prIndexLayerEnabled || !prIndexCache?.points?.length) return;
-            if (prIndexRefreshTimer !== null || prIndexRefreshIdleHandle !== null) return;
+            if (prIndexRefreshTimer !== null || prIndexActiveRefresh !== null) return;
             observeAsync(drawPrIndexPoints(prIndexCache.points), "actualisation du placement des PR");
         }, Math.max(0, delay));
     }
@@ -6221,7 +6243,7 @@
             }
             const renderedPoints = prIndexPointsForCurrentView(points, visibleBbox, zoomLevel);
             if (renderedPoints.length && prIndexLabelsVisibleAtZoom(zoomLevel) && !prLabelSegmentSpatialIndex) {
-                observeAsync(getPrLabelSegmentSpatialIndex(), "placement des étiquettes PR");
+                schedulePrLabelIndexRefresh();
             }
             const layoutKey = currentPrIndexLayoutKey(zoomLevel);
             const featureKey = prIndexRenderedPointsKey(renderedPoints);
@@ -6303,13 +6325,18 @@
 
     async function refreshPrIndexLayer(generation, force = false) {
         if (!prIndexLayerEnabled || generation !== prIndexRefreshGeneration) return;
+        const readRevision = ++prIndexViewReadRevision;
         const [zoom, extent] = await Promise.all([sdk.Map.getZoomLevel(), sdk.Map.getMapExtent()]);
-        if (generation !== prIndexRefreshGeneration) return;
+        if (!prIndexLayerEnabled || generation !== prIndexRefreshGeneration
+            || readRevision !== prIndexViewReadRevision) return;
         const zoomLevel = Number(zoom);
         prIndexCurrentZoom = zoomLevel;
         const effectiveMinZoomLevel = prIndexEffectiveMinZoomLevel();
         if (!Number.isFinite(zoomLevel) || zoomLevel < effectiveMinZoomLevel) {
+            generation = ++prIndexRefreshGeneration;
+            prIndexActiveViewKey = "";
             await clearPrIndexFeatures();
+            if (!prIndexLayerEnabled || generation !== prIndexRefreshGeneration) return;
             setPrIndexStatus(
                 effectivePrIndexAxisFilter()
                     ? `Filtre ${prIndexAxisFilterLabel()} actif — zoomez au niveau ${effectiveMinZoomLevel} minimum pour afficher les PR de l’axe.`
@@ -6320,8 +6347,36 @@
         }
 
         const visibleBbox = Core.normalizeBbox(extent);
-        const view = { visibleBbox, zoomLevel, generation };
         const requestContext = prIndexRequestContext();
+        const viewKey = prIndexRequestKey(visibleBbox, zoomLevel, requestContext);
+        // Les paquets WME d'une même vue ne rendent pas sa réponse PR obsolète.
+        // Seul un changement réel de vue/scope (ou une action forcée) l'invalide.
+        if (prIndexActiveViewKey && prIndexActiveViewKey !== viewKey) {
+            generation = ++prIndexRefreshGeneration;
+        }
+        prIndexActiveViewKey = viewKey;
+        if (prIndexActiveRefresh?.generation === generation && prIndexActiveRefresh.viewKey === viewKey) {
+            return await prIndexActiveRefresh.promise;
+        }
+        const view = { visibleBbox, zoomLevel, generation };
+        const job = { generation, viewKey, promise: refreshPrIndexView(view, requestContext, force) };
+        prIndexActiveRefresh = job;
+        try {
+            return await job.promise;
+        } finally {
+            if (prIndexActiveRefresh === job) {
+                prIndexActiveRefresh = null;
+                // Un index d'étiquettes résolu pendant le dessin a pu voir sa
+                // demande de layout regroupée avec ce travail encore en cours.
+                if (prIndexRenderedLayoutKey && prIndexRenderedLayoutKey !== currentPrIndexLayoutKey()) {
+                    schedulePrIndexLayoutRefresh(0);
+                }
+            }
+        }
+    }
+
+    async function refreshPrIndexView(view, requestContext, force) {
+        const { visibleBbox, zoomLevel, generation } = view;
         const scopeKey = prIndexScopeKey(requestContext);
         if (!force && prIndexCache && prIndexCache.scopeKey === scopeKey
             && !prIndexCache.truncated && Core.bboxContains(prIndexCache.bbox, visibleBbox)) {
@@ -6384,43 +6439,21 @@
         }
     }
 
-    function cancelPrIndexIdleRefresh() {
-        if (prIndexRefreshIdleHandle === null) return;
-        try {
-            if (typeof root.cancelIdleCallback === "function") root.cancelIdleCallback(prIndexRefreshIdleHandle);
-            else root.clearTimeout(prIndexRefreshIdleHandle);
-        } catch (error) {
-            // Non bloquant.
-        }
-        prIndexRefreshIdleHandle = null;
-    }
-
-    function runPrIndexRefreshWhenIdle(generation, force = false) {
-        cancelPrIndexIdleRefresh();
-        const execute = () => {
-            prIndexRefreshIdleHandle = null;
-            if (!prIndexLayerEnabled || generation !== prIndexRefreshGeneration) return;
-            observeAsync(refreshPrIndexLayer(generation, force), "rafraîchissement PR");
-        };
-        if (typeof root.requestIdleCallback === "function") {
-            // Laisser WME terminer son propre rendu après un déplacement. Le timeout
-            // évite toutefois qu'un navigateur très occupé reporte indéfiniment le calque PR.
-            prIndexRefreshIdleHandle = root.requestIdleCallback(execute, { timeout: 1200 });
-        } else {
-            // Repli pour les navigateurs sans requestIdleCallback.
-            prIndexRefreshIdleHandle = root.setTimeout(execute, 220);
-        }
-    }
-
-    function schedulePrIndexRefresh(delay = PR_INDEX_DEBOUNCE_MS, force = false, deferUntilIdle = false) {
+    function schedulePrIndexRefresh(delay = PR_INDEX_DEBOUNCE_MS, force = false) {
         if (!prIndexLayerEnabled) return;
-        if (prIndexRefreshTimer !== null) root.clearTimeout(prIndexRefreshTimer);
-        cancelPrIndexIdleRefresh();
-        const generation = ++prIndexRefreshGeneration;
+        prIndexRefreshPendingForce = prIndexRefreshPendingForce || force;
+        if (force) prIndexRefreshGeneration += 1;
+        // Conserver la première échéance : une rafale de data-loaded ne doit
+        // jamais repousser la requête jusqu'à la fin de tout le chargement WME.
+        if (prIndexRefreshTimer !== null) {
+            if (delay > 0) return;
+            root.clearTimeout(prIndexRefreshTimer);
+        }
         prIndexRefreshTimer = root.setTimeout(() => {
             prIndexRefreshTimer = null;
-            if (deferUntilIdle) runPrIndexRefreshWhenIdle(generation, force);
-            else observeAsync(refreshPrIndexLayer(generation, force), "rafraîchissement PR");
+            const forceRefresh = prIndexRefreshPendingForce;
+            prIndexRefreshPendingForce = false;
+            observeAsync(refreshPrIndexLayer(prIndexRefreshGeneration, forceRefresh), "rafraîchissement PR");
         }, Math.max(0, delay));
     }
 
@@ -6433,10 +6466,12 @@
         writeSetting(SETTINGS_PR_INDEX_ENABLED_KEY, wantedEnabled ? "1" : "0");
         if (!wantedEnabled) {
             if (prIndexRefreshTimer !== null) root.clearTimeout(prIndexRefreshTimer);
-            cancelPrIndexIdleRefresh();
+            prIndexRefreshPendingForce = false;
             if (prIndexLayoutTimer !== null) root.clearTimeout(prIndexLayoutTimer);
+            if (prLabelIndexTimer !== null) root.clearTimeout(prLabelIndexTimer);
             prIndexRefreshTimer = null;
             prIndexLayoutTimer = null;
+            prLabelIndexTimer = null;
             prIndexRefreshGeneration += 1;
         } else {
             setPrIndexStatus("Calque des PR activé.", "info");
@@ -6930,13 +6965,14 @@
 
     function bindPrIndexMapEvents() {
         if (prIndexMapEventsBound) return;
-        const refresh = () => schedulePrIndexRefresh(PR_INDEX_DEBOUNCE_MS, false, true);
+        const refresh = () => schedulePrIndexRefresh();
         const dataLoaded = () => {
             routeDataRevision += 1;
             routeSnapshotCache.clear();
             mapModelSnapshotPromise = null;
             mapJunctionsSnapshotPromise = null;
             prLabelSegmentSpatialIndex = null;
+            schedulePrLabelIndexRefresh();
             // Le premier rendu garde le placement disponible. La résolution du
             // nouvel index déclenchera l'affinement, sans masquer les points PR.
             // Vérifier aussi la nouvelle emprise : un simple recalcul de layout

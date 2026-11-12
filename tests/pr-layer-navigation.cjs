@@ -9,19 +9,20 @@ const settle = async () => { for (let i = 0; i < 100; i++) await Promise.resolve
 const point = (id, lon) => ({ id, axis: 'D1075', number: 20, abscissa: 20000,
     coordinate: [lon, 46.12], departmentCode: '01', networkType: 'D', pointType: 'PR', side: 'U' });
 
-function fixture({ zoom = 16, points = [point('A', 5.3)] } = {}) {
-    const timers = new Map(), events = new Map(), requests = [];
+function fixture({ zoom = 16, points = [point('A', 5.3)], labels = false } = {}) {
+    const timers = new Map(), events = new Map(), requests = [], paints = [];
     let nextTimer = 0, now = 0, extent = [5.25, 46.10, 5.35, 46.15], features = [], removeHook;
+    let networkDelay = 0, modelReads = 0;
     const root = { document: {},
         setTimeout(fn, delay = 0) { const id = ++nextTimer; timers.set(id, { fn, due: now + delay }); return id; },
         clearTimeout: id => timers.delete(id),
     };
     // Model an async SDK and its real event handlers, scheduler, cache and renderer.
     const hooks = `root.__TEST__ = {
-        configure(api, loader, status) {
+        configure(api, loader, status, labels) {
             sdk = api; searchPrLayerPoints = loader; ui = { prIndexStatus: status };
             prIndexLayerEnabled = true;
-            appearanceSettings = Core.normalizeAppearanceSettings({ prLabelMode: 'never' });
+            appearanceSettings = Core.normalizeAppearanceSettings({ prLabelMode: labels ? 'always' : 'never' });
             bindPrIndexMapEvents(); schedulePrIndexRefresh(0, true);
         },
         drawPrIndexPoints,
@@ -36,12 +37,18 @@ function fixture({ zoom = 16, points = [point('A', 5.3)] } = {}) {
         Map: {
             getZoomLevel: async () => zoom, getMapExtent: async () => extent,
             removeAllFeaturesFromLayer: async () => { features = []; if (removeHook) { const fn = removeHook; removeHook = null; await fn(); } },
-            addFeaturesToLayer: async args => { features = args.features; }, setLayerVisibility: async () => {},
+            addFeaturesToLayer: async args => { features = args.features; paints.push(now); }, setLayerVisibility: async () => {},
         },
-        DataModel: { Segments: { getAll: async () => [] }, Streets: { getAll: async () => [] } },
-    }, async bbox => { requests.push([...bbox]); return { points: points.filter(p => p.coordinate[0] >= bbox[0] && p.coordinate[0] <= bbox[2]), truncated: false }; }, status);
+        DataModel: { Segments: { getAll: async () => { modelReads++; return []; } }, Streets: { getAll: async () => [] } },
+    }, async bbox => {
+        requests.push([...bbox]);
+        if (networkDelay) await new Promise(resolve => root.setTimeout(resolve, networkDelay));
+        return { points: points.filter(p => p.coordinate[0] >= bbox[0] && p.coordinate[0] <= bbox[2]), truncated: false };
+    }, status, labels);
     return {
-        t: root.__TEST__, requests, status,
+        t: root.__TEST__, requests, status, paints,
+        delayNetwork(ms) { networkDelay = ms; },
+        modelReads: () => modelReads,
         moveTo(lon) { extent = [lon - .05, 46.10, lon + .05, 46.15]; },
         event(name) { events.get(name)(); },
         afterRemove(fn) { removeHook = fn; },
@@ -89,4 +96,48 @@ test('a draw superseded after removal cannot leave stale render keys and an empt
     await f.t.drawPrIndexPoints([b]); await latest;
     assert.equal(f.markers().length, 1, 'the previous feature key does not prove anything is still on the map');
     assert.equal(f.markers()[0].geometry.coordinates[0], 5.3);
+});
+
+test('a burst of WME data events does not postpone the first PR request', async () => {
+    const f = fixture({ points: [point('A', 5.3), point('B', 6.3)] });
+    await f.tick(); f.moveTo(6.3); f.event('wme-map-move-end');
+    for (let i = 0; i < 20; i++) {
+        await f.tick(100); f.event('wme-map-data-loaded');
+    }
+    assert.equal(f.requests.length, 2, 'request the new view during the event burst');
+    assert(f.paints[1] - f.paints[0] <= 1150, 'new points start rendering within 150 ms of the move in this no-network-latency simulation');
+    assert.equal(f.markers()[0].geometry.coordinates[0], 6.3);
+});
+
+test('same-view WME events preserve an already running PR response', async () => {
+    const f = fixture({ points: [point('A', 5.3), point('B', 6.3)] });
+    await f.tick(); f.delayNetwork(1000); f.moveTo(6.3); f.event('wme-map-move-end');
+    await f.tick(700); assert.equal(f.requests.length, 2);
+    for (let i = 0; i < 10; i++) {
+        f.event('wme-map-data-loaded'); await f.tick(100);
+    }
+    assert.equal(f.markers()[0].geometry.coordinates[0], 6.3, 'data arrivals must not cancel a response for the unchanged view');
+    assert.equal(f.requests.length, 2, 'do not download the same points again');
+    assert.equal(f.paints.length, 2, 'share the render job while the RPC is pending');
+});
+
+test('data-loaded for a genuinely different view still rejects late old results', async () => {
+    const f = fixture({ points: [point('A', 5.3), point('B', 6.3), point('C', 7.3)] });
+    await f.tick(); f.delayNetwork(2000); f.moveTo(6.3); f.event('wme-map-move-end');
+    await f.tick(700); f.delayNetwork(50); f.moveTo(7.3); f.event('wme-map-data-loaded');
+    await f.tick(1000); assert.equal(f.markers()[0].geometry.coordinates[0], 7.3);
+    await f.tick(2500); assert.equal(f.markers()[0].geometry.coordinates[0], 7.3);
+});
+
+test('optional label geometry is built once after a data burst, while PRs paint earlier', async () => {
+    const f = fixture({ labels: true, points: [point('A', 5.3), point('B', 6.3)] });
+    await f.tick(); assert.equal(f.modelReads(), 1);
+    f.moveTo(6.3); f.event('wme-map-move-end');
+    for (let i = 0; i < 20; i++) {
+        await f.tick(100); f.event('wme-map-data-loaded');
+    }
+    assert.equal(f.markers()[0].geometry.coordinates[0], 6.3);
+    assert.equal(f.modelReads(), 1, 'do not repeatedly convert all map segments during the burst');
+    await f.tick(1000);
+    assert.equal(f.modelReads(), 2, 'refine labels once the map data settles');
 });

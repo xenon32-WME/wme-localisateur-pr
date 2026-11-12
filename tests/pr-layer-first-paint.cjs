@@ -51,6 +51,7 @@ function fixture() {
     const first = f.t.refreshPrIndexLayer(1);
     await settle();
     assert.equal(f.draws.length, 1, 'PRs must appear while the optional WME geometry is still pending');
+    assert.equal(f.calls.segments, 0, 'do not even start converting the WME model before the first paint');
     await first;
     assert.match(f.status.textContent, /1 PR chargés/);
     assert.equal(f.calls.zoom, 1, 'reuse the map view read for the refresh');
@@ -58,7 +59,7 @@ function fixture() {
     const initialMarker = f.draws[0].find(x => x.properties.kind === 'pr-index');
     const initialLabel = f.draws[0].find(x => x.properties.kind === 'pr-index-cartouche');
     assert(initialLabel, 'labels remain available before WME geometry arrives');
-    f.resolveGeometry(); await settle(); await f.flush();
+    f.resolveGeometry(); await settle(); await f.flush(); await f.flush();
     assert.equal(f.draws.length, 2, 'refine label placement once the geometry is ready');
     const refinedMarker = f.draws[1].find(x => x.properties.kind === 'pr-index');
     const refinedLabel = f.draws[1].find(x => x.properties.kind === 'pr-index-cartouche');
