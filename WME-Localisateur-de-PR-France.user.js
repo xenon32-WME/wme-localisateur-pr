@@ -3334,6 +3334,8 @@
     let prIndexRefreshIdleHandle = null;
     let prIndexLayoutTimer = null;
     let prLabelSegmentSpatialIndex = null;
+    let prLabelSegmentSpatialIndexReady = null;
+    let prLabelPlacementRevision = 0;
     let prIndexRefreshGeneration = 0;
     const prIndexRequestsInFlight = new Map();
     let prIndexCache = null;
@@ -5511,6 +5513,7 @@
             && prIndexLabelsVisibleAtZoom(zoomLevel);
         return stableFeatureHash(JSON.stringify({
             cartoucheVisible,
+            placementRevision: prIndexLabelsVisibleAtZoom(zoomLevel) ? prLabelPlacementRevision : 0,
             // Les offsets anticollision sont en pixels écran : un zoom différent
             // nécessite un nouveau placement même si la liste des PR est identique.
             cartoucheZoom: cartoucheVisible ? Number(zoomLevel) : null,
@@ -5579,13 +5582,23 @@
     }
 
     async function getPrLabelSegmentSpatialIndex() {
-        if (!prLabelSegmentSpatialIndex) prLabelSegmentSpatialIndex = createPrLabelSegmentSpatialIndex();
-        try {
-            return await prLabelSegmentSpatialIndex;
-        } catch (error) {
-            prLabelSegmentSpatialIndex = null;
-            throw error;
+        if (!prLabelSegmentSpatialIndex) {
+            const pending = createPrLabelSegmentSpatialIndex().then((index) => {
+                // La géométrie ne sert qu'au placement des étiquettes. Une réponse
+                // ancienne ne doit pas remplacer un index demandé plus récemment.
+                if (prLabelSegmentSpatialIndex === pending) {
+                    prLabelSegmentSpatialIndexReady = index;
+                    prLabelPlacementRevision += 1;
+                    schedulePrIndexLayoutRefresh(0);
+                }
+                return index;
+            }).catch((error) => {
+                if (prLabelSegmentSpatialIndex === pending) prLabelSegmentSpatialIndex = null;
+                throw error;
+            });
+            prLabelSegmentSpatialIndex = pending;
         }
+        return await prLabelSegmentSpatialIndex;
     }
 
     function findPrLabelSegment(point, spatialIndex = null) {
@@ -5842,9 +5855,11 @@
     }
 
     async function buildPrIndexFeatures(points, zoomLevel) {
-        const labelsVisible = prIndexLabelsVisibleAtZoom();
+        const labelsVisible = prIndexLabelsVisibleAtZoom(zoomLevel);
         const cartouchesVisible = labelsVisible && appearanceSettings.prLabelStyle === "cartouche";
-        const spatialIndex = labelsVisible ? await getPrLabelSegmentSpatialIndex() : null;
+        // Les coordonnées PR sont déjà connues : afficher immédiatement les points
+        // et cartouches, puis affiner leurs décalages quand la géométrie WME arrive.
+        const spatialIndex = labelsVisible ? prLabelSegmentSpatialIndexReady : null;
         const oppositeCarriagewayLookup = cartouchesVisible
             ? buildOppositeCarriagewayLookup(points)
             : null;
@@ -6181,20 +6196,21 @@
         return stableFeatureHash(identities.join("|"));
     }
 
-    function drawPrIndexPoints(points) {
+    function drawPrIndexPoints(points, view = null) {
         // Les appels SDK étant désormais asynchrones, les dessins sont mis en
         // file pour éviter d'intercaler remove/add de deux vues différentes.
         // Une génération obsolète n'accède pas au calque WME.
         const generation = ++prIndexDrawRevision;
+        const isCurrent = () => generation === prIndexDrawRevision && prIndexLayerEnabled
+            && (!view || view.generation === prIndexRefreshGeneration);
         const job = prIndexDrawQueue.catch((error) => {
             console.warn(`${SCRIPT_NAME}: précédent rendu PR interrompu`, error);
         }).then(async () => {
-            if (generation !== prIndexDrawRevision || !prIndexLayerEnabled) return false;
-            const [visibleBbox, zoom] = await Promise.all([
-                sdk.Map.getMapExtent(),
-                sdk.Map.getZoomLevel(),
-            ]);
-            if (generation !== prIndexDrawRevision || !prIndexLayerEnabled) return false;
+            if (!isCurrent()) return false;
+            const [visibleBbox, zoom] = view
+                ? [view.visibleBbox, view.zoomLevel]
+                : await Promise.all([sdk.Map.getMapExtent(), sdk.Map.getZoomLevel()]);
+            if (!isCurrent()) return false;
             const zoomLevel = Number(zoom);
             prIndexCurrentZoom = zoomLevel;
             if (!Number.isFinite(zoomLevel) || zoomLevel < prIndexEffectiveMinZoomLevel()) {
@@ -6204,6 +6220,9 @@
                 return false;
             }
             const renderedPoints = prIndexPointsForCurrentView(points, visibleBbox, zoomLevel);
+            if (renderedPoints.length && prIndexLabelsVisibleAtZoom(zoomLevel) && !prLabelSegmentSpatialIndex) {
+                observeAsync(getPrLabelSegmentSpatialIndex(), "placement des étiquettes PR");
+            }
             const layoutKey = currentPrIndexLayoutKey(zoomLevel);
             const featureKey = prIndexRenderedPointsKey(renderedPoints);
             if (featureKey === prIndexRenderedFeatureKey && layoutKey === prIndexRenderedLayoutKey) {
@@ -6211,11 +6230,11 @@
             }
 
             const features = await buildPrIndexFeatures(renderedPoints, zoomLevel);
-            if (generation !== prIndexDrawRevision || !prIndexLayerEnabled) return false;
+            if (!isCurrent()) return false;
             await sdk.Map.removeAllFeaturesFromLayer({ layerName: PR_INDEX_LAYER });
-            if (generation !== prIndexDrawRevision || !prIndexLayerEnabled) return false;
+            if (!isCurrent()) return false;
             if (features.length) await sdk.Map.addFeaturesToLayer({ layerName: PR_INDEX_LAYER, features });
-            if (generation !== prIndexDrawRevision || !prIndexLayerEnabled) return false;
+            if (!isCurrent()) return false;
             await sdk.Map.setLayerVisibility({ layerName: PR_INDEX_LAYER, visibility: true });
             prIndexRenderedLayoutKey = layoutKey;
             prIndexRenderedFeatureKey = featureKey;
@@ -6279,8 +6298,9 @@
 
     async function refreshPrIndexLayer(generation, force = false) {
         if (!prIndexLayerEnabled || generation !== prIndexRefreshGeneration) return;
-        const zoomLevel = Number(await sdk.Map.getZoomLevel());
+        const [zoom, extent] = await Promise.all([sdk.Map.getZoomLevel(), sdk.Map.getMapExtent()]);
         if (generation !== prIndexRefreshGeneration) return;
+        const zoomLevel = Number(zoom);
         prIndexCurrentZoom = zoomLevel;
         const effectiveMinZoomLevel = prIndexEffectiveMinZoomLevel();
         if (!Number.isFinite(zoomLevel) || zoomLevel < effectiveMinZoomLevel) {
@@ -6294,8 +6314,8 @@
             return;
         }
 
-        const visibleBbox = Core.normalizeBbox(await sdk.Map.getMapExtent());
-        if (generation !== prIndexRefreshGeneration) return;
+        const visibleBbox = Core.normalizeBbox(extent);
+        const view = { visibleBbox, zoomLevel, generation };
         const requestContext = prIndexRequestContext();
         const scopeKey = prIndexScopeKey(requestContext);
         if (!force && prIndexCache && prIndexCache.scopeKey === scopeKey
@@ -6303,7 +6323,7 @@
             // Le cache réseau couvre volontairement une zone large, mais on ne garde
             // dessinés que les PR proches de la vue courante. Cela évite de faire
             // déplacer à WME des centaines de features hors écran pendant un pan.
-            if (prIndexCache.points.length) await drawPrIndexPoints(prIndexCache.points);
+            if (prIndexCache.points.length) await drawPrIndexPoints(prIndexCache.points, view);
             if (generation !== prIndexRefreshGeneration) return;
             setPrIndexStatus(prIndexLoadedStatusMessage(prIndexCache.points), "success");
             return;
@@ -6337,7 +6357,7 @@
             }
 
             prIndexCache = { bbox: queryBbox, points: result.points, truncated: result.truncated, scopeKey };
-            await drawPrIndexPoints(result.points);
+            await drawPrIndexPoints(result.points, view);
             if (generation !== prIndexRefreshGeneration) return;
             if (result.truncated) {
                 setPrIndexStatus(
@@ -6912,7 +6932,8 @@
             mapModelSnapshotPromise = null;
             mapJunctionsSnapshotPromise = null;
             prLabelSegmentSpatialIndex = null;
-            prIndexRenderedLayoutKey = ""; // même jeu de PR, mais géométrie WME mise à jour
+            // Le premier rendu garde le placement disponible. La résolution du
+            // nouvel index déclenchera l'affinement, sans masquer les points PR.
             schedulePrIndexLayoutRefresh();
         };
         sdk.Events.on({ eventName: "wme-map-move-end", eventHandler: refresh });

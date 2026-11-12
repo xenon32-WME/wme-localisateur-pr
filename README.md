@@ -16,7 +16,7 @@ Version actuelle : **1.2.0**.
 
 Si une ancienne variante porte un autre nom ou un numéro supérieur à 1.2.0, son remplacement doit être manuel. Les préférences utilisent les mêmes identifiants internes. Vérifier les anciennes installations avant de les supprimer.
 
-Le correctif du calque PR du 12 novembre conserve le numéro **1.2.0**. Pour remplacer une installation 1.2.0 antérieure, réinstaller le userscript depuis le lien ci-dessus : la vérification habituelle des versions ne suffit pas à détecter ce correctif.
+Les correctifs du calque PR du 12 novembre conservent le numéro **1.2.0** : rafraîchissements concurrents et premier affichage sans attente de la géométrie WME. Pour remplacer une installation 1.2.0 antérieure, réinstaller le userscript depuis le lien ci-dessus : la vérification habituelle des versions ne suffit pas à détecter ces correctifs.
 
 Le script requiert le SDK WME asynchrone et fonctionne sur WME et WME Beta. Aucun paramétrage Supabase n’est nécessaire.
 

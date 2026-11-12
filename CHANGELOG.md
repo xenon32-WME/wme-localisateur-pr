@@ -7,6 +7,8 @@
 - Corrige le calque PR pouvant rester sur « Chargement de la nouvelle zone… » après deux rafraîchissements successifs de la même vue.
 - Partage la requête en cours entre ces rafraîchissements et applique sa réponse à la vue la plus récente.
 - Empêche une erreur réseau d'une ancienne vue de remplacer le statut courant ou de relancer une requête devenue inutile.
+- Affiche les points et cartouches sans attendre la récupération de la géométrie WME ; le placement des étiquettes s'affine ensuite en arrière-plan.
+- Lit le zoom et l'emprise en parallèle et réutilise cette vue pour le dessin, sans les redemander au SDK. Une vue devenue obsolète reste ignorée.
 
 Réinstaller le userscript pour recevoir ce correctif sur une installation 1.2.0 antérieure.
 
