@@ -1,6 +1,20 @@
 # Contrôles de fonctionnement du 12 novembre 2026
 
-Version publique : **1.2.0**. Révision : **20261112-network-cancel**.
+Version : **1.2.0**. Historique des contrôles jusqu’à **20261112-xhr-transport**. Le [diagnostic prod/Beta suivant](DIAGNOSTIC-BETA-20261112.md) décrit la révision en cours.
+
+## Constat complémentaire et changement ciblé
+
+Les traces de la révision précédente dans WME montrent des échecs directs `TypeError: Failed to fetch` après 0 à 1 ms, suivis dans certains cas de délais totaux de 20 secondes sur le secours Tampermonkey. L’en-tête CSP de la page publique WME Beta a été consulté : son `connect-src` n’inclut pas Supabase. Le fetch de page ne constitue donc pas une voie adaptée dans ce contexte. Les quatre réponses du calque retrouvées dans les journaux du service sur la période ciblée sont HTTP 200, avec des temps à l’origine de 137 à 332 ms. Ces durées serveur ne mesurent pas le parcours complet dans le navigateur.
+
+L’ancienne référence utilisait déjà `GM_xmlhttpRequest`, mais sans l’option `anonymous`. [Tampermonkey documente que cette option force le moteur fetch sur Chrome](https://www.tampermonkey.net/documentation.php?locale=en&q=GM_xmlhttpRequest). Cette branche rétablit le moteur XMLHttpRequest pour les RPC, avec suppression explicite de Cookie et Referer, et garde les corrections du calque. L’interprétation de la valeur `null` en suppression d’en-tête a été vérifiée dans la distribution officielle Tampermonkey 5.5.1 ; ce n’est pas une capture réseau du navigateur utilisateur.
+
+Ce changement isole une différence de transport réelle. Il ne prouve pas encore que le mode fetch de Tampermonkey explique à lui seul toute la lenteur. La branche reste en validation, sans annonce de gain réel dans WME. La console mesure désormais aussi les réponses réussies, leur démarrage et l’arrivée des en-têtes pour permettre cette comparaison.
+
+Les 16 suites hors ligne de la branche passent, ainsi que la vérification de syntaxe et la reproductibilité de l’archive. Le test de transport rejette la révision précédente et valide une seule requête XMLHttpRequest, les suppressions d’en-têtes demandées, le délai total, les erreurs et l’annulation. Les tests de navigation conservent une seule requête active après dix déplacements.
+
+Les six scénarios réels en lecture seule passent à nouveau : les 14 appels couvrant les huit RPC ont reçu HTTP 200. Le maximum de durée depuis cet environnement Node.js est d’environ 8,7 secondes ; les vérifications de listes sont plus lentes que celles du calque. Ce test utilise un adaptateur fetch côté Node.js, pas le moteur XMLHttpRequest de Tampermonkey : il vérifie le contrat des API, pas le gain attendu dans Chrome.
+
+Les observations ci-dessous restent celles de la révision précédente, `20261112-network-cancel`.
 
 ## Défaut reproduit et corrigé
 

@@ -2,6 +2,16 @@
 
 ## 1.2.0 — 12 novembre 2026
 
+### Correctif validé — requêtes sans redirection
+
+- Interdit les redirections pour les huit RPC Supabase, dont les adresses sont finales. Tampermonkey 5.5.1 peut ainsi restreindre ses règles d’en-têtes à l’URL demandée plutôt que préparer une règle globale après les autres transferts.
+- Utilise `GM_xmlhttpRequest` avec `anonymous: true` et `redirect: "error"`. Ce mode emploie le moteur fetch du gestionnaire sur Chrome ; aucune tentative de fetch dans la page WME n’est ajoutée.
+- Conserve les délais, l’annulation des requêtes périmées, le cache et le SDK asynchrone.
+- Ajoute les durées de préparation et de dessin du calque aux mesures réseau locales, ainsi que le nom et la version du gestionnaire dans le message de démarrage.
+- Révision `20261112-no-redirect`, version 1.2.0 conservée. Les essais utilisateur confirment la disparition des lenteurs sur WME Beta après la fin du premier chargement de WME.
+
+Les changements ci-dessous décrivent les révisions précédentes.
+
 ### Correctif du calque PR, numéro de version conservé
 
 - Corrige le calque PR pouvant rester sur « Chargement de la nouvelle zone… » après deux rafraîchissements successifs de la même vue.
