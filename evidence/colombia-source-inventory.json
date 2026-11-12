@@ -1,0 +1,86 @@
+{
+  "checked_at": "2026-11-12",
+  "table": "public.wme_pr_colombia",
+  "total": 18617,
+  "groups": [
+    {
+      "source": "Administrador vial",
+      "point_type": "PR",
+      "quality": "physical",
+      "points": 67
+    },
+    {
+      "source": "AMV Coordenada",
+      "point_type": "PR",
+      "quality": "physical",
+      "points": 1
+    },
+    {
+      "source": "Coordenadas tomadas con aplicativo Collector",
+      "point_type": "PR",
+      "quality": "physical",
+      "points": 47
+    },
+    {
+      "source": "Entrega del Contratista",
+      "point_type": "PR",
+      "quality": "physical",
+      "points": 207
+    },
+    {
+      "source": "Google Maps",
+      "point_type": "PR",
+      "quality": "physical",
+      "points": 19
+    },
+    {
+      "source": "IGAC (Contrato 2130/2014)",
+      "point_type": "PR",
+      "quality": "physical",
+      "points": 2224
+    },
+    {
+      "source": "IGAC (Contrato 2932/2008)",
+      "point_type": "PR",
+      "quality": "physical",
+      "points": 14361
+    },
+    {
+      "source": "INVÍAS Postes de Referencia",
+      "point_type": "PR",
+      "quality": "physical",
+      "points": 380
+    },
+    {
+      "source": "INVÍAS Red Vial",
+      "point_type": "DS",
+      "quality": "boundary",
+      "points": 562
+    },
+    {
+      "source": "INVÍAS Red Vial",
+      "point_type": "FS",
+      "quality": "boundary",
+      "points": 562
+    },
+    {
+      "source": "Levantamiento realizado por el INVIAS con la ayud*",
+      "point_type": "PR",
+      "quality": "physical",
+      "points": 36
+    },
+    {
+      "source": "Oficio",
+      "point_type": "PR",
+      "quality": "physical",
+      "points": 15
+    },
+    {
+      "source": "Visita de campo levantado con navegador",
+      "point_type": "PR",
+      "quality": "physical",
+      "points": 136
+    }
+  ]
+}
+

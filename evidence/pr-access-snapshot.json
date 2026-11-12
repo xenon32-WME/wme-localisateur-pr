@@ -1,0 +1,98 @@
+{
+  "checked_at": "2026-11-12",
+  "rls": [
+    {
+      "relname": "wme_pr_france",
+      "relrowsecurity": true
+    },
+    {
+      "relname": "wme_pr_colombia",
+      "relrowsecurity": true
+    }
+  ],
+  "policies": [
+    {
+      "cmd": "SELECT",
+      "qual": "true",
+      "roles": [
+        "anon",
+        "authenticated"
+      ],
+      "tablename": "wme_pr_france",
+      "policyname": "Lecture publique des PR",
+      "with_check": null
+    }
+  ],
+  "columns_co": [
+    {
+      "data_type": "bigint",
+      "column_name": "id"
+    },
+    {
+      "data_type": "text",
+      "column_name": "road_code"
+    },
+    {
+      "data_type": "integer",
+      "column_name": "pr_number"
+    },
+    {
+      "data_type": "integer",
+      "column_name": "pr_offset"
+    },
+    {
+      "data_type": "integer",
+      "column_name": "chainage"
+    },
+    {
+      "data_type": "text",
+      "column_name": "raw_pr"
+    },
+    {
+      "data_type": "double precision",
+      "column_name": "longitude"
+    },
+    {
+      "data_type": "double precision",
+      "column_name": "latitude"
+    },
+    {
+      "data_type": "text",
+      "column_name": "physical_side"
+    },
+    {
+      "data_type": "text",
+      "column_name": "point_type"
+    },
+    {
+      "data_type": "text",
+      "column_name": "section_id"
+    },
+    {
+      "data_type": "text",
+      "column_name": "source_id"
+    },
+    {
+      "data_type": "text",
+      "column_name": "source"
+    },
+    {
+      "data_type": "text",
+      "column_name": "quality"
+    }
+  ],
+  "table_grants": [
+    {
+      "table_name": "wme_pr_france",
+      "grantee": "anon",
+      "privilege_type": "SELECT"
+    },
+    {
+      "table_name": "wme_pr_france",
+      "grantee": "authenticated",
+      "privilege_type": "SELECT"
+    }
+  ],
+  "scope": "PR tables only; not a security certification of the whole shared project"
+}
+

@@ -1,0 +1,61 @@
+{
+  "checked_at": "2026-11-12",
+  "functions": [
+    {
+      "proname": "find_wme_pr_colombia_guides",
+      "prosecdef": true,
+      "provolatile": "s",
+      "anon_execute": true,
+      "authenticated_execute": true
+    },
+    {
+      "proname": "find_wme_pr_colombia_points_in_bbox",
+      "prosecdef": true,
+      "provolatile": "s",
+      "anon_execute": true,
+      "authenticated_execute": true
+    },
+    {
+      "proname": "find_wme_pr_colombia_target",
+      "prosecdef": true,
+      "provolatile": "s",
+      "anon_execute": true,
+      "authenticated_execute": true
+    },
+    {
+      "proname": "find_wme_pr_intercommunal_scopes",
+      "prosecdef": false,
+      "provolatile": "s",
+      "anon_execute": true,
+      "authenticated_execute": true
+    },
+    {
+      "proname": "find_wme_pr_points_in_bbox_v121",
+      "prosecdef": false,
+      "provolatile": "s",
+      "anon_execute": true,
+      "authenticated_execute": true
+    },
+    {
+      "proname": "find_wme_pr_points_v08",
+      "prosecdef": false,
+      "provolatile": "s",
+      "anon_execute": true,
+      "authenticated_execute": true
+    },
+    {
+      "proname": "list_wme_pr_intercommunal_axes",
+      "prosecdef": false,
+      "provolatile": "s",
+      "anon_execute": true,
+      "authenticated_execute": true
+    },
+    {
+      "proname": "list_wme_pr_intercommunal_managers",
+      "prosecdef": false,
+      "provolatile": "s",
+      "anon_execute": true,
+      "authenticated_execute": true
+    }
+  ]
+}
