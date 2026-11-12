@@ -40,7 +40,8 @@ async function run(){
  t.setPrCache({old:true});const gen=t.getGeneration();t.resetPrIndexScope();
  assert.equal(t.getPrCache(),null);assert(t.getGeneration()>gen);
  for(const o of sent){
-  assert.equal(o.method,'POST');assert.equal(o.anonymous,true);
+  assert.equal(o.method,'POST');assert.equal(o.anonymous,undefined);assert.equal(o.fetch,false);
+  assert.equal(o.headers.Cookie,null);assert.equal(o.headers.Referer,null);
   assert.equal(new URL(o.url).host,'ygdyaciibfyqldlejyuu.supabase.co');
   assert.equal(new URL(o.url).search,'');
   assert(o.headers.apikey.startsWith('sb_publishable_'));

@@ -32,7 +32,7 @@
     const SCRIPT_ID = "wme_localisateur_pr_fr";
     const SCRIPT_NAME = "Localisateur de PR France";
     const VERSION = "1.2.0";
-    const BUILD_ID = "20261112-network-cancel";
+    const BUILD_ID = "20261112-xhr-transport";
     const IS_DEV_BUILD = /\.(?:dev|temp)\d+\b/i.test(VERSION);
     const SCRIPT_ICON_DATA_URI = "data:image/png;base64,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";
     const RESULT_LAYER = "wme_localisateur_pr_result";
@@ -43,7 +43,6 @@
     const SUPABASE_URL = "https://ygdyaciibfyqldlejyuu.supabase.co";
     const SUPABASE_PUBLIC_KEY = "sb_publishable_0q-t5iSyWijEAOj79VEmng_MOEM8Fuu";
     const PR_REQUEST_TIMEOUT_MS = 20000;
-    const PR_DIRECT_REQUEST_TIMEOUT_MS = 8000;
     const WME_ROUTE_LOAD_TIMEOUT_MS = 20000;
     const WME_ROUTE_LOAD_POLL_MS = 250;
     const ROUTE_SNAPSHOT_CACHE_TTL_MS = 1200;
@@ -4637,12 +4636,23 @@
     }
 
     function requestWithoutCookies(request, details) {
-        // Tampermonkey : anonymous supprime les cookies et impose fetch sur Chrome.
-        // Dans ce mode, son timeout peut être ignoré : conserver un délai JS explicite.
+        // anonymous impose fetch sur Chrome. Pour les RPC Supabase, revenir au
+        // transport XMLHttpRequest et demander explicitement la suppression des
+        // en-têtes Cookie et Referer (null = remove dans Tampermonkey).
+        // Conserver un watchdog couvrant aussi l'attente du gestionnaire.
         let finished = false;
         let handle = null;
         let watchdog = null;
-        const { signal, ...requestDetails } = details;
+        const { signal, classicXhr = false, ...requestDetails } = details;
+        const transport = classicXhr ? {
+            fetch: false,
+            headers: {
+                ...Object.fromEntries(Object.entries(requestDetails.headers || {})
+                    .filter(([name]) => !/^(cookie|referer)$/i.test(name))),
+                Cookie: null,
+                Referer: null,
+            },
+        } : { anonymous: true };
         const finish = (key, ...args) => {
             if (finished) return;
             finished = true;
@@ -4665,7 +4675,7 @@
         try {
             handle = request({
                 ...requestDetails,
-                anonymous: true,
+                ...transport,
                 onload: (response) => finish("onload", response),
                 ontimeout: (...args) => finish("ontimeout", ...args),
                 onerror: (...args) => finish("onerror", ...args),
@@ -4750,6 +4760,9 @@
                 data: options.body,
                 timeout: options.timeout || PR_REQUEST_TIMEOUT_MS,
                 signal: options.signal,
+                classicXhr: options.classicXhr,
+                onloadstart: options.onloadstart,
+                onreadystatechange: options.onreadystatechange,
                 onload: (response) => {
                     try {
                         resolve(parseServiceJson(response, sourceLabel));
@@ -4796,73 +4809,37 @@
             throw new Error("Adresse Supabase invalide.");
         }
         if (options.signal?.aborted) throw prRequestAbortError();
-        if (typeof fetch !== "function" || typeof AbortController !== "function") {
-            return await requestJson(url, sourceLabel, options);
-        }
         const started = Date.now();
-        const budget = options.timeout || PR_REQUEST_TIMEOUT_MS;
-        const controller = new AbortController();
-        let watchdog;
-        let onAbort;
-        let phase = "connexion";
-        const cancelled = new Promise((resolve, reject) => {
-            onAbort = () => { reject(prRequestAbortError()); controller.abort(); };
-            options.signal?.addEventListener("abort", onAbort, { once: true });
-        });
-        const expired = new Promise((resolve, reject) => {
-            watchdog = root.setTimeout(() => {
-                const error = new Error("La connexion directe à Supabase a dépassé son délai.");
-                error.isTimeout = true;
-                reject(error);
-                controller.abort();
-            }, Math.min(PR_DIRECT_REQUEST_TIMEOUT_MS, budget));
+        let startMs = null;
+        let headersMs = null;
+        const timing = () => ({
+            rpc: address.pathname.split("/").pop(),
+            transport: "Tampermonkey XMLHttpRequest",
+            totalElapsedMs: Date.now() - started,
+            startMs, headersMs,
         });
         try {
-            // CORS est autorisé par Supabase. Le corps POST, la clé publique et
-            // l'absence de cookies sont identiques au transport Tampermonkey.
-            const direct = (async () => {
-                const response = await fetch(url, {
-                    method: options.method || "POST",
-                    headers: { Accept: "application/json", ...(options.headers || {}) },
-                    body: options.body,
-                    credentials: "omit", mode: "cors", redirect: "error",
-                    referrerPolicy: "no-referrer", cache: "no-store", signal: controller.signal,
-                });
-                phase = "réception du corps";
-                const responseText = await response.text();
-                return parseServiceJson({ status: response.status, responseText }, sourceLabel);
-            })();
-            return await Promise.race([direct, expired, cancelled]);
+            // WME n'autorise pas Supabase dans son connect-src : un fetch de page
+            // échoue immédiatement. Une seule requête via l'API autorisée du
+            // gestionnaire suffit ; aucun changement de CSP ni relais supplémentaire.
+            const result = await requestJson(url, sourceLabel, {
+                ...options,
+                classicXhr: true,
+                onloadstart: () => { if (startMs === null) startMs = Date.now() - started; },
+                onreadystatechange: (response) => {
+                    if (headersMs === null && response.readyState >= 2 && response.status > 0) {
+                        headersMs = Date.now() - started;
+                    }
+                },
+            });
+            console.debug(`${SCRIPT_NAME}: réponse API PR ${JSON.stringify(timing())}`);
+            return result;
         } catch (error) {
             if (options.signal?.aborted || error.isAbortError) throw prRequestAbortError();
-            error.transport = "connexion directe";
-            // Une réponse HTTP ou JSON invalide vient bien du serveur : ne pas
-            // rejouer ces erreurs via un autre transport (notamment 401/403).
-            if (error.httpStatus || error.isInvalidResponse) throw error;
-            if (!error.isTimeout) error.isNetworkError = true;
-            root.clearTimeout(watchdog);
-            controller.abort();
-            const remaining = budget - (Date.now() - started);
-            if (remaining <= 0 || !getRequestFunction()) throw error;
-            console.warn(`${SCRIPT_NAME}: connexion directe indisponible — secours Tampermonkey ${JSON.stringify({
-                rpc: address.pathname.split("/").pop(),
-                reason: prRequestFailureReason(error), elapsedMs: Date.now() - started,
-                phase, errorName: error.name || "Error",
-                detail: String(error.message || "").replace(/https?:\/\/\S+/g, "[service]").slice(0, 200),
-            })}`);
-            try {
-                // Partager le même budget, sans ajouter 20 s à l'attente initiale.
-                return await requestJson(url, sourceLabel, { ...options, timeout: remaining });
-            } catch (fallbackError) {
-                if (options.signal?.aborted || fallbackError.isAbortError) throw prRequestAbortError();
-                fallbackError.transport = "connexion directe puis Tampermonkey";
-                fallbackError.directFailure = prRequestFailureReason(error);
-                fallbackError.totalElapsedMs = Date.now() - started;
-                throw fallbackError;
-            }
-        } finally {
-            root.clearTimeout(watchdog);
-            options.signal?.removeEventListener("abort", onAbort);
+            Object.assign(error, timing(), {
+                phase: headersMs === null ? "attente de réponse" : "réception du corps",
+            });
+            throw error;
         }
     }
 
@@ -6433,7 +6410,8 @@
                 const reason = prRequestFailureReason(error);
                 console.warn(`${SCRIPT_NAME}: échec de chargement PR avant nouvelle tentative ${JSON.stringify({
                     attempt: attempt + 1, reason, transport: error.transport || "Tampermonkey",
-                    directFailure: error.directFailure || null,
+                    phase: error.phase || null,
+                    startMs: error.startMs ?? null, headersMs: error.headersMs ?? null,
                     totalElapsedMs: error.totalElapsedMs ?? null,
                 })}`);
                 setPrIndexStatus(

@@ -2,7 +2,7 @@
 const assert=require('node:assert/strict'),vm=require('node:vm');
 const {source,filename}=require('./harness.cjs');
 const settle=async()=>{for(let i=0;i<50;i++)await Promise.resolve();};
-function fixture(useRelay=false){
+function fixture(){
  const calls=[],relay=[],timers=new Map(),draws=[],status={};let id=0,extent=[5,46,5.1,46.1],zoom=16;
  const root={document:{},setTimeout:(fn,ms)=>{timers.set(++id,{fn,ms});return id;},clearTimeout:i=>timers.delete(i)};
  const hooks=`root.__TEST__={refreshPrIndexLayer,setPrIndexLayerEnabled,resetPrIndexScope,setCountry,
@@ -11,12 +11,11 @@ function fixture(useRelay=false){
  vm.runInNewContext(source.replace('    initialize();',hooks),{unsafeWindow:root,module:{exports:{}},
   console:{...console,warn(){},error(){}},URL,URLSearchParams,Promise,Date,JSON,AbortController,
   GM_setValue(){},GM_getValue(){return '';},
-  fetch:(url,options)=>new Promise((resolve,reject)=>{
-   const call={options,aborted:false,resolve:data=>resolve({status:200,text:async()=>JSON.stringify(data)})};calls.push(call);
-   options.signal.addEventListener('abort',()=>{call.aborted=true;reject(Object.assign(new Error('cancelled'),{name:'AbortError'}));},{once:true});
-   if(useRelay)reject(new TypeError('Failed to fetch'));
-  }),
-  GM_xmlhttpRequest:options=>{const call={options,aborted:false};relay.push(call);return {abort(){call.aborted=true;options.onabort?.();}};},
+  fetch:()=>assert.fail('WME page fetch must not be used'),
+  GM_xmlhttpRequest:options=>{
+   const call={options,aborted:false,resolve:data=>options.onload({status:200,responseText:JSON.stringify(data)})};
+   calls.push(call);return {abort(){call.aborted=true;options.onabort?.();}};
+  },
  },{filename,timeout:5000});
  const api=root.__TEST__;
  api.configure({Map:{getZoomLevel:async()=>zoom,getMapExtent:async()=>extent,setLayerVisibility:async()=>{},removeAllFeaturesFromLayer:async()=>{}}},status,async(points)=>{draws.push(points);return true;});
@@ -35,10 +34,10 @@ const rawPoint={department_code:'01',network_type:'D',axis:'D1',pr_number:1,poin
  assert.equal(f.draws.length,1);assert.equal(f.api.cache().points[0].axis,'D1');assert.equal(f.timers.size,0);
 
  // Same-view events still share a request; one new view cancels the old relay.
- const r=fixture(true);const first=r.move(5);await settle();const duplicate=r.api.start();await settle();
- assert.equal(r.relay.length,1);assert.equal(r.relay[0].aborted,false);
- const second=r.move(6);await settle();assert.equal(r.relay.length,2);assert.equal(r.relay[0].aborted,true);
- r.relay[1].options.onload({status:200,responseText:'[]'});await Promise.all([first,duplicate,second]);
+ const r=fixture();const first=r.move(5);await settle();const duplicate=r.api.start();await settle();
+ assert.equal(r.calls.length,1);assert.equal(r.calls[0].aborted,false);
+ const second=r.move(6);await settle();assert.equal(r.calls.length,2);assert.equal(r.calls[0].aborted,true);
+ r.calls[1].options.onload({status:200,responseText:'[]'});await Promise.all([first,duplicate,second]);
  assert.equal(r.draws.length,1);assert.equal(r.timers.size,0);
 
  // Disabling, zooming out, or changing country/filter scope releases the network.
@@ -51,5 +50,5 @@ const rawPoint={department_code:'01',network_type:'D',axis:'D1',pr_number:1,poin
   await job;assert.equal(x.calls[0].aborted,true,action);assert.equal(x.draws.length,0,action);
   assert.equal(x.relay.length,0);assert.equal(x.timers.size,0);
  }
- console.log('PR navigation: one active request, no stale fallback, relay abort, disable/zoom/scope PASS');
+ console.log('PR navigation: one active XHR, no page fetch, abort, disable/zoom/scope PASS');
 })().catch(e=>{console.error(e);process.exitCode=1;});

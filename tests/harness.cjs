@@ -16,9 +16,13 @@ function harness(request,globals={}){
 }
 function fetchRequest(options,fetchImpl=fetch){
  const controller=new AbortController();
- fetchImpl(options.url,{method:options.method,headers:options.headers,body:options.data,
+ options.onloadstart?.();
+ fetchImpl(options.url,{method:options.method,headers:Object.fromEntries(Object.entries(options.headers || {}).filter(([,v])=>v!==null)),body:options.data,
   credentials:'omit',redirect:'error',signal:controller.signal})
- .then(async r=>options.onload({status:r.status,responseText:await r.text(),responseHeaders:[...r.headers].map(([k,v])=>k+': '+v).join('\n')}))
+ .then(async r=>{
+  options.onreadystatechange?.({readyState:2,status:r.status});
+  options.onload({status:r.status,responseText:await r.text(),responseHeaders:[...r.headers].map(([k,v])=>k+': '+v).join('\n')});
+ })
  .catch(e=>options.onerror(e));
  return {abort:()=>controller.abort()};
 }

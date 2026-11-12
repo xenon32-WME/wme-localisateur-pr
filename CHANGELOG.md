@@ -2,6 +2,16 @@
 
 ## 1.2.0 — 12 novembre 2026
 
+### En validation — transport XMLHttpRequest
+
+- Supprime le fetch direct, incompatible avec le connect-src observé sur WME.
+- Rétablit le moteur XMLHttpRequest de Tampermonkey pour les RPC Supabase, sans `anonymous: true` qui impose le moteur fetch sur Chrome. Demande au gestionnaire de retirer les en-têtes Cookie et Referer.
+- Conserve le délai total de 20 secondes, l’annulation des anciennes vues et le partage des requêtes identiques.
+- Mesure le démarrage, la réception des en-têtes et la fin de réponse dans la console locale, sans critères de recherche.
+- Révision `20261112-xhr-transport`, numéro 1.2.0 conservé. Le gain réel reste à confirmer dans WME avant intégration de cette branche dans la distribution publique.
+
+Les changements ci-dessous décrivent les révisions précédentes.
+
 ### Correctif du calque PR, numéro de version conservé
 
 - Corrige le calque PR pouvant rester sur « Chargement de la nouvelle zone… » après deux rafraîchissements successifs de la même vue.
