@@ -10,7 +10,7 @@ Le script localise un point de repère routier ou une zone comprise entre deux P
 
 Version actuelle : **1.2.0**.
 
-Cette branche prépare la révision **20261112-xhr-transport**, à vérifier dans WME avant intégration dans `main`. [Archive de cette branche](https://raw.githubusercontent.com/xenon32-WME/wme-localisateur-pr/fix/pr-xhr-transport/dist/Localisateur_PR.zip). Les liens habituels ci-dessous restent ceux de la distribution publique.
+Cette branche prépare la révision **20261112-no-redirect**, à vérifier dans WME avant intégration dans `main`. [Archive de cette branche](https://raw.githubusercontent.com/xenon32-WME/wme-localisateur-pr/fix/pr-xhr-transport/dist/Localisateur_PR.zip). Les liens habituels ci-dessous restent ceux de la distribution publique.
 
 1. Installer Tampermonkey dans le navigateur.
 2. [Installer le userscript](https://raw.githubusercontent.com/xenon32-WME/wme-localisateur-pr/main/WME-Localisateur-de-PR-France.user.js), ou télécharger [l’archive ZIP](https://raw.githubusercontent.com/xenon32-WME/wme-localisateur-pr/main/dist/Localisateur_PR.zip) et ouvrir le fichier `.user.js` qu’elle contient.
@@ -18,11 +18,11 @@ Cette branche prépare la révision **20261112-xhr-transport**, à vérifier dan
 
 Si une ancienne variante porte un autre nom ou un numéro supérieur à 1.2.0, son remplacement doit être manuel. Les préférences utilisent les mêmes identifiants internes. Vérifier les anciennes installations avant de les supprimer.
 
-Les correctifs du calque PR du 12 novembre conservent le numéro **1.2.0** : rafraîchissements concurrents, chargement après déplacement de carte et suppression des reports de chargement lors des rafales de données WME. Les points s'affichent avant le calcul facultatif du placement des étiquettes. Cette branche rétablit XMLHttpRequest via Tampermonkey pour Supabase : le fetch direct est incompatible avec le connect-src observé sur WME. Les en-têtes Cookie et Referer sont retirés par le gestionnaire ; une nouvelle tentative indique la raison de l'échec. Pour remplacer une installation 1.2.0 antérieure, réinstaller le userscript depuis le lien ci-dessus : la vérification habituelle des versions ne suffit pas à détecter ces correctifs.
+Les correctifs du calque PR du 12 novembre conservent le numéro **1.2.0** : rafraîchissements concurrents, chargement après déplacement de carte et suppression des reports de chargement lors des rafales de données WME. Les points s'affichent avant le calcul facultatif du placement des étiquettes. Cette branche utilise les requêtes anonymes de Tampermonkey avec redirections interdites pour Supabase : cette configuration évite que notre requête demande une règle globale d’en-têtes dans Tampermonkey 5.5.1. Le fetch direct de page reste retiré. Une nouvelle tentative indique la raison de l’échec. Pour remplacer une installation 1.2.0 antérieure, réinstaller le userscript depuis le lien ci-dessus : la vérification habituelle des versions ne suffit pas à détecter ces correctifs.
 
 Le script requiert le SDK WME asynchrone et fonctionne sur WME et WME Beta. Aucun paramétrage Supabase n’est nécessaire.
 
-La révision `20261112-xhr-transport` conserve l’annulation des requêtes périmées : elle annule les requêtes des anciennes zones au lieu de les laisser occuper le réseau jusqu'à leur expiration. Son identifiant apparaît dans la console au démarrage. Voir le [bilan des contrôles du 12 novembre](docs/CONTROLES-20261112.md).
+La révision `20261112-no-redirect` conserve l’annulation des requêtes périmées : elle annule les requêtes des anciennes zones au lieu de les laisser occuper le réseau jusqu'à leur expiration. Son identifiant apparaît dans la console au démarrage. Voir le [diagnostic comparé prod/Beta](docs/DIAGNOSTIC-BETA-20261112.md) et les [contrôles précédents](docs/CONTROLES-20261112.md).
 
 ## Utilisation
 

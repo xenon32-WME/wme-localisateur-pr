@@ -50,5 +50,5 @@ const rawPoint={department_code:'01',network_type:'D',axis:'D1',pr_number:1,poin
   await job;assert.equal(x.calls[0].aborted,true,action);assert.equal(x.draws.length,0,action);
   assert.equal(x.relay.length,0);assert.equal(x.timers.size,0);
  }
- console.log('PR navigation: one active XHR, no page fetch, abort, disable/zoom/scope PASS');
+ console.log('PR navigation: one active GM request, no page fetch, abort, disable/zoom/scope PASS');
 })().catch(e=>{console.error(e);process.exitCode=1;});

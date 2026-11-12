@@ -1,6 +1,6 @@
 # Contrôles de fonctionnement du 12 novembre 2026
 
-Version : **1.2.0**. Branche en validation : **20261112-xhr-transport**.
+Version : **1.2.0**. Historique des contrôles jusqu’à **20261112-xhr-transport**. Le [diagnostic prod/Beta suivant](DIAGNOSTIC-BETA-20261112.md) décrit la révision en cours.
 
 ## Constat complémentaire et changement ciblé
 

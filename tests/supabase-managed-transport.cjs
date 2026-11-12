@@ -22,10 +22,10 @@ async function run(){
  assert.equal(response.data.length,0);assert.equal(normal.calls.length,1);assert.equal(normal.timers.size,0);
  const sent=normal.calls[0];
  assert.equal(sent.url,endpoint);assert.equal(sent.method,'POST');assert.equal(sent.data,'{}');
- assert.equal(sent.anonymous,undefined);assert.equal(sent.fetch,false);assert.equal(sent.responseType,undefined);
- assert.equal(sent.headers.Cookie,null);assert.equal(sent.headers.Referer,null);
+ assert.equal(sent.anonymous,true);assert.equal(sent.redirect,'error');assert.equal(sent.fetch,undefined);assert.equal(sent.responseType,undefined);
+ assert(!Object.keys(sent.headers).some(k=>/^(cookie|referer|origin)$/i.test(k)));
  assert.equal(sent.headers['Content-Type'],'application/json');assert(sent.headers.apikey.startsWith('sb_publishable_'));
- assert.match(normal.logs[0],/"transport":"Tampermonkey XMLHttpRequest"/);
+ assert.match(normal.logs[0],/"transport":"Tampermonkey sans redirection"/);
  assert.match(normal.logs[0],/"headersMs":0/);
 
  // The external watchdog covers both a stalled GM dispatch and a stalled body.
@@ -35,7 +35,7 @@ async function run(){
   await stalled.advance(19999);assert.equal(aborted,0);
   await stalled.advance(1);const error=await pending;
   assert.equal(error.isTimeout,true);assert.equal(aborted,1);assert.equal(stalled.timers.size,0);
-  assert.equal(error.transport,'Tampermonkey XMLHttpRequest');assert.equal(error.totalElapsedMs,20000);
+  assert.equal(error.transport,'Tampermonkey sans redirection');assert.equal(error.totalElapsedMs,20000);
   assert.equal(error.headersMs,headers?0:null);assert.equal(stalled.calls.length,1);
   stalled.calls[0].onload({status:200,responseText:'[]'});assert.equal(stalled.logs.length,0);
  }
@@ -61,10 +61,10 @@ async function run(){
   await assert.rejects(()=>normal.api.requestSupabaseJson(url,{headers:{apikey:'test'}}),/Adresse Supabase invalide/);
  }
  assert.equal(normal.calls.length,1);
- // Metadata remains anonymous and does not use the Supabase-specific XHR mode.
+ // Metadata remains anonymous and does not use the Supabase-specific redirect policy.
  const metadata=fixture(o=>o.onload({status:200,responseText:'metadata'}));
  assert.equal(await metadata.api.requestText('https://update.greasyfork.org/scripts/590425/test.meta.js'),'metadata');
- assert.equal(metadata.calls[0].anonymous,true);assert.equal(metadata.calls[0].fetch,undefined);
- console.log('Supabase XHR: single request, header removals, cancellation, timings, errors PASS');
+ assert.equal(metadata.calls[0].anonymous,true);assert.equal(metadata.calls[0].redirect,undefined);
+ console.log('Supabase managed transport: no redirects, anonymous, cancellation, timings, errors PASS');
 }
 run().catch(e=>{console.error(e);process.exitCode=1;});

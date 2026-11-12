@@ -2,13 +2,13 @@
 
 ## 1.2.0 — 12 novembre 2026
 
-### En validation — transport XMLHttpRequest
+### En validation — requêtes sans redirection
 
-- Supprime le fetch direct, incompatible avec le connect-src observé sur WME.
-- Rétablit le moteur XMLHttpRequest de Tampermonkey pour les RPC Supabase, sans `anonymous: true` qui impose le moteur fetch sur Chrome. Demande au gestionnaire de retirer les en-têtes Cookie et Referer.
-- Conserve le délai total de 20 secondes, l’annulation des anciennes vues et le partage des requêtes identiques.
-- Mesure le démarrage, la réception des en-têtes et la fin de réponse dans la console locale, sans critères de recherche.
-- Révision `20261112-xhr-transport`, numéro 1.2.0 conservé. Le gain réel reste à confirmer dans WME avant intégration de cette branche dans la distribution publique.
+- Interdit les redirections pour les huit RPC Supabase, dont les adresses sont finales. Tampermonkey 5.5.1 peut ainsi restreindre ses règles d’en-têtes à l’URL demandée plutôt que préparer une règle globale après les autres transferts.
+- Utilise `GM_xmlhttpRequest` avec `anonymous: true` et `redirect: "error"`. Ce mode emploie le moteur fetch du gestionnaire sur Chrome ; aucune tentative de fetch dans la page WME n’est ajoutée.
+- Conserve les délais, l’annulation des requêtes périmées, le cache et le SDK asynchrone.
+- Ajoute les durées de préparation et de dessin du calque aux mesures réseau locales, ainsi que le nom et la version du gestionnaire dans le message de démarrage.
+- Révision `20261112-no-redirect`, version 1.2.0 conservée. La fluidité sur WME Beta reste à confirmer avant intégration dans la distribution publique.
 
 Les changements ci-dessous décrivent les révisions précédentes.
 
