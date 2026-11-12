@@ -20,6 +20,8 @@ Les correctifs du calque PR du 12 novembre conservent le numéro **1.2.0** : raf
 
 Le script requiert le SDK WME asynchrone et fonctionne sur WME et WME Beta. Aucun paramétrage Supabase n’est nécessaire.
 
+La révision `20261112-network-cancel` annule aussi les requêtes des anciennes zones au lieu de les laisser occuper le réseau jusqu'à leur expiration. Son identifiant apparaît dans la console au démarrage. Voir le [bilan des contrôles du 12 novembre](docs/CONTROLES-20261112.md).
+
 ## Utilisation
 
 - Choisir le pays, le type de route, l’axe et le département ou gestionnaire si nécessaire.

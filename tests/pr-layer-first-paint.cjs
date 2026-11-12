@@ -23,7 +23,7 @@ function fixture() {
         supersede: () => { prIndexRefreshGeneration++; },
     };`;
     vm.runInNewContext(source.replace('    initialize();', hooks), {
-        unsafeWindow: root, module: { exports: {} }, console, URL, URLSearchParams, Promise, Date, JSON,
+        unsafeWindow: root, module: { exports: {} }, console, URL, URLSearchParams, Promise, Date, JSON, AbortController,
     });
     const point = { id: 'pr20', axis: 'D1075', number: 20, abscissa: 20000, coordinate: [5.3, 46.12],
         departmentCode: '01', networkType: 'D', pointType: 'PR', side: 'U' };

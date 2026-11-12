@@ -29,7 +29,7 @@ function fixture({ zoom = 16, points = [point('A', 5.3)], labels = false } = {})
         disable() { prIndexLayerEnabled = false; prIndexRefreshGeneration++; },
     };`;
     vm.runInNewContext(source.replace('    initialize();', hooks), {
-        unsafeWindow: root, module: { exports: {} }, console, URL, URLSearchParams, Promise, Date, JSON,
+        unsafeWindow: root, module: { exports: {} }, console, URL, URLSearchParams, Promise, Date, JSON, AbortController,
     });
     const status = {};
     root.__TEST__.configure({

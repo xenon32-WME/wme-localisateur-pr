@@ -36,7 +36,8 @@ async function run(){
  const gm=blocked.fallback[0];assert.equal(gm.anonymous,true);assert.equal(gm.timeout,20000);
  assert.equal(gm.url,blocked.direct[0].url);assert.equal(gm.data,blocked.direct[0].body);
  assert.deepEqual(gm.headers,blocked.direct[0].headers);assert.equal(blocked.timers.size,0);
- assert.equal(blocked.warnings[0][1].reason,'erreur réseau');
+ assert.match(blocked.warnings[0][0], /"reason":"erreur réseau"/);
+ assert.match(blocked.warnings[0][0], /"errorName":"TypeError"/);
 
  // Headers alone are not completion: a stalled response body must also expire.
  const body=deferred();const stalled=fixture(()=>Promise.resolve({status:200,text:()=>body.promise}),gmSuccess);
@@ -45,7 +46,8 @@ async function run(){
  await stalled.advance(1);await pending;
  assert(stalled.direct[0].signal.aborted);assert.equal(stalled.fallback.length,1);
  assert.equal(stalled.fallback[0].timeout,12000);assert.equal(stalled.timers.size,0);
- assert.equal(stalled.warnings[0][1].reason,'délai dépassé');
+ assert.match(stalled.warnings[0][0], /"reason":"délai dépassé"/);
+ assert.match(stalled.warnings[0][0], /"phase":"réception du corps"/);
  body.resolve('[{"late":true}]');await flush();assert.equal(stalled.fallback.length,1);
 
  // Both paths hanging cannot double the 20-second request budget.

@@ -16,6 +16,8 @@
 - Diffère la conversion des segments/rues servant aux étiquettes après le premier affichage et la rafale de données WME, pour éviter de refaire ce travail à chaque paquet.
 - Utilise une connexion directe à Supabase sans cookies ni référent, avec le transport anonyme Tampermonkey en secours si la connexion directe échoue ou dépasse 8 secondes. Les deux transports partagent le même délai maximal de 20 secondes par tentative, réception du corps incluse.
 - Affiche la raison d'une nouvelle tentative du calque (délai dépassé, erreur réseau ou statut HTTP) et consigne localement le transport utilisé. Les erreurs HTTP et les réponses JSON invalides ne déclenchent pas de secours par un autre transport.
+- Annule effectivement les requêtes de calque devenues inutiles après un changement de vue, de pays, de filtre, une désactivation ou un dézoom sous le seuil. Une annulation ne déclenche ni secours ni nouvelle tentative ; les événements de la même vue continuent de partager la requête.
+- Rend les diagnostics de connexion lisibles dans les exports de console : phase, type d'erreur et durée, sans paramètres de recherche. Identifie cette révision par `20261112-network-cancel` dans le message de démarrage, avec une version publique toujours à 1.2.0.
 
 Réinstaller le userscript pour recevoir ce correctif sur une installation 1.2.0 antérieure.
 
