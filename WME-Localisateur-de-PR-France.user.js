@@ -3335,7 +3335,7 @@
     let prIndexLayoutTimer = null;
     let prLabelSegmentSpatialIndex = null;
     let prIndexRefreshGeneration = 0;
-    let prIndexLastRequestKey = "";
+    const prIndexRequestsInFlight = new Map();
     let prIndexCache = null;
     let prIndexAxisFilter = null;
     let prIndexRenderedLayoutKey = "";
@@ -3819,7 +3819,6 @@
             // Aucune réponse France ne doit repeindre une vue Colombie, ni inversement.
             prIndexRefreshGeneration += 1;
             prIndexCache = null;
-            prIndexLastRequestKey = "";
             prIndexRenderedFeatureKey = "";
             prIndexRenderedLayoutKey = "";
         }
@@ -6063,10 +6062,9 @@
     }
 
     function resetPrIndexScope() {
-        // Annule les GET en vol, supprime le cache et invalide les rendus antérieurs.
+        // Rend obsolètes les réponses en vol, le cache et les rendus antérieurs.
         prIndexRefreshGeneration += 1;
         prIndexCache = null;
-        prIndexLastRequestKey = "";
         prIndexRenderedFeatureKey = "";
         prIndexRenderedLayoutKey = "";
         observeAsync(clearPrIndexFeatures(), "effacement du calque précédent");
@@ -6239,10 +6237,27 @@
     }
 
     async function loadPrIndexBboxWithRetry(queryBbox, generation, requestContext) {
+        const requestKey = prIndexRequestKey(queryBbox, prIndexCurrentZoom, requestContext);
         for (let attempt = 0; ; attempt += 1) {
+            if (!prIndexLayerEnabled || generation !== prIndexRefreshGeneration) return null;
             try {
-                return await searchPrLayerPoints(queryBbox, requestContext);
+                // Deux événements WME peuvent demander la même zone avant la réponse.
+                // Chaque rafraîchissement attend cette réponse ; seul le plus récent
+                // pourra ensuite l'afficher. Une clé seule faisait perdre la réponse.
+                let pending = prIndexRequestsInFlight.get(requestKey);
+                if (!pending) {
+                    pending = Promise.resolve()
+                        .then(() => searchPrLayerPoints(queryBbox, requestContext))
+                        .finally(() => {
+                            if (prIndexRequestsInFlight.get(requestKey) === pending) {
+                                prIndexRequestsInFlight.delete(requestKey);
+                            }
+                        });
+                    prIndexRequestsInFlight.set(requestKey, pending);
+                }
+                return await pending;
             } catch (error) {
+                if (!prIndexLayerEnabled || generation !== prIndexRefreshGeneration) return null;
                 if (!Core.isRetryablePrIndexError(error) || attempt >= PR_INDEX_RETRY_DELAYS_MS.length) throw error;
                 const nextAttempt = attempt + 2;
                 const totalAttempts = PR_INDEX_RETRY_DELAYS_MS.length + 1;
@@ -6270,7 +6285,6 @@
         const effectiveMinZoomLevel = prIndexEffectiveMinZoomLevel();
         if (!Number.isFinite(zoomLevel) || zoomLevel < effectiveMinZoomLevel) {
             await clearPrIndexFeatures();
-            prIndexLastRequestKey = "";
             setPrIndexStatus(
                 effectivePrIndexAxisFilter()
                     ? `Filtre ${prIndexAxisFilterLabel()} actif — zoomez au niveau ${effectiveMinZoomLevel} minimum pour afficher les PR de l’axe.`
@@ -6297,9 +6311,6 @@
 
         const networkPaddingRatio = prIndexNetworkPaddingRatio(zoomLevel);
         let queryBbox = Core.expandBbox(visibleBbox, networkPaddingRatio);
-        const requestKey = prIndexRequestKey(queryBbox, zoomLevel, requestContext);
-        if (!force && requestKey === prIndexLastRequestKey) return;
-        prIndexLastRequestKey = requestKey;
         setPrIndexStatus(
             networkPaddingRatio > PR_INDEX_BBOX_PADDING_RATIO
                 ? "Préchargement élargi de la zone autour de la vue… Les PR déjà chargés restent affichés."
@@ -6340,7 +6351,6 @@
             }
         } catch (error) {
             if (generation !== prIndexRefreshGeneration) return;
-            prIndexLastRequestKey = "";
             const retained = prIndexCache?.points?.length
                 ? ` Les ${prIndexCache.points.length.toLocaleString("fr-FR")} PR précédents restent affichés.`
                 : "";
@@ -6403,7 +6413,6 @@
             prIndexRefreshTimer = null;
             prIndexLayoutTimer = null;
             prIndexRefreshGeneration += 1;
-            prIndexLastRequestKey = "";
         } else {
             setPrIndexStatus("Calque des PR activé.", "info");
             schedulePrIndexRefresh(0, true);
