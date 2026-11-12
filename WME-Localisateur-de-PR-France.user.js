@@ -6231,6 +6231,11 @@
 
             const features = await buildPrIndexFeatures(renderedPoints, zoomLevel);
             if (!isCurrent()) return false;
+            // Le prochain await peut être interrompu par une nouvelle vue. Dès
+            // que l'on retire les features, les anciennes clés ne décrivent plus
+            // le calque ; les conserver pouvait empêcher le dessin de remplacement.
+            prIndexRenderedLayoutKey = "";
+            prIndexRenderedFeatureKey = "";
             await sdk.Map.removeAllFeaturesFromLayer({ layerName: PR_INDEX_LAYER });
             if (!isCurrent()) return false;
             if (features.length) await sdk.Map.addFeaturesToLayer({ layerName: PR_INDEX_LAYER, features });
@@ -6934,7 +6939,10 @@
             prLabelSegmentSpatialIndex = null;
             // Le premier rendu garde le placement disponible. La résolution du
             // nouvel index déclenchera l'affinement, sans masquer les points PR.
-            schedulePrIndexLayoutRefresh();
+            // Vérifier aussi la nouvelle emprise : un simple recalcul de layout
+            // ne chargeait jamais les PR absents du cache de la vue précédente.
+            // Le cache et les requêtes partagées évitent les téléchargements doublons.
+            schedulePrIndexRefresh(PR_INDEX_DEBOUNCE_MS);
         };
         sdk.Events.on({ eventName: "wme-map-move-end", eventHandler: refresh });
         sdk.Events.on({ eventName: "wme-map-zoom-changed", eventHandler: refresh });
