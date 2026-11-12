@@ -2,9 +2,20 @@
 // Explicit live read-only RPC checks. Never called by the offline test runner.
 const assert=require('node:assert/strict'),fs=require('node:fs');
 const {harness,fetchRequest}=require('./harness.cjs');
-const t=harness(fetchRequest,{fetch,AbortController});
+const apiCalls=[];
+async function measuredFetch(url,options){
+ const started=Date.now(),entry={rpc:new URL(url).pathname.split('/').at(-1)};apiCalls.push(entry);
+ try{
+  const response=await fetch(url,options);entry.status=response.status;entry.headers_ms=Date.now()-started;
+  return {status:response.status,headers:response.headers,text:async()=>{
+   try{const text=await response.text();entry.bytes=Buffer.byteLength(text);entry.total_ms=Date.now()-started;return text;}
+   catch(e){entry.error=e.name;entry.total_ms=Date.now()-started;throw e;}
+  }};
+ }catch(e){entry.error=e.name;entry.total_ms=Date.now()-started;throw e;}
+}
+const t=harness(options=>fetchRequest(options,measuredFetch),{fetch:measuredFetch,AbortController});
 async function run(){
- const report={tested_at:new Date().toISOString(),version:'1.2.0',checks:[]};
+ const report={tested_at:new Date().toISOString(),version:'1.2.0',environment:'Node.js, not WME; network times include this execution environment',checks:[],api_calls:apiCalls};
  async function check(name,run){const started=Date.now();await run();report.checks.push({name,pass:true,ms:Date.now()-started});console.log(name+': PASS');}
  await check('A40 both sides',async()=>{
   const r=await t.requestPrData('lookup',{axis:'A40',department:'01',numbers:'120,121,122,123,124,125',network_type:'A'},'FR');

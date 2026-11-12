@@ -21,7 +21,7 @@ function fixture() {
     };`;
     vm.runInNewContext(source.replace('    initialize();', hooks), {
         unsafeWindow: root, module: { exports: {} }, console: { ...console, error() {}, warn(...args) { warnings.push(args); } },
-        URL, URLSearchParams, Promise, Date, JSON,
+        URL, URLSearchParams, Promise, Date, JSON, AbortController,
     });
     const t = root.__TEST__;
     let extent = [5, 46, 5.1, 46.1], generation = 0;
@@ -102,7 +102,7 @@ const networkError = () => Object.assign(new Error('temporary network failure'),
     transient.requests[0].reject(Object.assign(networkError(), { transport: 'connexion directe puis Tampermonkey' }));
     await settle();
     assert.match(transient.status.textContent, /nouvelle tentative 2\/4 \(erreur réseau\)/);
-    assert.equal(transient.warnings[0][1].transport, 'connexion directe puis Tampermonkey');
+    assert.match(transient.warnings[0][0], /"transport":"connexion directe puis Tampermonkey"/);
     await new Promise(resolve => setTimeout(resolve, 5)); await settle();
     assert.equal(transient.requests.length, 2);
     transient.requests[1].resolve(result('retry-success')); await retried;
