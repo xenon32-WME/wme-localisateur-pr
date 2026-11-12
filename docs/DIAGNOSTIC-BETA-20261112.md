@@ -1,6 +1,6 @@
 # Diagnostic prod/Beta — 12 novembre 2026
 
-Version 1.2.0, révision distribuée `20261112-no-redirect`. Diagnostic rouvert après des essais supplémentaires.
+Version 1.2.0. Les mesures ci-dessous portent sur la révision `20261112-no-redirect`. La révision suivante, `20261112-startup-notice`, ajoute uniquement une information au démarrage du calque et conserve le même transport.
 
 ## Observations avant correction
 
@@ -47,11 +47,17 @@ Sur la fenêtre serveur du 12 novembre 2026 de **20:00:00 à 20:24:34 UTC**, les
 
 L’attente dominante est donc observée avant réception du premier callback Tampermonkey. Deux causes restent à départager : une attente du gestionnaire avant émission et une livraison tardive des callbacks lorsque la page est occupée. La préparation des requêtes dans Tampermonkey utilise toujours un verrou partagé, même lorsque la requête courante refuse les redirections ; une autre requête peut déjà le détenir. Ce mécanisme est compatible avec les traces, mais aucun autre script précis n’a été identifié comme responsable. Le cache des PR seul n’explique pas le retour utilisateur concernant les zones inédites.
 
-### Prochain essai d’isolement
+### Essai d’isolement proposé
 
 Conserver la même version du Localisateur. Fermer les autres onglets WME, désactiver temporairement les autres userscripts actifs sur WME, puis recharger Beta avec uniquement le Localisateur actif. Attendre le chargement initial et comparer plusieurs déplacements proches puis lointains, dont des zones inédites. Relever les mêmes durées API et rendu. Restaurer ensuite les scripts désactivés.
 
 Si les attentes disparaissent, réactiver les autres scripts par groupes pour rechercher l’interaction. Si elles persistent, poursuivre le diagnostic du Localisateur, du gestionnaire et de la charge de la page. Aucun préchargement artificiel, relancement agressif ni nouveau transport n’est ajouté sans ce résultat.
+
+### Retour utilisateur et décision
+
+L’utilisateur a ensuite testé avec uniquement le Localisateur actif : plus aucune lenteur constatée, pour des déplacements proches, lointains et vers des zones éloignées. Ce retour est qualitatif ; il ne fournit pas de nouveaux chronométrages. Le SDK asynchrone reste actif pendant cet essai.
+
+Ce résultat oriente vers une interaction entre scripts ou leur charge cumulée, sans identifier un script précis ni départager définitivement les mécanismes possibles. L’utilisateur choisit de ne pas poursuivre l’isolement script par script. La révision `20261112-startup-notice` informe donc brièvement du délai possible au démarrage, dans la langue choisie, avec une option de masquage mémorisée. Elle n’est pas présentée comme une correction supplémentaire des performances.
 
 ## Contrôles de cette révision
 

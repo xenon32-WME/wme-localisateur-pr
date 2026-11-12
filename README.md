@@ -10,7 +10,7 @@ Le script localise un point de repère routier ou une zone comprise entre deux P
 
 Version actuelle : **1.2.0**.
 
-Révision actuelle : **20261112-no-redirect**. Des lenteurs intermittentes après déplacement restent en cours de diagnostic sur WME Beta ; leur disparition complète n’est pas confirmée.
+Révision actuelle : **20261112-startup-notice**. Une popup courte informe que le premier chargement du calque PR peut prendre du temps selon les scripts actifs. Elle suit la langue choisie : français, espagnol ou anglais.
 
 1. Installer Tampermonkey dans le navigateur.
 2. [Installer le userscript](https://raw.githubusercontent.com/xenon32-WME/wme-localisateur-pr/main/WME-Localisateur-de-PR-France.user.js), ou télécharger [l’archive ZIP](https://raw.githubusercontent.com/xenon32-WME/wme-localisateur-pr/main/dist/Localisateur_PR.zip) et ouvrir le fichier `.user.js` qu’elle contient.
@@ -18,13 +18,15 @@ Révision actuelle : **20261112-no-redirect**. Des lenteurs intermittentes aprè
 
 Si une ancienne variante porte un autre nom ou un numéro supérieur à 1.2.0, son remplacement doit être manuel. Les préférences utilisent les mêmes identifiants internes. Vérifier les anciennes installations avant de les supprimer.
 
-Les correctifs du calque PR du 12 novembre conservent le numéro **1.2.0**. Pour remplacer une installation antérieure, réinstaller le userscript depuis le lien ci-dessus : la vérification habituelle des versions ne suffit pas à détecter ces correctifs. Une installation de la révision `20261112-no-redirect` possède déjà le code actuellement distribué.
+Les correctifs du calque PR du 12 novembre conservent le numéro **1.2.0**. Pour remplacer une installation antérieure, réinstaller le userscript depuis le lien ci-dessus : la vérification habituelle des versions ne suffit pas à détecter ces correctifs. La révision `20261112-startup-notice` ajoute le message d’information à la révision `20261112-no-redirect`.
 
-**Au démarrage, attendre la fin du premier chargement de WME avant d’évaluer les déplacements de carte.** Cette attente ne suffit pas à éliminer toutes les lenteurs observées. Les mesures distinguent une attente avant les callbacks réseau et un dessin du calque généralement bref ; voir le [diagnostic et le protocole d’isolement](docs/DIAGNOSTIC-BETA-20261112.md).
+La popup apparaît une fois par ouverture de WME, au premier chargement effectif du calque PR. Elle ne bloque ni les requêtes ni la carte. Le bouton de fermeture et la touche Échap permettent de la fermer ; la case **« Ne plus afficher ce message »** mémorise ce choix à la fermeture. Elle n’apparaît pas si le calque reste désactivé ou si le zoom est insuffisant pour charger les PR.
+
+Les essais utilisateur avec uniquement le Localisateur actif n’ont plus montré de lenteur, y compris dans des zones éloignées. La présence des autres scripts peut contribuer aux attentes ; aucun script précis ni mécanisme exclusif n’a été identifié. Voir le [diagnostic comparé](docs/DIAGNOSTIC-BETA-20261112.md).
 
 Le script requiert le SDK WME asynchrone et fonctionne sur WME et WME Beta. Aucun paramétrage Supabase n’est nécessaire.
 
-La révision `20261112-no-redirect` conserve l’annulation des requêtes périmées : elle annule les requêtes des anciennes zones au lieu de les laisser occuper le réseau jusqu'à leur expiration. Son identifiant apparaît dans la console au démarrage. Voir le [diagnostic comparé prod/Beta](docs/DIAGNOSTIC-BETA-20261112.md) et les [contrôles précédents](docs/CONTROLES-20261112.md).
+Le script conserve l’annulation des requêtes des anciennes zones pour libérer les transferts devenus inutiles. L’identifiant de révision apparaît dans la console au démarrage. Voir également les [contrôles précédents](docs/CONTROLES-20261112.md).
 
 ## Utilisation
 
