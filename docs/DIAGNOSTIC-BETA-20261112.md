@@ -1,8 +1,8 @@
 # Diagnostic prod/Beta — 12 novembre 2026
 
-Version 1.2.0, révision en validation `20261112-no-redirect`.
+Version 1.2.0, révision validée `20261112-no-redirect`.
 
-## Observations
+## Observations avant correction
 
 La même révision `20261112-xhr-transport` a été observée dans les deux environnements. Les essais utilisateur indiquent un fonctionnement fluide sur WME prod et des lenteurs persistantes sur Beta.
 
@@ -21,13 +21,15 @@ La fonction de préparation de cette distribution a été exécutée dans une VM
 
 Cette reproduction établit le mécanisme de la version examinée, pas la cause exclusive de chaque attente dans le navigateur utilisateur. Une autre requête qui détient déjà un verrou global peut toujours retarder le script.
 
-## Changement et validation attendue
+## Changement et validation utilisateur
 
 Les RPC Supabase utilisent des URL finales. Le script demande désormais `anonymous: true` et `redirect: "error"` via `GM_xmlhttpRequest`. Les cookies restent omis ; les redirections ne sont plus suivies. [La documentation Tampermonkey](https://www.tampermonkey.net/documentation.php?locale=en&q=GM_xmlhttpRequest) précise que ces options sélectionnent son moteur fetch sur Chrome. Il ne s’agit pas du fetch de page, incompatible avec la politique réseau observée sur WME.
 
 Les paramètres API, la base et le fonctionnement du SDK ne changent pas. Les annulations et le délai maximal de 20 secondes restent actifs. Les temps du dessin sont maintenant consignés séparément des réponses API, sans coordonnées ni noms de route. Cela permet de distinguer une attente du gestionnaire d’un rendu lent dans WME Beta. Le nom et la version du gestionnaire sont ajoutés au message de démarrage.
 
-La révision reste sur une branche de validation. Les contrôles automatisés et les lectures réelles des API ne remplacent pas la comparaison après installation dans WME Beta. Aucun gain réel dans Beta n’est annoncé avant cette vérification.
+Le 12 novembre 2026, le retour utilisateur après installation confirme la disparition des lenteurs sur WME Beta. Il reste nécessaire d’attendre la fin du premier chargement à l’ouverture de WME avant de commencer les déplacements. Cette validation est qualitative : aucun nouveau temps de chargement chiffré n’est déduit de ce retour.
+
+Le code testé est conservé à l’identique pour la publication sur `main`. Aucun délai artificiel supplémentaire ni changement de démarrage n’a été ajouté.
 
 ## Contrôles de cette révision
 

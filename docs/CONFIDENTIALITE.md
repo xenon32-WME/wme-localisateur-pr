@@ -6,7 +6,7 @@ Le corps des requêtes contient les critères nécessaires : pays via le choix d
 
 Les requêtes du script omettent les cookies. Supabase reçoit nécessairement l’adresse IP, les données de connexion et les requêtes. La configuration de conservation des journaux de l’hébergeur n’a pas été certifiée ici : aucune durée ni anonymisation particulière n’est promise.
 
-Pour Supabase, cette branche utilise directement `GM_xmlhttpRequest`, avec `anonymous: true` et `redirect: "error"`. Les cookies sont omis et les redirections interdites : les adresses RPC sont finales. Ces options sélectionnent le moteur fetch interne de Tampermonkey sur Chrome, distinct d’un fetch de page. Le fetch de page reste retiré, Supabase ne figurant pas dans le connect-src observé sur WME.
+Pour Supabase, le script utilise directement `GM_xmlhttpRequest`, avec `anonymous: true` et `redirect: "error"`. Les cookies sont omis et les redirections interdites : les adresses RPC sont finales. Ces options sélectionnent le moteur fetch interne de Tampermonkey sur Chrome, distinct d’un fetch de page. Le fetch de page reste retiré, Supabase ne figurant pas dans le connect-src observé sur WME.
 
 Les en-têtes manuels Cookie/Referer de la révision intermédiaire ont été retirés. Le gestionnaire applique lui-même l’absence de cookies. Dans Tampermonkey 5.5.1, le refus des redirections permet de limiter les règles d’en-têtes à l’URL demandée. La vérification des métadonnées GreasyFork conserve son comportement anonyme antérieur. Aucun réglage de sécurité de WME ou du navigateur n’est modifié.
 
