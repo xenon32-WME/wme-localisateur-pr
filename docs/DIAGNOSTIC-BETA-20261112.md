@@ -1,6 +1,6 @@
 # Diagnostic prod/Beta — 12 novembre 2026
 
-Version 1.2.0, révision validée `20261112-no-redirect`.
+Version 1.2.0, révision distribuée `20261112-no-redirect`. Diagnostic rouvert après des essais supplémentaires.
 
 ## Observations avant correction
 
@@ -27,9 +27,31 @@ Les RPC Supabase utilisent des URL finales. Le script demande désormais `anonym
 
 Les paramètres API, la base et le fonctionnement du SDK ne changent pas. Les annulations et le délai maximal de 20 secondes restent actifs. Les temps du dessin sont maintenant consignés séparément des réponses API, sans coordonnées ni noms de route. Cela permet de distinguer une attente du gestionnaire d’un rendu lent dans WME Beta. Le nom et la version du gestionnaire sont ajoutés au message de démarrage.
 
-Le 12 novembre 2026, le retour utilisateur après installation confirme la disparition des lenteurs sur WME Beta. Il reste nécessaire d’attendre la fin du premier chargement à l’ouverture de WME avant de commencer les déplacements. Cette validation est qualitative : aucun nouveau temps de chargement chiffré n’est déduit de ce retour.
+Le 12 novembre 2026, un premier retour utilisateur après installation indiquait une disparition des lenteurs après la fin du chargement initial. Des essais supplémentaires ont ensuite montré des lenteurs résiduelles : les premiers déplacements proches ou lointains sont plus lents, puis les nouvelles vues deviennent rapides, y compris dans des zones non encore parcourues. La première conclusion de résolution était donc prématurée.
 
 Le code testé est conservé à l’identique pour la publication sur `main`. Aucun délai artificiel supplémentaire ni changement de démarrage n’a été ajouté.
+
+## Mesures complémentaires sur Beta
+
+La console confirme Tampermonkey **5.5.1** et la révision **20261112-no-redirect**. Les traces du calque donnent notamment :
+
+| Durée de requête | Premier callback de démarrage | Dessin après réponse |
+| --- | --- | --- |
+| 11 873 ms | 11 725 ms | 115 ms |
+| 12 829 ms | 12 828 ms | 36 ms |
+| 14 226 ms | 14 033 ms | 81 ms |
+
+De nombreuses requêtes ultérieures prennent entre 200 et 494 ms, avec un callback de démarrage souvent reçu vers 120 ms. Les dessins observés dans cet échantillon prennent de 8 à 242 ms, sans attente mesurée dans la file de dessin. Cela confirme que le dessin du calque ne représente pas les 12 à 14 secondes des trois exemples.
+
+Sur la fenêtre serveur du 12 novembre 2026 de **20:00:00 à 20:24:34 UTC**, les 37 POST reçus pour la RPC française du calque répondent tous HTTP 200. Le champ `response.origin_time` vaut en moyenne **150 ms**, avec un minimum de **46 ms** et un maximum de **823 ms**. Cette agrégation n’est pas une corrélation requête par requête avec la console et ne mesure ni le trajet réseau complet ni les requêtes qui n’auraient pas atteint le serveur.
+
+L’attente dominante est donc observée avant réception du premier callback Tampermonkey. Deux causes restent à départager : une attente du gestionnaire avant émission et une livraison tardive des callbacks lorsque la page est occupée. La préparation des requêtes dans Tampermonkey utilise toujours un verrou partagé, même lorsque la requête courante refuse les redirections ; une autre requête peut déjà le détenir. Ce mécanisme est compatible avec les traces, mais aucun autre script précis n’a été identifié comme responsable. Le cache des PR seul n’explique pas le retour utilisateur concernant les zones inédites.
+
+### Prochain essai d’isolement
+
+Conserver la même version du Localisateur. Fermer les autres onglets WME, désactiver temporairement les autres userscripts actifs sur WME, puis recharger Beta avec uniquement le Localisateur actif. Attendre le chargement initial et comparer plusieurs déplacements proches puis lointains, dont des zones inédites. Relever les mêmes durées API et rendu. Restaurer ensuite les scripts désactivés.
+
+Si les attentes disparaissent, réactiver les autres scripts par groupes pour rechercher l’interaction. Si elles persistent, poursuivre le diagnostic du Localisateur, du gestionnaire et de la charge de la page. Aucun préchargement artificiel, relancement agressif ni nouveau transport n’est ajouté sans ce résultat.
 
 ## Contrôles de cette révision
 

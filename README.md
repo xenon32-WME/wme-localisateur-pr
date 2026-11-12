@@ -10,7 +10,7 @@ Le script localise un point de repère routier ou une zone comprise entre deux P
 
 Version actuelle : **1.2.0**.
 
-Révision actuelle : **20261112-no-redirect**. Le correctif des lenteurs après déplacement de carte a été validé par les essais utilisateur sur WME Beta.
+Révision actuelle : **20261112-no-redirect**. Des lenteurs intermittentes après déplacement restent en cours de diagnostic sur WME Beta ; leur disparition complète n’est pas confirmée.
 
 1. Installer Tampermonkey dans le navigateur.
 2. [Installer le userscript](https://raw.githubusercontent.com/xenon32-WME/wme-localisateur-pr/main/WME-Localisateur-de-PR-France.user.js), ou télécharger [l’archive ZIP](https://raw.githubusercontent.com/xenon32-WME/wme-localisateur-pr/main/dist/Localisateur_PR.zip) et ouvrir le fichier `.user.js` qu’elle contient.
@@ -18,9 +18,9 @@ Révision actuelle : **20261112-no-redirect**. Le correctif des lenteurs après 
 
 Si une ancienne variante porte un autre nom ou un numéro supérieur à 1.2.0, son remplacement doit être manuel. Les préférences utilisent les mêmes identifiants internes. Vérifier les anciennes installations avant de les supprimer.
 
-Les correctifs du calque PR du 12 novembre conservent le numéro **1.2.0**. Pour remplacer une installation antérieure, réinstaller le userscript depuis le lien ci-dessus : la vérification habituelle des versions ne suffit pas à détecter ces correctifs. Une installation de la révision `20261112-no-redirect` possède déjà le code validé.
+Les correctifs du calque PR du 12 novembre conservent le numéro **1.2.0**. Pour remplacer une installation antérieure, réinstaller le userscript depuis le lien ci-dessus : la vérification habituelle des versions ne suffit pas à détecter ces correctifs. Une installation de la révision `20261112-no-redirect` possède déjà le code actuellement distribué.
 
-**Au démarrage, attendre la fin du premier chargement de WME avant de commencer les déplacements de carte.** Les essais utilisateur confirment ensuite la disparition des lenteurs de chargement des PR sur WME Beta.
+**Au démarrage, attendre la fin du premier chargement de WME avant d’évaluer les déplacements de carte.** Cette attente ne suffit pas à éliminer toutes les lenteurs observées. Les mesures distinguent une attente avant les callbacks réseau et un dessin du calque généralement bref ; voir le [diagnostic et le protocole d’isolement](docs/DIAGNOSTIC-BETA-20261112.md).
 
 Le script requiert le SDK WME asynchrone et fonctionne sur WME et WME Beta. Aucun paramétrage Supabase n’est nécessaire.
 
