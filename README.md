@@ -4,29 +4,15 @@ Dépôt officiel public du **WME Localisateur de PR**, développé par Xenon32 p
 
 Le script localise un point de repère routier ou une zone comprise entre deux PR, affiche le résultat sur la carte et peut sélectionner les segments correspondants. Il prend en charge les données françaises IGN et un module Colombie BETA. La création d’une note de carte reste une action explicite de l’éditeur, suivie d’un enregistrement manuel dans WME.
 
-**Toutes les corrections et améliorations du script sont centralisées dans ce dépôt.** La branche `main` contient la version distribuée. Les développements se font dans des branches de ce même dépôt, puis sont intégrés après vérification.
+**Toutes les corrections et améliorations du script sont centralisées dans ce dépôt.** Les développements se font dans des branches dédiées. Une nouvelle version n’est publiée qu’après validation ; chaque version correspond à un code identifié.
 
-## Installation
+## Version publique
 
-Version actuelle : **1.2.0**.
+La fiche publique conservée est [GreasyFork 590425 — version 1.1.5](https://greasyfork.org/fr/scripts/590425-wme-localisateur-de-pr-france). Elle reste inchangée jusqu’à la validation de la prochaine version.
 
-Révision actuelle : **20261112-startup-notice**. Une popup courte informe que le premier chargement du calque PR peut prendre du temps selon les scripts actifs. Elle suit la langue choisie : français, espagnol ou anglais.
+Le code 1.2.0 présent dans ce dépôt n’est plus proposé à l’installation. Les liens d’installation directe et de téléchargement depuis `main` sont retirés. Ne pas utiliser `main` comme canal de mise à jour d’une version de travail.
 
-1. Installer Tampermonkey dans le navigateur.
-2. [Installer le userscript](https://raw.githubusercontent.com/xenon32-WME/wme-localisateur-pr/main/WME-Localisateur-de-PR-France.user.js), ou télécharger [l’archive ZIP](https://raw.githubusercontent.com/xenon32-WME/wme-localisateur-pr/main/dist/Localisateur_PR.zip) et ouvrir le fichier `.user.js` qu’elle contient.
-3. Ne conserver qu’une seule version active du Localisateur, puis recharger WME.
-
-Si une ancienne variante porte un autre nom ou un numéro supérieur à 1.2.0, son remplacement doit être manuel. Les préférences utilisent les mêmes identifiants internes. Vérifier les anciennes installations avant de les supprimer.
-
-Les correctifs du calque PR du 12 novembre conservent le numéro **1.2.0**. Pour remplacer une installation antérieure, réinstaller le userscript depuis le lien ci-dessus : la vérification habituelle des versions ne suffit pas à détecter ces correctifs. La révision `20261112-startup-notice` ajoute le message d’information à la révision `20261112-no-redirect`.
-
-La popup apparaît une fois par ouverture de WME, au premier chargement effectif du calque PR. Elle ne bloque ni les requêtes ni la carte. Le bouton de fermeture et la touche Échap permettent de la fermer ; la case **« Ne plus afficher ce message »** mémorise ce choix à la fermeture. Elle n’apparaît pas si le calque reste désactivé ou si le zoom est insuffisant pour charger les PR.
-
-Les essais utilisateur avec uniquement le Localisateur actif n’ont plus montré de lenteur, y compris dans des zones éloignées. La présence des autres scripts peut contribuer aux attentes ; aucun script précis ni mécanisme exclusif n’a été identifié. Voir le [diagnostic comparé](docs/DIAGNOSTIC-BETA-20261112.md).
-
-Le script requiert le SDK WME asynchrone et fonctionne sur WME et WME Beta. Aucun paramétrage Supabase n’est nécessaire.
-
-Le script conserve l’annulation des requêtes des anciennes zones pour libérer les transferts devenus inutiles. L’identifiant de révision apparaît dans la console au démarrage. Voir également les [contrôles précédents](docs/CONTROLES-20261112.md).
+Les développements suivants sont préparés séparément. Le dépôt reste public pour consulter le code et son historique.
 
 ## Utilisation
 
@@ -40,7 +26,7 @@ L’interface propose le français, l’espagnol et l’anglais. Un pont local p
 
 ## Mises à jour et assistance
 
-Les métadonnées d’installation pointent vers ce dépôt. Tampermonkey vérifie et installe les versions suivantes selon ses réglages de mise à jour. Le code publié reste lisible, sans compilation ni dépendance JavaScript téléchargée à l’exécution.
+La prochaine version validée sera publiée sur la fiche GreasyFork 590425. Aucune nouvelle version ne doit être distribuée automatiquement depuis une branche de travail. Le code reste lisible, sans compilation ni dépendance JavaScript téléchargée à l’exécution.
 
 Pour un problème ou une proposition, [ouvrir une issue](https://github.com/xenon32-WME/wme-localisateur-pr/issues) en précisant la version, le pays, l’axe, les PR, le résultat attendu et les étapes pour reproduire. Éviter les informations personnelles dans les captures et messages.
 
