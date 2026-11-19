@@ -1,8 +1,11 @@
--- Read-only documentation snapshot, captured 2026-11-12.
+-- Read-only documentation snapshot.
+-- Colombia functions captured from the deployed database on 2026-11-19.
+-- France functions below are the unchanged historical snapshot from 2026-11-12.
+-- These historical France RPCs are not used by the IGN-direct candidate.
 -- DO NOT RUN as a migration: grants, tables and dependencies are intentionally not recreated.
 
 CREATE OR REPLACE FUNCTION public.find_wme_pr_colombia_guides(p_road_code text, p_start_chainage integer, p_end_chainage integer)
- RETURNS TABLE(chainage integer, longitude double precision, latitude double precision)
+ RETURNS TABLE(chainage integer, longitude double precision, latitude double precision, source text)
  LANGUAGE sql
  STABLE SECURITY DEFINER
  SET search_path TO ''
@@ -13,17 +16,19 @@ AS $function$
             least(coalesce(p_start_chainage,0), coalesce(p_end_chainage,0)) as min_chainage,
             greatest(coalesce(p_start_chainage,0), coalesce(p_end_chainage,0)) as max_chainage
     )
-    select g.chainage, g.longitude, g.latitude
+    select g.chainage, g.longitude, g.latitude, r.source
     from public.wme_road_colombia_guides g
+    join public.wme_road_colombia r on r.section_id = g.section_id
     cross join params p
     where g.road_code = p.road_code
+      and coalesce(r.source, '') not ilike '%google%'
       and g.chainage between p.min_chainage and p.max_chainage
     order by g.chainage, g.source_id;
-$function$
+$function$;
 
 
 CREATE OR REPLACE FUNCTION public.find_wme_pr_colombia_points_in_bbox(p_min_longitude double precision, p_min_latitude double precision, p_max_longitude double precision, p_max_latitude double precision, p_limit integer DEFAULT 1000)
- RETURNS TABLE(department_code text, axis text, pr_number integer, raw_point_number text, abscissa integer, point_type text, point_order double precision, longitude double precision, latitude double precision, side text, branch_id text, network_type text, road_manager text, route_id text, source_id text, source_updated_at timestamp with time zone, is_truncated boolean)
+ RETURNS TABLE(department_code text, axis text, pr_number integer, raw_point_number text, abscissa integer, point_type text, point_order double precision, longitude double precision, latitude double precision, side text, branch_id text, network_type text, road_manager text, route_id text, source_id text, source_updated_at timestamp with time zone, is_truncated boolean, source text)
  LANGUAGE sql
  STABLE SECURITY DEFINER
  SET search_path TO ''
@@ -40,6 +45,9 @@ AS $function$
         from public.wme_pr_colombia p
         cross join params b
         where p.point_type = 'PR'
+          and coalesce(p.source, '') not ilike '%google%'
+          and not ((p.point_type in ('DS','FS') or p.source = 'INVÍAS Red Vial')
+              and exists (select 1 from public.wme_road_colombia rs where rs.section_id = p.section_id and rs.source ilike '%google%'))
           and point(p.longitude,p.latitude) <@ box(point(b.min_lon,b.min_lat),point(b.max_lon,b.max_lat))
         order by p.road_code,p.pr_number,p.source_id
         limit (select row_limit + 1 from params)
@@ -61,15 +69,16 @@ AS $function$
         r.route,
         c.source_id,
         null::timestamptz,
-        (select count(*) > (select row_limit from params) from candidates)
+        (select count(*) > (select row_limit from params) from candidates),
+        c.source
     from candidates c
-    left join public.wme_road_colombia r on r.section_id = c.section_id
+    left join public.wme_road_colombia r on r.section_id = c.section_id and coalesce(r.source, '') not ilike '%google%'
     limit (select row_limit from params);
-$function$
+$function$;
 
 
 CREATE OR REPLACE FUNCTION public.find_wme_pr_colombia_target(p_road_code text, p_target_chainage integer)
- RETURNS TABLE(department_code text, axis text, pr_number integer, raw_point_number text, abscissa integer, point_type text, point_order double precision, longitude double precision, latitude double precision, side text, branch_id text, network_type text, road_manager text, route_id text, source_id text, source_updated_at timestamp with time zone, quality text, physical_side text)
+ RETURNS TABLE(department_code text, axis text, pr_number integer, raw_point_number text, abscissa integer, point_type text, point_order double precision, longitude double precision, latitude double precision, side text, branch_id text, network_type text, road_manager text, route_id text, source_id text, source_updated_at timestamp with time zone, quality text, physical_side text, source text)
  LANGUAGE sql
  STABLE SECURITY DEFINER
  SET search_path TO ''
@@ -85,12 +94,18 @@ AS $function$
         from public.wme_pr_colombia p
         cross join params
         where p.road_code = params.road_code
+          and coalesce(p.source, '') not ilike '%google%'
+          and not ((p.point_type in ('DS','FS') or p.source = 'INVÍAS Red Vial')
+              and exists (select 1 from public.wme_road_colombia rs where rs.section_id = p.section_id and rs.source ilike '%google%'))
     ), selected as (
         select p.*
         from public.wme_pr_colombia p
         cross join params
         cross join bounds
         where p.road_code = params.road_code
+          and coalesce(p.source, '') not ilike '%google%'
+          and not ((p.point_type in ('DS','FS') or p.source = 'INVÍAS Red Vial')
+              and exists (select 1 from public.wme_road_colombia rs where rs.section_id = p.section_id and rs.source ilike '%google%'))
           and p.chainage in (bounds.lower_chainage, bounds.upper_chainage)
     )
     select
@@ -111,14 +126,15 @@ AS $function$
         s.source_id,
         null::timestamptz as source_updated_at,
         s.quality,
-        s.physical_side
+        s.physical_side,
+        case when s.point_type in ('DS','FS') or s.source = 'INVÍAS Red Vial' then coalesce(r.source, s.source) else s.source end as source
     from selected s
-    left join public.wme_road_colombia r on r.section_id = s.section_id
+    left join public.wme_road_colombia r on r.section_id = s.section_id and coalesce(r.source, '') not ilike '%google%'
     order by
         s.chainage,
         case s.point_type when 'PR' then 0 when 'DS' then 1 else 2 end,
         s.source_id;
-$function$
+$function$;
 
 
 CREATE OR REPLACE FUNCTION public.find_wme_pr_intercommunal_scopes(p_axis text)

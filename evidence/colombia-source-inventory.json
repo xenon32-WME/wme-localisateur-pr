@@ -1,86 +1,375 @@
 {
-  "checked_at": "2026-11-12",
-  "table": "public.wme_pr_colombia",
-  "total": 18617,
-  "groups": [
+  "guides": {
+    "groups": [
+      {
+        "source": "Administrador vial",
+        "stored_rows": 93,
+        "eligible_rows": 93,
+        "excluded_rows": 0
+      },
+      {
+        "source": "ANI",
+        "stored_rows": 25,
+        "eligible_rows": 25,
+        "excluded_rows": 0
+      },
+      {
+        "source": "Archivo SHP suministrdo por la ANI",
+        "stored_rows": 42,
+        "eligible_rows": 42,
+        "excluded_rows": 0
+      },
+      {
+        "source": "Archivos SHP suministrados por la ANI",
+        "stored_rows": 91,
+        "eligible_rows": 91,
+        "excluded_rows": 0
+      },
+      {
+        "source": "CONCESION",
+        "stored_rows": 11,
+        "eligible_rows": 11,
+        "excluded_rows": 0
+      },
+      {
+        "source": "Digital Globe",
+        "stored_rows": 66,
+        "eligible_rows": 66,
+        "excluded_rows": 0
+      },
+      {
+        "source": "Entrega del Contratista",
+        "stored_rows": 21,
+        "eligible_rows": 21,
+        "excluded_rows": 0
+      },
+      {
+        "source": "Google Maps",
+        "stored_rows": 509,
+        "eligible_rows": 0,
+        "excluded_rows": 509
+      },
+      {
+        "source": "Google Maps (DC Criterio Técnico)",
+        "stored_rows": 156,
+        "eligible_rows": 0,
+        "excluded_rows": 156
+      },
+      {
+        "source": "Google Maps y WFS ANI",
+        "stored_rows": 32,
+        "eligible_rows": 0,
+        "excluded_rows": 32
+      },
+      {
+        "source": "Google Maps, WFS ANI.",
+        "stored_rows": 84,
+        "eligible_rows": 0,
+        "excluded_rows": 84
+      },
+      {
+        "source": "IGAC (Contrato 2130/2014)",
+        "stored_rows": 3146,
+        "eligible_rows": 3146,
+        "excluded_rows": 0
+      },
+      {
+        "source": "IGAC (Contrato 2932/2008)",
+        "stored_rows": 8783,
+        "eligible_rows": 8783,
+        "excluded_rows": 0
+      },
+      {
+        "source": "Imagenes Satelitales Gigital Globe",
+        "stored_rows": 3,
+        "eligible_rows": 3,
+        "excluded_rows": 0
+      },
+      {
+        "source": "INVÍAS Red Vial",
+        "stored_rows": 58,
+        "eligible_rows": 58,
+        "excluded_rows": 0
+      },
+      {
+        "source": "Mapa Base proporcionado por Digital Globe",
+        "stored_rows": 4,
+        "eligible_rows": 4,
+        "excluded_rows": 0
+      },
+      {
+        "source": "OpenStreetMap.",
+        "stored_rows": 29,
+        "eligible_rows": 29,
+        "excluded_rows": 0
+      },
+      {
+        "source": "Por Definir",
+        "stored_rows": 4,
+        "eligible_rows": 4,
+        "excluded_rows": 0
+      },
+      {
+        "source": "Por Defnir",
+        "stored_rows": 237,
+        "eligible_rows": 237,
+        "excluded_rows": 0
+      },
+      {
+        "source": "WFS ANI",
+        "stored_rows": 41,
+        "eligible_rows": 41,
+        "excluded_rows": 0
+      },
+      {
+        "source": "WFS ANI, Google Maps",
+        "stored_rows": 41,
+        "eligible_rows": 0,
+        "excluded_rows": 41
+      }
+    ],
+    "stored_rows": 13476,
+    "eligible_rows": 12654,
+    "excluded_rows": 822
+  },
+  "points": {
+    "groups": [
+      {
+        "source": "Administrador vial",
+        "quality": "physical",
+        "point_type": "PR",
+        "stored_rows": 67,
+        "eligible_rows": 67,
+        "excluded_rows": 0
+      },
+      {
+        "source": "AMV Coordenada",
+        "quality": "physical",
+        "point_type": "PR",
+        "stored_rows": 1,
+        "eligible_rows": 1,
+        "excluded_rows": 0
+      },
+      {
+        "source": "Coordenadas tomadas con aplicativo Collector",
+        "quality": "physical",
+        "point_type": "PR",
+        "stored_rows": 47,
+        "eligible_rows": 47,
+        "excluded_rows": 0
+      },
+      {
+        "source": "Entrega del Contratista",
+        "quality": "physical",
+        "point_type": "PR",
+        "stored_rows": 207,
+        "eligible_rows": 207,
+        "excluded_rows": 0
+      },
+      {
+        "source": "Google Maps",
+        "quality": "physical",
+        "point_type": "PR",
+        "stored_rows": 19,
+        "eligible_rows": 0,
+        "excluded_rows": 19
+      },
+      {
+        "source": "IGAC (Contrato 2130/2014)",
+        "quality": "physical",
+        "point_type": "PR",
+        "stored_rows": 2224,
+        "eligible_rows": 2224,
+        "excluded_rows": 0
+      },
+      {
+        "source": "IGAC (Contrato 2932/2008)",
+        "quality": "physical",
+        "point_type": "PR",
+        "stored_rows": 14361,
+        "eligible_rows": 14361,
+        "excluded_rows": 0
+      },
+      {
+        "source": "INVÍAS Postes de Referencia",
+        "quality": "physical",
+        "point_type": "PR",
+        "stored_rows": 380,
+        "eligible_rows": 380,
+        "excluded_rows": 0
+      },
+      {
+        "source": "INVÍAS Red Vial",
+        "quality": "boundary",
+        "point_type": "DS",
+        "stored_rows": 562,
+        "eligible_rows": 536,
+        "excluded_rows": 26
+      },
+      {
+        "source": "INVÍAS Red Vial",
+        "quality": "boundary",
+        "point_type": "FS",
+        "stored_rows": 562,
+        "eligible_rows": 536,
+        "excluded_rows": 26
+      },
+      {
+        "source": "Levantamiento realizado por el INVIAS con la ayud*",
+        "quality": "physical",
+        "point_type": "PR",
+        "stored_rows": 36,
+        "eligible_rows": 36,
+        "excluded_rows": 0
+      },
+      {
+        "source": "Oficio",
+        "quality": "physical",
+        "point_type": "PR",
+        "stored_rows": 15,
+        "eligible_rows": 15,
+        "excluded_rows": 0
+      },
+      {
+        "source": "Visita de campo levantado con navegador",
+        "quality": "physical",
+        "point_type": "PR",
+        "stored_rows": 136,
+        "eligible_rows": 136,
+        "excluded_rows": 0
+      }
+    ],
+    "stored_rows": 18617,
+    "eligible_rows": 18546,
+    "excluded_derived": 52,
+    "excluded_direct_google": 19
+  },
+  "checked_at": "2026-11-19T05:30:21.745452+00:00",
+  "point_table": "public.wme_pr_colombia",
+  "road_sources": [
     {
       "source": "Administrador vial",
-      "point_type": "PR",
-      "quality": "physical",
-      "points": 67
+      "stored_sections": 2,
+      "excluded_sections": 0
     },
     {
-      "source": "AMV Coordenada",
-      "point_type": "PR",
-      "quality": "physical",
-      "points": 1
+      "source": "ANI",
+      "stored_sections": 6,
+      "excluded_sections": 0
     },
     {
-      "source": "Coordenadas tomadas con aplicativo Collector",
-      "point_type": "PR",
-      "quality": "physical",
-      "points": 47
+      "source": "Archivo SHP suministrdo por la ANI",
+      "stored_sections": 4,
+      "excluded_sections": 0
+    },
+    {
+      "source": "Archivos SHP suministrados por la ANI",
+      "stored_sections": 3,
+      "excluded_sections": 0
+    },
+    {
+      "source": "CONCESION",
+      "stored_sections": 1,
+      "excluded_sections": 0
+    },
+    {
+      "source": "Digital Globe",
+      "stored_sections": 2,
+      "excluded_sections": 0
     },
     {
       "source": "Entrega del Contratista",
-      "point_type": "PR",
-      "quality": "physical",
-      "points": 207
+      "stored_sections": 1,
+      "excluded_sections": 0
     },
     {
       "source": "Google Maps",
-      "point_type": "PR",
-      "quality": "physical",
-      "points": 19
+      "stored_sections": 44,
+      "excluded_sections": 44
+    },
+    {
+      "source": "Google Maps (DC Criterio Técnico)",
+      "stored_sections": 4,
+      "excluded_sections": 4
+    },
+    {
+      "source": "Google Maps y WFS ANI",
+      "stored_sections": 3,
+      "excluded_sections": 3
+    },
+    {
+      "source": "Google Maps, WFS ANI.",
+      "stored_sections": 2,
+      "excluded_sections": 2
     },
     {
       "source": "IGAC (Contrato 2130/2014)",
-      "point_type": "PR",
-      "quality": "physical",
-      "points": 2224
+      "stored_sections": 112,
+      "excluded_sections": 0
     },
     {
       "source": "IGAC (Contrato 2932/2008)",
-      "point_type": "PR",
-      "quality": "physical",
-      "points": 14361
+      "stored_sections": 400,
+      "excluded_sections": 0
     },
     {
-      "source": "INVÍAS Postes de Referencia",
-      "point_type": "PR",
-      "quality": "physical",
-      "points": 380
-    },
-    {
-      "source": "INVÍAS Red Vial",
-      "point_type": "DS",
-      "quality": "boundary",
-      "points": 562
+      "source": "Imagenes Satelitales Gigital Globe",
+      "stored_sections": 1,
+      "excluded_sections": 0
     },
     {
       "source": "INVÍAS Red Vial",
-      "point_type": "FS",
-      "quality": "boundary",
-      "points": 562
+      "stored_sections": 3,
+      "excluded_sections": 0
     },
     {
-      "source": "Levantamiento realizado por el INVIAS con la ayud*",
-      "point_type": "PR",
-      "quality": "physical",
-      "points": 36
+      "source": "Mapa Base proporcionado por Digital Globe",
+      "stored_sections": 1,
+      "excluded_sections": 0
     },
     {
-      "source": "Oficio",
-      "point_type": "PR",
-      "quality": "physical",
-      "points": 15
+      "source": "OpenStreetMap.",
+      "stored_sections": 1,
+      "excluded_sections": 0
     },
     {
-      "source": "Visita de campo levantado con navegador",
-      "point_type": "PR",
-      "quality": "physical",
-      "points": 136
+      "source": "Por Definir",
+      "stored_sections": 2,
+      "excluded_sections": 0
+    },
+    {
+      "source": "Por Defnir",
+      "stored_sections": 18,
+      "excluded_sections": 0
+    },
+    {
+      "source": "WFS ANI",
+      "stored_sections": 3,
+      "excluded_sections": 0
+    },
+    {
+      "source": "WFS ANI, Google Maps",
+      "stored_sections": 1,
+      "excluded_sections": 1
     }
-  ]
+  ],
+  "interpretation": {
+    "stored_rows": "Rows retained in private source tables, including exclusions.",
+    "eligible_rows": "Rows passing the deployed Google-source filter; does not imply licensing approval or availability in every query.",
+    "exclusion": "Case-insensitive source contains Google, including mixed attribution. Derived boundaries/guides also inspect parent road-section source.",
+    "no_physical_deletion": true,
+    "license_status": "INVÍAS clarification and Colombian community review pending."
+  },
+  "verification": {
+    "checked_at": "2026-11-19 05:30:48.599848+00",
+    "excluded_points_checked": 71,
+    "forbidden_target_ids": 0,
+    "forbidden_target_sources": 0,
+    "forbidden_bbox_ids": 0,
+    "forbidden_bbox_sources": 0,
+    "affected_guide_routes_checked": 47,
+    "forbidden_guide_sources": 0,
+    "unattributed_guides": 0,
+    "allowed_guides_returned": 16
+  }
 }
-

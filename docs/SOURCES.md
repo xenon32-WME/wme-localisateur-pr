@@ -1,6 +1,6 @@
 # Sources et utilisation des données
 
-État des sources documenté le 12 novembre 2026.
+État des sources françaises documenté le 12 novembre 2026 ; vérification du service colombien actualisée le 19 novembre 2026.
 
 ## Origine du projet
 
@@ -45,9 +45,27 @@ Références pour l’instruction de la demande, sans affirmation d’identité 
 
 Une clarification écrite a été demandée à INVÍAS sur les jeux exacts, les transformations, les attributions éventuelles de tiers et les conditions de réutilisation. La réponse est attendue ; aucune autorisation spécifique n’est revendiquée. La disponibilité technique d’un service n’établit pas sa licence. Aucune licence française n’est étendue à ces données.
 
-### Inventaire des attributions colombiennes
+### Inventaire et filtrage des sources colombiennes — 19 novembre 2026
 
-La table `public.wme_pr_colombia` contient 18 617 lignes au contrôle du 12 novembre 2026. Son champ `source` inclut notamment 14 361 mentions « IGAC (Contrato 2932/2008) », 2 224 mentions « IGAC (Contrato 2130/2014) » et 19 mentions « Google Maps ». Le détail agrégé figure dans `evidence/colombia-source-inventory.json`. Le nom du diffuseur INVÍAS ne prouve pas à lui seul les droits sur chaque contribution. Le module Colombie reste expérimental (BETA). La publication du code ne constitue pas une confirmation des droits applicables à ces contributions. Le dépôt ne contient pas d’export complet de cette base.
+Les trois fonctions publiques ont été relues directement dans la base déployée le 19 novembre : `find_wme_pr_colombia_points_in_bbox`, `find_wme_pr_colombia_target` et `find_wme_pr_colombia_guides`. Elles renvoient toutes la colonne `source` et excluent les attributions contenant « Google », sans distinction de casse, avant sélection des références d'encadrement et limitation du nombre de résultats.
+
+| Catégorie | Conservés dans les tables privées | Exclus des réponses | Passent le filtre de provenance |
+|---|---:|---:|---:|
+| PR et bornes de section | 18 617 | 71 | 18 546 |
+| Guides Red Vial | 13 476 | 822 | 12 654 |
+
+Les 71 exclusions comprennent **19 PR directement attribués à Google Maps** et **52 bornes DS/FS dérivées de sections dont la source mentionne Google**. Les **822 guides** de ces sections sont également exclus, y compris les attributions mixtes. Les métadonnées de sections Google ne sont pas jointes aux PR indépendants d'autres producteurs. Les lignes restent conservées pour traçabilité ; elles ne sont pas servies par les trois fonctions.
+
+Le filtre serveur s'applique aux anciennes installations, dont la 1.1.5, sans dépendre d'un filtre dans le navigateur. Le champ `source` supplémentaire permet à la candidate 1.2.1 et aux versions suivantes de présenter l'attribution réelle et d'effectuer un contrôle supplémentaire côté client.
+
+Contrôles du jour : les 71 points exclus ne réapparaissent dans aucun résultat cible ni emprise testé ; aucune source Google n'est renvoyée dans les guides des 47 codes routiers concernés. Le retrait peut diminuer la couverture de certaines sections ; aucune donnée exclue n'est réutilisée en secours.
+
+- [SQL réellement déployé](../backend/deployed-rpc-snapshot.sql) : trois fonctions colombiennes actualisées ; les fonctions françaises du même fichier restent un relevé historique, clairement daté.
+- [Inventaire actualisé, détaillé par source](../evidence/colombia-source-inventory.json) : PR, bornes, sections et guides, avec distinction entre lignes conservées et exclues.
+- [Requêtes de vérification en lecture seule](../backend/colombia-source-checks.sql).
+- [Contrôle HTTP des trois fonctions](../evidence/colombia-http-20261119.json).
+
+Les mentions IGAC, ANI, Digital Globe, OpenStreetMap ou indéterminées sont conservées dans l'inventaire, sans leur attribuer une autorisation de réutilisation. **Passer le filtre Google ne vaut pas confirmation de licence ni accréditation Waze.** La clarification demandée à INVÍAS et l'avis de la communauté colombienne restent attendus.
 
 ## Application des données dans WME
 
