@@ -1,83 +1,31 @@
-# Sources et utilisation des données
+# Sources — WME Localisateur de PR France 1.2.7
 
-État des sources françaises documenté le 12 novembre 2026 ; vérification du service colombien actualisée le 19 novembre 2026.
+## Références officielles
 
-## Origine du projet
+- Producteur : IGN, BD TOPO® v3, classe Point de repère.
+- Accès : `https://data.geopf.fr/wfs/ows`, couche `BDTOPO_V3:point_de_repere`.
+- [Catalogue BD TOPO](https://cartes.gouv.fr/rechercher-une-donnee/dataset/IGNF_BD-TOPO).
+- [Documentation WFS Géoplateforme](https://cartes.gouv.fr/aide/fr/guides-utilisateur/utiliser-les-services-de-la-geoplateforme/diffusion/wfs/).
+- [Licence Ouverte Etalab 2.0](https://www.data.gouv.fr/pages/legal/licences/etalab-2-0), © IGN.
 
-Le script a été conçu pour les points de repère routiers français. Sur suggestion d’un éditeur colombien, l’auteur a ensuite intégré des données colombiennes et adapté le moteur à leur représentation des PR et des tronçons.
+Recherches, calque, listes de gestionnaires et d’axes interrogent directement ce service, sans autre fournisseur routier. Le script utilise la couche courante, sans date d’édition fixe. Les dates `date_modification` disponibles sont affichées ; leur absence est indiquée.
 
-## France — IGN
+## Traitements locaux
 
-Producteur : Institut national de l’information géographique et forestière (IGN).
-Produit : BD TOPO® v3, classe Point de repère. Licence des données : Licence Ouverte / Open Licence 2.0. © IGN.
+Les coordonnées sont demandées en `CRS:84` et conservées en longitude / latitude. Le numéro brut, l’abscisse, le type de repère, la section, le côté, le gestionnaire et l’identifiant IGN sont conservés. Les attributs sont adaptés au moteur sans réécriture de la source.
 
-- [Catalogue officiel IGN](https://cartes.gouv.fr/rechercher-une-donnee/dataset/IGNF_BD-TOPO)
-- [Publication IGN sur data.gouv.fr](https://www.data.gouv.fr/datasets/bd-topo-r)
-- [Texte de la Licence Ouverte 2.0](https://www.data.gouv.fr/pages/legal/licences/etalab-2-0)
+Les positions intermédiaires sont calculées à partir des références disponibles et des segments WME chargés. Les bornes de début et de fin et les discontinuités connues sont prises en compte. Les résultats calculés ou projetés sont des aides à l’édition, distinctes des coordonnées officielles.
 
-La licence MIT du code ne remplace pas la licence des données. Cette adaptation bénévole n’est pas un service officiel ni une approbation de l’IGN.
+La distinction A/N/D/autres axes sert à l’interface ; elle ne remplace pas le statut administratif officiel de la voie. Les listes d’axes et de gestionnaires sont dérivées localement des réponses IGN.
 
-### Copie actuellement consultée
+## A40 — correction de l’auteur
 
-La table `public.wme_pr_france` du projet Supabase `Liste PR France` contient 639 073 lignes lors du contrôle :
+Dans l’Ain, les PR 119 et 123 servent à estimer les positions 120–122 et les PR intermédiaires concernés sur chaque chaussée WME. Les références sont lues directement sur le service IGN.
 
-| Identifiant du lot | Nombre | Date d’import enregistrée (UTC) |
-|---|---:|---|
-| `ign_bdtopo_v3` | 635 695 | 2026-08-06 16:28:57.419 |
-| `ign_bdtopo_v3_intercommunal` | 3 378 | 2026-08-07 17:50:40.225 |
+Le calque, la localisation et les notes utilisent la position corrigée ; les coordonnées IGN restent inchangées dans les données et consultables dans le détail. Aucun second marqueur IGN n’est affiché à côté de la correction. Le symbole ≈ et la mention « correction de l’auteur » identifient l’estimation. Le script refuse un calcul si le parcours est incomplet ou ambigu.
 
-La date d’import n’est pas la date d’édition IGN. Le nom du paquet officiel, son empreinte et le journal complet d’extraction n’ont pas été retrouvés pour ces deux lots. Le champ `source_updated_at`, lorsqu’il existe, décrit une entité, pas le millésime du lot. Il est renseigné pour 392 869 lignes nationales et aucune ligne du lot intercommunal. Les dates d’entité vont du 21 janvier 2022 au 12 mars 2026. Aucune édition précise n’est revendiquée pour la copie servie.
+Cette méthode ne constitue ni une correction officielle de BD TOPO ni une mesure topographique de chaque borne.
 
-Les coordonnées sont utilisées en longitude/latitude. Le service normalise notamment les références de route, les numéros et abscisses de PR, les côtés, branches et gestionnaires. Les transformations historiques exactes ne sont pas toutes reproductibles faute d’archive d’import ; les RPC actuellement déployées sont fournies dans `backend/` pour examen.
+## Destinations des autoroutes
 
-### Corrections locales
-
-Six positions de l’A40, PR 120, 121 et 122 sur les côtés D/G, ont été corrigées par l’auteur puis reportées dans Supabase le 10 novembre 2026. Le fichier `evidence/a40-local-corrections.json` les identifie. Elles ne sont pas présentées comme des corrections officielles IGN. Tout futur réimport doit les comparer et les préserver explicitement.
-
-## Colombie — INVÍAS / Red Vial, BETA
-
-Producteur annoncé des données routières initiales : Instituto Nacional de Vías (INVÍAS). Les données utilisées comprennent des PR, des repères de début/fin et des guides de parcours. La copie hébergée et ses données dérivées ne sont pas assimilées automatiquement à une édition actuelle du portail officiel.
-
-Références pour l’instruction de la demande, sans affirmation d’identité exacte avec la copie actuelle :
-
-- [Service officiel PosteReferencia](https://hermes2.invias.gov.co/server/rest/services/MapaCarreteras/PosteReferencia/FeatureServer/0)
-- [Catalogue INVÍAS PosteReferenciaODAGOL](https://inviasopendata-invias.opendata.arcgis.com/datasets/7cdbffb61dfa4c90957557015c6ad86d_0/explore)
-
-Une clarification écrite a été demandée à INVÍAS sur les jeux exacts, les transformations, les attributions éventuelles de tiers et les conditions de réutilisation. La réponse est attendue ; aucune autorisation spécifique n’est revendiquée. La disponibilité technique d’un service n’établit pas sa licence. Aucune licence française n’est étendue à ces données.
-
-### Inventaire et filtrage des sources colombiennes — 19 novembre 2026
-
-Les trois fonctions publiques ont été relues directement dans la base déployée le 19 novembre : `find_wme_pr_colombia_points_in_bbox`, `find_wme_pr_colombia_target` et `find_wme_pr_colombia_guides`. Elles renvoient toutes la colonne `source` et excluent les attributions contenant « Google », sans distinction de casse, avant sélection des références d'encadrement et limitation du nombre de résultats.
-
-| Catégorie | Conservés dans les tables privées | Exclus des réponses | Passent le filtre de provenance |
-|---|---:|---:|---:|
-| PR et bornes de section | 18 617 | 71 | 18 546 |
-| Guides Red Vial | 13 476 | 822 | 12 654 |
-
-Les 71 exclusions comprennent **19 PR directement attribués à Google Maps** et **52 bornes DS/FS dérivées de sections dont la source mentionne Google**. Les **822 guides** de ces sections sont également exclus, y compris les attributions mixtes. Les métadonnées de sections Google ne sont pas jointes aux PR indépendants d'autres producteurs. Les lignes restent conservées pour traçabilité ; elles ne sont pas servies par les trois fonctions.
-
-Le filtre serveur s'applique aux anciennes installations, dont la 1.1.5, sans dépendre d'un filtre dans le navigateur. Le champ `source` supplémentaire permet à la candidate 1.2.1 et aux versions suivantes de présenter l'attribution réelle et d'effectuer un contrôle supplémentaire côté client.
-
-Contrôles du jour : les 71 points exclus ne réapparaissent dans aucun résultat cible ni emprise testé ; aucune source Google n'est renvoyée dans les guides des 47 codes routiers concernés. Le retrait peut diminuer la couverture de certaines sections ; aucune donnée exclue n'est réutilisée en secours.
-
-- [SQL réellement déployé](../backend/deployed-rpc-snapshot.sql) : trois fonctions colombiennes actualisées ; les fonctions françaises du même fichier restent un relevé historique, clairement daté.
-- [Inventaire actualisé, détaillé par source](../evidence/colombia-source-inventory.json) : PR, bornes, sections et guides, avec distinction entre lignes conservées et exclues.
-- [Requêtes de vérification en lecture seule](../backend/colombia-source-checks.sql).
-- [Contrôle HTTP des trois fonctions](../evidence/colombia-http-20261119.json).
-
-Les mentions IGAC, ANI, Digital Globe, OpenStreetMap ou indéterminées sont conservées dans l'inventaire, sans leur attribuer une autorisation de réutilisation. **Passer le filtre Google ne vaut pas confirmation de licence ni accréditation Waze.** La clarification demandée à INVÍAS et l'avis de la communauté colombienne restent attendus.
-
-## Application des données dans WME
-
-1. L’éditeur choisit un pays, un axe et un PR, éventuellement deux PR pour délimiter une zone.
-2. Le script lit les repères nécessaires via Supabase. Pour le calque, il envoie l’emprise de la carte et ses filtres.
-3. Le moteur effectue localement la correspondance avec le parcours routier WME chargé. Il tient compte des branches, des chaussées, des discontinuités et des repères terminaux. Une distance entre repères peut servir à calculer une position intermédiaire ; il ne s’agit pas d’un relevé officiel supplémentaire.
-4. Le résultat est affiché sur un calque et peut sélectionner des segments. Aucun tracé routier, adresse, vitesse ou fermeture n’est modifié automatiquement.
-5. L’éditeur peut demander une note de carte. Cette action prépare une modification WME et reste soumise à sa vérification et à l’enregistrement manuel.
-6. Un pont local permet au script FDB de demander une localisation française et, sur option explicite, la géométrie d’une note. Le Localisateur ne transmet pas ces résultats à un serveur FDB.
-
-## Limites connues
-
-- Traçabilité de l’édition exacte des lots français d’août 2026.
-- Provenance détaillée et conditions de réutilisation des données colombiennes, en attente d’INVÍAS.
-- Recette interactive de cette version dans WME ; les tests automatisés ne la remplacent pas.
+Le référentiel local facilite la distinction des côtés. Les surcharges personnelles sont conservées dans les réglages du gestionnaire de userscripts. Ces libellés ne modifient pas les coordonnées IGN.

@@ -1,0 +1,38 @@
+Vérification WME Localisateur de PR France 1.2.7 — 21 novembre 2026
+
+Syntaxe JavaScript : valide (node --check).
+Tests automatisés : 22 suites hors ligne réussies (node tests/run.cjs).
+Périmètre : France exclusivement, français / anglais, source routière IGN directe.
+Anciens réglages : langue non prise en charge remplacée par le français ; autres préférences conservées.
+Réseau : seuls data.geopf.fr, greasyfork.org et update.greasyfork.org sont autorisés.
+Comparaison avec 1.2.6 : géométrie du moteur français inchangée, retrait du seul texte de langue abandonnée dans Core ; transports IGN, fournisseur IGN, collecte des segments et contrat public FDB identiques.
+Contrôles inclus : isolement France, refus des demandes hors France avant réseau, recherches IGN, annulation et rafraîchissement du calque, recalage A40, SDK asynchrone, FDB, sources / confidentialité, interface et unicité des versions.
+
+Limites : tests simulés et comparaisons statiques ; pas de recette visuelle de cette version dans WME ni de nouvel appel au service IGN durant cette séparation.
+Vérifications effectuées avant la mise à jour du dépôt officiel. La publication GreasyFork est distincte.
+
+SHA-256 du userscript : c676bf661721d4b58a4a6b1614f0350eef4cd185a5d409c2444319dc7d539b95
+
+PASS a40-chamoise.cjs
+PASS a40-layer-lifecycle.cjs
+PASS a40-recalibration.cjs
+PASS async-sdk.cjs
+PASS audit-sources.cjs
+PASS distribution.cjs
+PASS fdb-comment-geometry.cjs
+PASS floating-header.cjs
+PASS france-only.cjs
+PASS greasyfork-frequency.cjs
+PASS ign-binary-transport.cjs
+PASS ign-direct.cjs
+PASS ign-response-errors.cjs
+PASS pr-layer-cancellation.cjs
+PASS pr-layer-first-paint.cjs
+PASS pr-layer-navigation.cjs
+PASS pr-layer-refresh.cjs
+PASS privacy-network.cjs
+PASS strict-async-sdk-startup.cjs
+PASS terminal-prf.cjs
+PASS ui-controls.cjs
+PASS version-lock.cjs
+22 offline suites passed

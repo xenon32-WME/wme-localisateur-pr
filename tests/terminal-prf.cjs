@@ -37,7 +37,7 @@ for(const [desc,params] of [
   ['requested offset before terminal',{offset:390}],
   ['terminal chainage does not match',{abscissa:38400}],
 ]){
-  assert.throws(()=>scenario(params),{message:/Aucune branche continue|insuffisant|référence/},desc);
+  assert.throws(()=>scenario(params),{message:/Impossible de suivre l’axe|insuffisant|référence/},desc);
 }
 const exact=scenario({length:392});
 assert.equal(exact.terminalGeometryAdjustment,false);

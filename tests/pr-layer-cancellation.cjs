@@ -1,11 +1,11 @@
 'use strict';
 const assert=require('node:assert/strict'),vm=require('node:vm');
-const {source,filename}=require('./harness.cjs');
+const {source,filename,ignFeature,ignCollection}=require('./harness.cjs');
 const settle=async()=>{for(let i=0;i<50;i++)await Promise.resolve();};
 function fixture(){
  const calls=[],relay=[],timers=new Map(),draws=[],status={};let id=0,extent=[5,46,5.1,46.1],zoom=16;
  const root={document:{},setTimeout:(fn,ms)=>{timers.set(++id,{fn,ms});return id;},clearTimeout:i=>timers.delete(i)};
- const hooks=`root.__TEST__={refreshPrIndexLayer,setPrIndexLayerEnabled,resetPrIndexScope,setCountry,
+ const hooks=`root.__TEST__={refreshPrIndexLayer,setPrIndexLayerEnabled,resetPrIndexScope,
    start:()=>refreshPrIndexLayer(prIndexRefreshGeneration),cache:()=>prIndexCache,
    configure:(api,label,draw)=>{sdk=api;ui={prIndexStatus:label};drawPrIndexPoints=draw;prIndexLayerEnabled=true;}};`;
  vm.runInNewContext(source.replace('    initialize();',hooks),{unsafeWindow:root,module:{exports:{}},
@@ -30,23 +30,22 @@ const rawPoint={department_code:'01',network_type:'D',axis:'D1',pr_number:1,poin
  assert.equal(f.calls.length,10);
  assert.equal(f.calls.filter(c=>!c.aborted).length,1,'obsolete HTTP requests must be aborted, not merely ignored');
  assert.equal(f.relay.length,0,'navigation cancellation must not start the fallback');
- f.calls.at(-1).resolve([rawPoint]);await Promise.all(pending);
+ f.calls.at(-1).resolve(ignCollection([ignFeature('latest',{numero:'1'},[14.05,46.05])]));await Promise.all(pending);
  assert.equal(f.draws.length,1);assert.equal(f.api.cache().points[0].axis,'D1');assert.equal(f.timers.size,0);
 
  // Same-view events still share a request; one new view cancels the old relay.
  const r=fixture();const first=r.move(5);await settle();const duplicate=r.api.start();await settle();
  assert.equal(r.calls.length,1);assert.equal(r.calls[0].aborted,false);
  const second=r.move(6);await settle();assert.equal(r.calls.length,2);assert.equal(r.calls[0].aborted,true);
- r.calls[1].options.onload({status:200,responseText:'[]'});await Promise.all([first,duplicate,second]);
+ r.calls[1].options.onload({status:200,responseText:JSON.stringify(ignCollection())});await Promise.all([first,duplicate,second]);
  assert.equal(r.draws.length,1);assert.equal(r.timers.size,0);
 
- // Disabling, zooming out, or changing country/filter scope releases the network.
- for(const action of ['disable','zoom','scope','country']){
+ // Disabling, zooming out, or changing filter scope releases the network.
+ for(const action of ['disable','zoom','scope']){
   const x=fixture();const job=x.move(5);await settle();
   if(action==='disable')await x.api.setPrIndexLayerEnabled(false);
   else if(action==='zoom')await x.zoomOut();
   else if(action==='scope')x.api.resetPrIndexScope();
-  else {await x.api.setCountry('CO');await x.api.setPrIndexLayerEnabled(false);}
   await job;assert.equal(x.calls[0].aborted,true,action);assert.equal(x.draws.length,0,action);
   assert.equal(x.relay.length,0);assert.equal(x.timers.size,0);
  }

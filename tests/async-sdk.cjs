@@ -13,7 +13,7 @@ source = source.replace('    initialize();', `    root.__TEST__ = {
         getSelectedSegmentIds, getSegmentAddress, collectRouteSnapshot,
         drawPrIndexPoints, clearPrIndexFeatures, createPrLabelSegmentSpatialIndex,
         getPrLabelSegmentSpatialIndex, createMapCommentFromResult,
-        refreshSelectionSummary, setCountry,
+        refreshSelectionSummary,
         getNearbyStreetNames,
         setUi: (value) => { ui = value; },
         setLatestResult: (value) => { latestResult = value; },

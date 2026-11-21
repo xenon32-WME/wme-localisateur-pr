@@ -38,8 +38,9 @@ assert.match(css,/\.wme-pr-floating-host\s*\.wme-pr-title-row\s*\{\s*cursor:\s*m
 const template=source.slice(source.indexOf('        tabPane.innerHTML = '));
 const header=template.slice(template.indexOf('<div class="wme-pr-header">'),template.indexOf('<div id="wme-pr-search-panel"'));
 for(const id of ['wme-pr-panel-title','wme-pr-floating-collapse','wme-pr-display-toggle',
- 'wme-pr-country','wme-pr-language','wme-pr-subtitle','wme-pr-customization-toggle'])
+ 'wme-pr-language','wme-pr-subtitle','wme-pr-customization-toggle'])
  assert(header.includes('id="'+id+'"'),'Pinned header should contain '+id);
+assert(!header.includes('id="wme-pr-country"'),'France edition has no country selector');
 assert(!header.includes('id="wme-pr-data-info"'),'Privacy details should scroll');
 assert(source.includes('applyDisplayMode(displayMode)'),'Saved mode still applied after reload');
 console.log('TEMP2 floating fixed header: PASS — full header fixed, body scrolling, drag/resize/collapse kept, anchored sidebar unaffected.');

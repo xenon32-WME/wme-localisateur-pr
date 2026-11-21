@@ -15,7 +15,7 @@ function fixture() {
             sdk = api; ui = { prIndexStatus: label }; prIndexLayerEnabled = true;
         },
         generation: value => { prIndexRefreshGeneration = value; },
-        country: value => { currentCountry = value; },
+        filter: value => { prIndexAxisFilter = value; },
         enabled: value => { prIndexLayerEnabled = value; },
         cache: () => prIndexCache,
     };`;
@@ -75,15 +75,16 @@ const networkError = () => Object.assign(new Error('temporary network failure'),
     assert.equal(stale.status.textContent, freshStatus);
     assert.equal(stale.requests.length, 2);
 
-    // Same coordinates in a different country must use a distinct request.
-    const country = fixture();
-    const fr = country.start(); await settle();
-    country.t.country('CO'); const co = country.start(); await settle();
-    assert.equal(country.requests.length, 2);
-    country.requests[1].resolve(result('co')); await co;
-    country.requests[0].resolve(result('fr')); await fr;
-    assert.equal(country.t.cache().points[0].id, 'co');
-    assert.equal(country.draws.length, 1);
+    // An axis filter change in the same view must reject the previous response.
+    const filtered = fixture();
+    const all = filtered.start(); await settle();
+    filtered.t.filter({routeType:'D',axis:'D107',departmentCode:'01',manager:''});
+    const selected = filtered.start(); await settle();
+    assert.equal(filtered.requests.length, 2);
+    filtered.requests[1].resolve({points:[{id:'filtered',axis:'D107',departmentCode:'01'}],truncated:false}); await selected;
+    filtered.requests[0].resolve(result('old')); await all;
+    assert.equal(filtered.t.cache().points[0].id, 'filtered');
+    assert.equal(filtered.draws.length, 1);
 
     // A failed request is released so the same view can be loaded again.
     const recovery = fixture();
@@ -116,5 +117,5 @@ const networkError = () => Object.assign(new Error('temporary network failure'),
     disabled.requests[0].reject(networkError()); await pending;
     assert.equal(disabled.status.textContent, 'désactivé');
     assert.equal(disabled.draws.length, 0);
-    console.log('PR layer concurrent refresh, stale results, country scope and recovery: PASS');
+    console.log('PR layer concurrent refresh, stale results, axis filter scope and recovery: PASS');
 })().catch(error => { console.error(error); process.exitCode = 1; });
