@@ -2,11 +2,9 @@
 // @name         WME Localisateur de PR France
 // @homepageURL  https://github.com/xenon32-WME/wme-localisateur-pr
 // @supportURL   https://github.com/xenon32-WME/wme-localisateur-pr/issues
-// @updateURL    https://raw.githubusercontent.com/xenon32-WME/wme-localisateur-pr/main/WME-Localisateur-de-PR-France.meta.js
-// @downloadURL  https://raw.githubusercontent.com/xenon32-WME/wme-localisateur-pr/main/WME-Localisateur-de-PR-France.user.js
 // @namespace    https://www.waze.com/
-// @version      1.2.0
-// @description  Localisation de points de repère et de zones dans WME. France IGN, Colombie BETA.
+// @version      1.2.7
+// @description  Localisation de points de repère et de zones en France dans WME. Source officielle IGN.
 // @author       Xenon32 / OpenAI
 // @license      MIT
 // @icon         data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAQFklEQVR42t1bbZBUVXp+3nNuf05Pz/TMMICAWSDADAiusIsWIoSPLXVdnF0tdRHWYlcrlbIqJpItLckqJlqRykZcrTL+0NLdQreCq8sqmpgq0URTlFSpBAwbRy1Eo6jMwHTPdPft2/ec8+ZHf8zt7tsfw4zGza26xTD33nPP+5znfd6Pcwf4ag4CINauXWsBaHgW7xH4f3LIomFne3zpYNCXtdoAdNkKy8L69ev/+NSpU0tc11nguu65AHfnclkJA4QiEQXQkJSBjyORyAc9PT3/9corr3yota4e0wDgrzMAsmS4lBIXXHDB2lRq5PtauxuU6/YpzQGlGK4CtGZoLlpGgJSEgAUELIKQ5FjS+n0gGHm5Mxb77VtHjrzhAUN6wf26AEDF0zz99NPBnTt3/iibGfszrdW3cnmDdIbhaiAYgO6MM3fFGR0xRjRUWMxsnpAaI5xOEVJjRHkXMmQBsTaBYIAgrcDBtrb2fzx27Ng/EZEugjAlbKCpXPUFCxZclc2m7wabpWMZjUyOeFoX65XnaXHJN11avsil+bMY3TGFaAgQkgEQjAayDmFoVOCDTyTeHrT4tcMBfuv3lhlOQsYioFhUQFqBN0OhyM7333//n4vvLrnF/xkAFgC1YsWKnlOnTj1ktLM5Yxuks6TPW2Boy3cd8YM/cTB/lgICDGgCXBT+NYWZlyZAgsdjgWDAJbz3sYVnXw3j1/8SNO9+KLi9jWUkJEAi9Fh//6Kfvvzyy6nJugRN1vjFixevTCZHfs1GzR9OQp87k2n7VlvccLmNWKcBcgTtEAwDRMWz+GbyvJ1Ngc/MhVMKhggCCAOpMwKP74/gF0+FzOenBXd3QAoZ/O+urq7r3nnnnXdKc/kqAbAAqAUL+r+bzY78xnFUNJUmtfWKvPV3N2cwY4YCMgRXEYQoiFzNW7nq7SXrafwGw4AxhIDFQAz46GMLtz0UxW8PBFUizpZlWclIJLrp+PHj/3G2IMiz9fmFCxdels2k9mdzKuRq0ru3Z6x7/jyDmGS4WQkSBCmoYpULUlnUy2rjAQ8lqPjfAoDMBJUldHUYXHN5HtEwiX89GNCCdJRZXztr+ux/Pz1y+qPi3PjLBEAC0EuXLl8xOjr8UtZ2gyQEP3XvmLx+wIZKCgAC0oKP4V7CcZX1VHsPjf+OAAgBGEUwLrD64jzmzTBi378FtQCHNbtXLVrU97uTJ08OFYWxZRAmkmUJAHzNNdd0jSRPPes4KqpYmD33psUVG3LInxaQkkHE445cmgd7geBaf6gAqygOPiYIwZAE5IcJmwdsPPbXGZl2SCtXJT7//LNnt27d2uaFe6oZIIjIpNPpX7n53KqRMVIP/TRjXbfJRv6MQCDgoTBX+bp38amJ9LBn9bmaJYXnpADcDOH85QphIrH/9YBqC+sZn578vCuZTO6fiCvIiVB/yZIlm7KZ0XuHzhi17UrXuvvmNNykQMCq4XqlzxOdhTR7mUE11wUBKgtc8m0X73wQEIcHhQoF1MrZc+a9Mjx86kSrILTqArxz587gaCr59+ms5rmzmXbdnIGxCUJWSztXUbp6/n4Xq5hTiggVwui5vxhSBQisgN1/kUFPgsnOaaTTZ/6BmVvWAdFiyDN79+7dbIzqS9swd2yzZfd0De3SeIhj9l+tsh743EcYB60mJHBV5PBcp5ImAMomzPmGi+1bcnI0I7RW+ZV9fX1XFDNEORUAaGYWmczYX6bGNC9fbHD9pTmYMUDKBpkF+djm5/6+YbJytceTBq7REGkBJk340ysdLPgjjXSWOZvNbCciTIULSADc399/oVbuN22H+MebHBlqZ2hNxblUxXXmJqmWJxQyF6dYRzsqSMG+WkIEaJfQ3q1wwxV5mbYBrfJrVqxYcV6RBWIyABAAOE7uWifPmNnL5vurHSBbUOKm+ST5iQDXkX6uMyDXyZdR4QpwCNeuc9DVwdpVEMnkmatasVG0Qn+t8uvTNrBqmStmziz4PpUobrhwciPK+xhdHR28eYPvYOyjL+MAGAeYf67Ct5cYSmcZuVx2Y9ENzNkCIADwqlWr5mit+pRirFmuiK2Cvb7dAL8UhLnOgpfE0ZP5lXy+2v56WSR5V4qAMLD6fFc4LgPM569Zs6YHlUXnhAAgABgeHl6iNIKRCMyKPk2UZ49OcWs5l58/s+dnNBBLP1ZVg1qahmJ8q9+lYACsDceHhob6mtnZFACt9QKlgO4OmG/0KkB5Ql8pOyNq7NJei2rCmn+iMyGAS0MqYP45jPY21loDruvOb1b1Ng2DWudnKg10dWgk2tm/9VBD2yqasg8iVK3wNaWhv8+zR1e4ch2gCT1xjUQcUAowJn/OpPMAAdGpNdAZY4SCBmwqo1jZOKpT4DTSNV+q+wtdbVSh2sU1QFuEEY8xlAa01vFJAxCNhmPGcKEpQQB7XkgtC6GnsS3IvydQ7zkvauT3nnEhZSZICQQkwxhGJBRunzQAhdartxrj8vx9w3XD7M+b7HB9jfBmfY2KKaLacOutIEVzAWm6a8M1mV0VvUs+ztS8EudGmSlX1c/VwHHlLeQdjz2jcHHOBCGaZ/pN76CW8njyrOhkWvXsI4T1egp+xKEiYWicvpNlgJfvSgNGA2Qa0JvJR+WrqA2qbIBWlL5edecWmFONIXnc10wBAMWXS4thJRhwqgoTarCQ1UbDVIZJqqI++7iBryiST+evCKQsVKnM3JILNAVAGyAYYHz8mYW7f5GAVqZoe23dT0SV1WsjUIma38jjxjEbT1eMPGN4WVT43WdDhGCQoNQUMIBBCAUJ//OZxt88lG0w4WZWT+XR+F0dHRGEQoCZCg2QQkApja5EO76z4RIYY8BgkN8EiOr7K/kIfb2qF9UE8WhGRUOJCiG6Kll66+0jyKQzsCxr8gAQEWzbxoUXrsQzz/4OfwjH6tWrceTokanRgLKiGoYxBsaY8TBTvmZq8wX/vjrIZ1Kevf+6uQgRQUrZdLGYC/OkFt2xNQCoVlW9IDSbmPdQSkEIcVbPl4zzW9kSSOPj8hQCwLVIl1ZeSonnn38eL7zwAmLtMRhdqzyRaATz5s7D2rVrsXDhwvKzpQk/8MADeO+99xAOh4tRZPyFlmWht7cXy5cvx7p16yClhNa6Kb1bTR1aAqAS2UrqSylx8OBBPProowiHw1BaQQo5HhLB4KL7dHZ2YsuWLdi1axdCoVD5+WeeeQYHDx5EKBSCNgZSCqBIYgZDKw3LsrBixQrs3r0bK1eubAmEqdoXAJgb+nhbWxtCoRC6u7sxrWcaQqEQBBGkEJBCoq2tDdOn94KI8OCDD2Lbtm0Vft/R0YH29nZ093Sju6sLlrSKekEIWgF0d3cjkUjgrbffwqZNm3D48OEyEyo9tVabpoQBjMa7W1prKKVgjIFt21i1ahVmzJwJNgZaawwODuLYsWOIxWI455xzsHfvXnzviu9h64+2VjyvXBdCCGy6chMi4Qi0Njhz5jQOHToEx3HQ092NoaFh7NixAy+++GJTBkxpFGjkUyX3EELAtrO47bbbsG7duvJ1x3GwY8cOPPLII+js7EQ0GsWeJ/dgy9YtZeUmIiilkUjE8csnfolQKFR+/vXXX8fmzZth2zl0dnbg0KFDGBwcRH9//7gr0JfpAtUlZwM0iAiZTAZaaziOA9d1EQqFcNddd2H69OlwHAehUBAnTpxAKpnyVfPRVApaa7iuC9d1cckll2BgYACjo6OwrAByORvHjx+vnAuX+hZfGgDkGwIrUvvifUIISCkhpYQlJYwxZfrn83kIKZHL5ZC1s3V7DiXhLbnHjBkzyj5tDMN13YZTbXVD2poM9SsbM1QhPlpraK3BzAgEAkilUjh58iSCwSCMNgiHw2hri/kCGg6HIYSAEKKczr7xxhvlyBEIBNDb2/tVhUGu6T41S1ai0WiZAQBg2zZ27tyJL774AolEAmfOnMGiRYvQ0RGvAKBQShh8+OGHSCQS0FpjbGwUjz/+BF577TV0dMRh2zZmz56NpUuX1i95J1CXtVQLtIqoMQbRaAT33Xcfnnji8WL6rDH43vsYfPddxONxMDPy+TxuvPHGmkzTsgJIpzO47PLLi503gm1nkclkEY/H4SqFZDKJn//852hvb4dSyj+LpNYbU00BKKWt5JN2eunGxVzBsgI4dOhQOUYTAcFgCJ2dnbBtGyMjI7jlllswMDAArTSkJStWjJmRs20wM6QlIaWFRGcntDHQSmPXrl246aaboLWun0JPQAubAlBuKxHqimC1exhjoJQq3+e6Gdi2jVmzZuHOO+/ErbfeWgCI/AUsEolACIFMJgMZkDDMsG0bTz75JAYGBuquPGHiHcnmGmBaA7XwTZ9ANpvF9ddfj76+vkKMlgKRcARz587FRRddhEQi4VtREghaK8Ri7di3bx+mTZuG+++/Hw8//DCmTZsGpRT279+PgYGBVhpIUxcFUBQZatLRZhTcwnEcbN26FWvWrKlbDZZWrzr8MRcqw3lz5yHeEceOHTvw3HPPYWRkBB2dHdizZw9+eN0PsfE7G31ZUE6qQC0zQbSgbD5bX/W5R0RIpVJQSiGXy5WTmVKq3Kz0LYmkMQY9PT3Yvv2vMDo2CktaCIVC+NmdP4PjOGVjG/ZOzVQAgMqPtlrZQLCkhGVZFaeU0rei9B1KFNxJa42f/OTHWH7BcoyOjiIej+PNN9/EY489BllMsPyCP03AupYAaNZdEULAktZ47J/gd4GlzFFIUcEQrTUikQjuuGMHcrkciAhdiQR2796NoaEhWJZVBQJ5ijdqCfCWU+FGg9m2DcdxMDIygkwmg3w+PyEA0uk0xsbGkBxJIplMlo0qlbwDA1di/foN+OSTT5Bzcjh+/Dhuv/12cINWHDepWSZcDfrFgRIoy5Ytw9VXX42Ojg6k02nMmTOnKWjeY+PGjZg1exaCgSCi0SjC4XD5eWMYUgrcc8/for29De3tcWilwMZgaHgYvb29lSyo+PxmcocFAP39S56KRCN82aWXulpr1lqzMabi9Duq72l0Nntea93yO7TWfPHFF7uxWIwXL178cLOFbr4zpN28IMH5YrOiVOR4V7e6K1zd9GwlhfY+7xcptFYwnq+zSnmHN3pIKSGEKFScQrDrurlJu4DK5/+zra1t29GjR/nAgQPYsGHDhLrAX/Wxb98+DA4OciQSIQNzpPUiv8611atX95w4ceJYOp2eFgwG8xs2bBBtbW3lFavtDdTTCq6zTeSt4OqXcd76o/BzYRzvPJLJJF599VVj2AQj4ciJZcuWnf/SSy+NNaoQqIUoYRYuXLg6k8n8Rik1I5VKVaWyXGHK+M9UvkoVr+IKfaooqjxbbjVbXi3swgkpEG+PIxAIfNTd3f2Do0ePHkaTP61rxVEFALN27doZn3766Q1EtMwYI40x5LszU5y4N1Ornez4J7zeVfXOyhS/xhJVkbpBBshCkJLSOjxnzpxfHThw4DSm4O8Kz6J19rU5WkzyJjbgHwoQutXK+H8BeOlLUc+zbl8AAAAASUVORK5CYII=
@@ -20,7 +18,7 @@
 // @grant        GM_setValue
 // @grant        GM_info
 // @grant        unsafeWindow
-// @connect      ygdyaciibfyqldlejyuu.supabase.co
+// @connect      data.geopf.fr
 // @connect      greasyfork.org
 // @connect      update.greasyfork.org
 // @run-at       document-idle
@@ -31,17 +29,13 @@
 
     const SCRIPT_ID = "wme_localisateur_pr_fr";
     const SCRIPT_NAME = "Localisateur de PR France";
-    const VERSION = "1.2.0";
-    const BUILD_ID = "20261112-startup-notice";
-    const IS_DEV_BUILD = /\.(?:dev|temp)\d+\b/i.test(VERSION);
+    const VERSION = "1.2.7";
+    const BUILD_ID = "20261121-france-only-1.2.7";
     const SCRIPT_ICON_DATA_URI = "data:image/png;base64,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";
     const RESULT_LAYER = "wme_localisateur_pr_result";
     const RESULT_CHECKBOX = "Localisateur PR — résultat";
     const PR_INDEX_LAYER = "wme_localisateur_pr_index";
     const PR_INDEX_CHECKBOX = "Localisateur PR — points repères";
-    // Public read-only Supabase project; no private key or alternate backend.
-    const SUPABASE_URL = "https://ygdyaciibfyqldlejyuu.supabase.co";
-    const SUPABASE_PUBLIC_KEY = "sb_publishable_0q-t5iSyWijEAOj79VEmng_MOEM8Fuu";
     const PR_REQUEST_TIMEOUT_MS = 20000;
     const WME_ROUTE_LOAD_TIMEOUT_MS = 20000;
     const WME_ROUTE_LOAD_POLL_MS = 250;
@@ -67,12 +61,14 @@
     const GREASYFORK_PAGE_URL = "https://greasyfork.org/fr/scripts/590425-wme-localisateur-de-pr-france";
     const IGN_BDTOPO_CATALOG_URL = "https://cartes.gouv.fr/rechercher-une-donnee/dataset/IGNF_BD-TOPO";
     const OPEN_LICENSE_URL = "https://www.data.gouv.fr/pages/legal/licences/etalab-2-0";
-    // La table source distingue ign_bdtopo_v3 / ign_bdtopo_v3_intercommunal.
-    // La date d'extraction exacte de la copie n'est pas tracée : ne pas
-    // la déduire de source_updated_at (date de mise à jour d'un objet).
-    const IGN_BDTOPO_IMPORT_EDITION = "WFS-IGN-EDITION-NON-VERIFIEE";
+    const IGN_WFS_URL = "https://data.geopf.fr/wfs/ows";
+    const IGN_PR_LAYER = "BDTOPO_V3:point_de_repere";
+    const IGN_POINT_TYPES = "type_de_pr IN ('PR','PR0','PRF','DS','FS')";
+    const IGN_VISIBLE_TYPES = "type_de_pr IN ('PR','PR0','PRF')";
+    // Same scope as the existing intercommunal tab: references outside A/N/D.
+    const IGN_INTERCOMMUNAL_FILTER = "route IS NOT NULL AND route NOT LIKE 'A%' AND route NOT LIKE 'N%' AND route NOT LIKE 'D%' AND route NOT LIKE 'RN%' AND route NOT LIKE 'RD%'";
+    const IGN_PR_PROPERTIES = "cleabs,route,numero,abscisse,ordre,cote,type_de_pr,identifiant_de_section,code_insee_du_departement,lien_vers_route_nommee,gestionnaire,date_modification,geometrie";
 
-    const SETTINGS_COUNTRY_KEY = `${SCRIPT_ID}:country`;
     const SETTINGS_LANGUAGE_KEY = `${SCRIPT_ID}:language`;
     const SEARCH_MIN_ZOOM_LEVEL = 14;
     const PR_INDEX_MIN_ZOOM_LEVEL = 15;
@@ -1243,7 +1239,9 @@
             const headerHeight = headerLines.length > 1
                 ? Math.max(25, Math.round(headerSize * 2.75))
                 : Math.max(18, Math.round(headerSize * 1.55));
-            const height = headerHeight + mainHeight + senseHeight + 2;
+            const annotation = Array.isArray(options.annotation) ? options.annotation.map(String).slice(0, 2) : [];
+            const annotationHeight = annotation.length * 11;
+            const height = headerHeight + mainHeight + senseHeight + annotationHeight + 2;
             const prefix = axis.charAt(0);
             const headerColor = prefix === "A"
                 ? String(options.motorwayColor || "#e30613")
@@ -1266,6 +1264,7 @@
                 + headerTextSvg
                 + `<text x="${width / 2}" y="${Math.round(mainCenterY + mainSize * 0.34)}" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="${mainSize}" font-weight="800" fill="#050505">${escapeSvgText(main)}</text>`
                 + (side ? `<text x="${width / 2}" y="${Math.round(senseCenterY + senseSize * 0.34)}" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="${senseSize}" font-weight="700" fill="#222222">${escapeSvgText(side.toUpperCase())}</text>` : "")
+                + annotation.map((line, index) => `<text x="${width / 2}" y="${headerHeight + mainHeight + senseHeight + 9 + index * 11}" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="8" font-weight="700" fill="#7c4d00">${escapeSvgText(line)}</text>`).join("")
                 + `</svg>`;
             return {
                 width,
@@ -1334,7 +1333,9 @@
                 networkType: record.network_type ? String(record.network_type).toUpperCase() : null,
                 roadManager: record.road_manager ? String(record.road_manager) : null,
                 routeId: record.route_id ? String(record.route_id) : null,
-                source: "Base PR (Supabase)",
+                source: record.source || null,
+                sourceUpdatedAt: record.source_updated_at && Number.isFinite(Date.parse(record.source_updated_at))
+                    ? String(record.source_updated_at) : null,
             };
         }
 
@@ -1376,6 +1377,8 @@
             if (!Number.isInteger(Number(reference.number)) || Number(reference.number) < 0) return null;
             if (String(terminal.departmentCode || "") !== String(reference.departmentCode || "")) return null;
             if (normalizeAxis(terminal.axis) !== normalizeAxis(reference.axis)) return null;
+            if (String(terminal.roadManager || "") !== String(reference.roadManager || "")) return null;
+            if (terminal.routeId && reference.routeId !== terminal.routeId) return null;
             const delta = Number(terminal.abscissa) - Number(reference.abscissa);
             if (!Number.isSafeInteger(delta) || delta < 0) return null;
             const terminalSide = normalizePrSide(terminal.side);
@@ -2165,6 +2168,98 @@
             };
         }
 
+        // User-validated anchors (119, 123), A40 / Ain / Chamoise only.
+        // The rule contains no replacement coordinates: every anchor comes from IGN.
+        function isA40CalibrationReference(point) {
+            return point?.axis === "A40" && point.departmentCode === "01"
+                && point.pointType === "PR" && point.number >= 119 && point.number <= 123
+                && ((point.side === "D" && point.branchId === "NAT-A40-D-7")
+                    || (point.side === "G" && point.branchId === "NAT-A40-G-9"));
+        }
+
+        function needsA40Calibration(point, offset = 0) {
+            return isA40CalibrationReference(point)
+                && point.number * 1000 + offset > 119000
+                && point.number * 1000 + offset < 123000;
+        }
+
+        function buildA40Calibration(points, rawSegments) {
+            const component = (rawSegments || []).map(describeSegment).filter(Boolean);
+            const result = {};
+            // Fail closed: no invented connections or guessed carriageway.
+            function anchorFor(point) {
+                const candidates = component.map(segment => {
+                    const projection = projectPointToPolyline(point.coordinate, segment.coordinates);
+                    return projection ? { ...projection, segmentId: segment.id, prPoint: point, prNumber: point.number } : null;
+                }).filter(Boolean).sort((a, b) => a.distance - b.distance);
+                const best = candidates[0];
+                if (!best || best.distance > 60) return null;
+                if (candidates.some(other => other.distance - best.distance < 3
+                    && haversine(best.point, other.point) > 3)) return null;
+                return best;
+            }
+            for (const side of ["D", "G"]) {
+                const scoped = (points || []).filter(point => isA40CalibrationReference(point) && point.side === side);
+                const lower = scoped.filter(point => point.number === 119);
+                const upper = scoped.filter(point => point.number === 123);
+                if (lower.length !== 1 || upper.length !== 1) return null;
+                const start = lower[0], end = upper[0];
+                if (!Number.isFinite(start.abscissa) || !Number.isFinite(end.abscissa)
+                    || start.routeId !== end.routeId || start.roadManager !== end.roadManager) return null;
+                const span = end.abscissa - start.abscissa;
+                if (span < 3000 || span > 5000) return null;
+                const startAnchor = anchorFor(start), endAnchor = anchorFor(end);
+                if (!startAnchor || !endAnchor) return null;
+                const path = pathBetweenTargets({ component, start: startAnchor, end: endAnchor });
+                if (!path || path.distance / span < 0.65 || path.distance / span > 1.35) return null;
+                const used = new Set(path.segmentUsages.filter(item => item.traversedLength > 1).map(item => item.segmentId));
+                const pathComponent = component.filter(segment => used.has(segment.id));
+                // Matching node IDs alone must not conceal a geometric gap.
+                const nodes = new Map();
+                for (const segment of pathComponent) {
+                    for (const [key, coordinate] of [[segment.from, segment.coordinates[0]], [segment.to, segment.coordinates.at(-1)]]) {
+                        if (nodes.has(key) && haversine(nodes.get(key), coordinate) > 3) return null;
+                        nodes.set(key, coordinate);
+                    }
+                }
+                result[side] = { start, end, span, path, component: pathComponent, startAnchor, endAnchor, used };
+            }
+            if ([...result.D.used].some(id => result.G.used.has(id))) return null;
+            return result;
+        }
+
+        function resolveA40Calibration(calibration, sourcePoint, offset = 0) {
+            if (!needsA40Calibration(sourcePoint, offset) || !Number.isFinite(sourcePoint.abscissa)) return null;
+            const corridor = calibration?.[sourcePoint.side];
+            if (!corridor || sourcePoint.branchId !== corridor.start.branchId
+                || sourcePoint.routeId !== corridor.start.routeId || sourcePoint.roadManager !== corridor.start.roadManager) return null;
+            const targetAbscissa = sourcePoint.abscissa + offset;
+            const ratio = (targetAbscissa - corridor.start.abscissa) / corridor.span;
+            if (!(ratio > 0 && ratio < 1)) return null;
+            const metrics = polylineMetrics(corridor.path.coordinates);
+            const position = pointAtOffset(metrics.coordinates, metrics.length * ratio);
+            const anchor = projectTargetToComponent(corridor.component, { point: position.point });
+            if (!anchor || anchor.distance > 1) return null;
+            const calibrationInfo = {
+                kind: "a40-119-123", referenceFrom: 119, referenceTo: 123,
+                sourceIds: [corridor.start.id, corridor.end.id], side: sourcePoint.side,
+                ratio, sourceCoordinate: sourcePoint.coordinate.slice(), targetAbscissa,
+                referencePathLength: metrics.length,
+            };
+            return {
+                point: position.point, segmentId: anchor.segmentId, sourcePoint,
+                sourceCoordinate: sourcePoint.coordinate.slice(), calibration: calibrationInfo,
+                estimated: true, confidence: Math.abs(metrics.length / corridor.span - 1) <= 0.08 ? "moyenne" : "faible",
+                chainageAware: true, targetAbscissa,
+                referenceFromNumber: 119, referenceToNumber: 123, referencePathLength: metrics.length,
+                startAnchor: corridor.startAnchor, endAnchor: corridor.endAnchor,
+                component: corridor.component, pathLength: metrics.length,
+                travelledCoordinates: [position.point.slice()],
+                pathSegmentIds: [anchor.segmentId],
+                estimationNote: "Recalage local sur le parcours WME entre les PR 119 et 123 validés ; coordonnées IGN brutes conservées.",
+            };
+        }
+
         // Rattrapage strict lorsqu'une zone IGN peut être projetée sur un seul
         // segment WME, alors que les localisations indépendantes se sont ancrées
         // sur des segments distincts (par ex. une géométrie de tunnel décalée).
@@ -2816,7 +2911,7 @@
             };
         }
 
-        function resolveTargetCandidates({ rawSegments, candidates, basePr, offset, maxAnchorDistance = MAX_ANCHOR_DISTANCE_METERS }) {
+        function resolveTargetCandidates({ rawSegments, candidates, basePr, offset, maxAnchorDistance = MAX_ANCHOR_DISTANCE_METERS, language = "fr" }) {
             const descriptions = (rawSegments || []).map(describeSegment).filter(Boolean);
             if (!descriptions.length) throw new Error("Aucun segment exploitable de cet axe n’est chargé dans WME.");
             const diagnostics = [];
@@ -2917,8 +3012,16 @@
                 }
             }
             const detail = [...new Set(diagnostics)].slice(0, 3).join(" ");
+            const requestedPr = `PR${basePr}${offset ? `+${String(offset).padStart(3, "0")}` : ""}`;
+            // Une rupture peut venir d'un numéro de route absent des adresses
+            // WME, notamment en ville. Guider la vérification sans l'affirmer
+            // comme cause certaine et conserver les diagnostics des candidats.
+            const messages = {
+                fr: `Impossible de suivre l’axe jusqu’au ${requestedPr}. Vérifiez que le numéro de route figure dans l’adresse principale ou alternative des segments traversés.`,
+                en: `Unable to follow the road to ${requestedPr}. Check that the road number is included in the primary or alternate address of the segments along the route.`,
+            };
             throw new Error(
-                `Aucune branche continue et cohérente n’a pu localiser PR${basePr}${offset ? `+${offset}` : ""}.`
+                (messages[language] || messages.fr)
                 + (detail ? ` ${detail}` : ""),
             );
         }
@@ -3203,6 +3306,7 @@
             normalizeDepartmentCode,
             pathBetweenTargets,
             recoverSingleSegmentZone,
+            isA40CalibrationReference, needsA40Calibration, buildA40Calibration, resolveA40Calibration,
             automaticSelectionSegmentIds,
             parsePrPayload,
             parsePrRecord,
@@ -3354,7 +3458,6 @@
     let motorwayDestinationOverrides = {};
     let displayMode = "sidebar";
     let searchRouteType = "D";
-    let currentCountry = "FR";
     let currentLanguage = "fr";
     let intercommunalManagersLoaded = false;
     let intercommunalManagers = [];
@@ -3371,20 +3474,6 @@
     let floatingCollapsed = false;
     let floatingZIndex = 10050;
     let locateInProgress = false;
-    const COUNTRY_CONFIG = Object.freeze({
-        FR: Object.freeze({
-            flag: "🇫🇷",
-            label: "France",
-            defaultLanguage: "fr",
-            source: "IGN BD TOPO",
-        }),
-        CO: Object.freeze({
-            flag: "🇨🇴",
-            label: "Colombia",
-            defaultLanguage: "es",
-            source: "INVÍAS · Red Vial · BETA",
-        }),
-    });
 
     const UI_TRANSLATIONS = Object.freeze({
         fr: Object.freeze({
@@ -3397,13 +3486,11 @@
             back: "Retour",
             detach: "Détacher",
             attach: "Rattacher",
-            country: "Pays",
             language: "Langue",
             selectionEmpty: "Segment sélectionné : facultatif",
             department: "Département",
             manager: "Gestionnaire / territoire",
             axisFR: "Axe",
-            axisCO: "Código de vía",
             side: "Chaussée / sens — facultatif",
             sideRequired: "Chaussée / sens — obligatoire",
             firstPr: "Premier PR — obligatoire",
@@ -3412,11 +3499,10 @@
             textSearchPlaceholder: "Ex. D1084 — travaux du PR 35+250 au PR 37+1350",
             textSearchAction: "Analyser et rechercher",
             sourceInfoTitle: "Sources et confidentialité",
-            franceSourceInfo: "France : IGN BD TOPO® v3 — classe Point de repère. Licence Ouverte Etalab 2.0, © IGN. Lots importés dans Supabase les 6 et 7 août 2026 ; date exacte d’édition IGN non conservée. Six coordonnées A40 (PR 120 à 122, côtés D/G) ont été corrigées par l’auteur. Cette adaptation n’est pas un service officiel IGN.",
-            colombiaSourceInfo: "Colombie BETA : données INVÍAS / Red Vial, hébergées par l’auteur. Extraction d’origine, données dérivées et conditions de réutilisation : clarification écrite demandée à INVÍAS, réponse attendue. Aucune autorisation spécifique n’est annoncée à ce stade. La copie contient aussi des attributions IGAC et Google Maps à clarifier.",
-            sourceServerInfo: "Service : projet Liste PR France, hébergé sur Supabase et géré par l’auteur. Les requêtes HTTPS transmettent les critères de recherche (axe, PR, département et éventuellement gestionnaire) ou l’emprise visible de WME pour le calque PR. Aucun pseudonyme Waze ni identifiant d’objet WME n’est ajouté aux requêtes. Le script consulte les données en lecture seule avec une clé publique.",
-            connectionPrivacyInfo: "Données de connexion : Supabase reçoit techniquement l’adresse IP et les requêtes nécessaires au service. Les critères de recherche sont transmis dans le corps des requêtes HTTPS, sans cookies. Des journaux techniques peuvent être conservés par l’hébergeur ; leur durée de conservation dépend de sa configuration. Aucune durée ni anonymisation particulière n’est garantie ici.",
-            localPrivacyInfo: "Stockage local : Tampermonkey conserve les préférences du panneau, des calques, du pays, de la langue et le cache de vérification de version. Le Localisateur ne conserve pas d’historique de recherches. Ses requêtes externes n’envoient pas de cookies. Une recherche de mise à jour GreasyFork est possible uniquement depuis une installation associée à une URL GreasyFork reconnue, au plus une fois toutes les 24 heures. La création d’une note de carte WME exige une action de votre part.",
+            franceSourceInfo: "France : IGN BD TOPO® v3 — classe Point de repère, consultée directement sur le WFS officiel data.geopf.fr. Licence Ouverte Etalab 2.0, © IGN. Les coordonnées source ne sont pas modifiées. A40 (01), PR 120 à 122 et positions intermédiaires entre 119 et 123 : le calque, la localisation et les notes utilisent une position corrigée, estimée sur WME ; les coordonnées IGN d’origine restent consultables dans le détail des résultats. Les positions intermédiaires et projections WME sont calculées localement. Ce script n’est pas un service officiel IGN.",
+            sourceServerInfo: "Données routières : API officielle IGN, consultée directement. Les requêtes transmettent les critères de recherche ou l’emprise cartographique, sans pseudonyme Waze ni identifiant d’objet WME.",
+            connectionPrivacyInfo: "Connexion : l’IGN reçoit l’adresse IP et les critères utiles dans les URL HTTPS. Les requêtes omettent les cookies et refusent les redirections. L’IGN peut conserver des journaux selon ses propres règles.",
+            localPrivacyInfo: "Stockage local : Tampermonkey conserve les préférences du panneau, des calques, de la langue et le cache de vérification de version. Le Localisateur ne conserve pas d’historique de recherches. Ses requêtes externes n’envoient pas de cookies. Une recherche de mise à jour GreasyFork est possible uniquement depuis une installation associée à une URL GreasyFork reconnue, au plus une fois toutes les 24 heures. La création d’une note de carte WME exige une action de votre part.",
             sourceIgnLink: "Source officielle IGN — BD TOPO®",
             sourceLicenseLink: "Licence Ouverte 2.0",
             autoSelect: "Sélectionner automatiquement le segment du PR ou tous les segments de la zone",
@@ -3429,57 +3515,7 @@
             clearResult: "Vider le résultat",
             franceHelp: "Le sens permet de forcer une chaussée ; sinon la branche cohérente la plus proche est choisie. Le deuxième PR permet d’afficher une zone sur le même axe. Les PR doivent être saisis au format 52+000 ou 60+007.",
             motorwayHelp: "Autoroutes Axx : choisissez le sens de circulation (Sens 1 par défaut ou Sens 2). Le choix est obligatoire et conservé pendant la recherche. Les PR doivent être saisis au format 52+000 ou 60+007.",
-            colombiaHelp: "Colombie BETA : saisissez le Código de vía visible dans WME (ex. 4005 ou 6510) et le PR au format 65+500. Le calcul est recalé entre les références officielles encadrantes sur la géométrie WME.",
-            colombiaStatus: "Mode Colombie BETA : saisissez le Código de vía et le PR à localiser.",
             franceStatus: "Choisissez le type de route, l’axe et le premier PR.",
-            unavailable: "Données Colombie momentanément indisponibles dans la base du Localisateur PR. Réessayez ultérieurement.",
-        }),
-        es: Object.freeze({
-            title: "Localizador de PR",
-            prStartupTitle: "Carga de la capa PR",
-            prStartupMessage: "Al iniciar WME, la carga de la capa PR puede tardar un poco según el número de scripts activos.",
-            prStartupHide: "No volver a mostrar este mensaje",
-            prStartupClose: "Entendido",
-            customize: "Personalizar",
-            back: "Volver",
-            detach: "Separar",
-            attach: "Acoplar",
-            country: "País",
-            language: "Idioma",
-            selectionEmpty: "Segmento seleccionado: opcional",
-            department: "Departamento",
-            manager: "Gestor / territorio",
-            axisFR: "Eje",
-            axisCO: "Código de vía",
-            side: "Calzada / sentido — opcional",
-            sideRequired: "Calzada / sentido — obligatorio",
-            firstPr: "Primer PR — obligatorio",
-            secondPr: "Segundo PR — opcional",
-            textSearch: "Búsqueda desde un texto",
-            textSearchPlaceholder: "Ej. D1084 — obras del PR 35+250 al PR 37+800",
-            textSearchAction: "Analizar y buscar",
-            sourceInfoTitle: "Fuentes y privacidad",
-            franceSourceInfo: "Francia: IGN BD TOPO® v3, capa de hitos kilométricos. Licencia Abierta Etalab 2.0, © IGN. Lotes importados en Supabase el 6 y 7 de agosto de 2026; fecha exacta de edición IGN no conservada. El autor corrigió seis coordenadas A40 (PR 120 a 122, lados D/G). Esta adaptación no es un servicio oficial del IGN.",
-            colombiaSourceInfo: "Colombia BETA: datos INVÍAS / Red Vial alojados por el autor. Extracción original, datos derivados y condiciones de reutilización: se ha solicitado una aclaración escrita a INVÍAS y se espera su respuesta. No se anuncia una autorización específica. La copia también contiene atribuciones a IGAC y Google Maps pendientes de aclaración.",
-            sourceServerInfo: "Servicio: proyecto Liste PR France, alojado en Supabase y gestionado por el autor. Las solicitudes HTTPS transmiten los criterios de búsqueda (vía, PR, departamento y, si procede, gestor) o la extensión visible de WME para la capa PR. No se añaden nombres de usuario Waze ni identificadores de objetos WME. El script consulta los datos en modo de solo lectura con una clave pública.",
-            connectionPrivacyInfo: "Datos de conexión: Supabase recibe técnicamente la dirección IP y las solicitudes necesarias para el servicio. Los criterios de búsqueda se envían en el cuerpo de las solicitudes HTTPS, sin cookies. El proveedor puede conservar registros técnicos según su configuración; aquí no se garantiza un plazo de conservación ni una anonimización específicos.",
-            localPrivacyInfo: "Almacenamiento local: Tampermonkey conserva las preferencias del panel, las capas, el país, el idioma y el estado de comprobación de versiones. El Localizador no guarda un historial de búsquedas. Las peticiones externas no envían cookies. Solo se comprueba GreasyFork si la instalación tiene una URL GreasyFork reconocida, como máximo una vez cada 24 horas. Las notas de mapa WME se crean únicamente por acción del usuario.",
-            sourceIgnLink: "Fuente oficial IGN — BD TOPO®",
-            sourceLicenseLink: "Licence Ouverte 2.0",
-            autoSelect: "Seleccionar automáticamente el segmento del PR o todos los segmentos de la zona",
-            filterAxis: "Mostrar solo esta vía",
-            filterAll: "Mostrar todos los PR",
-            locate: "Buscar y localizar",
-            addNote: "Añadir nota",
-            copyPermalink: "Copiar permalink",
-            openPermalink: "Abrir permalink",
-            clearResult: "Borrar resultado",
-            franceHelp: "El sentido permite forzar una calzada; de lo contrario se elige la rama coherente más cercana. El segundo PR permite mostrar una zona en el mismo eje.",
-            motorwayHelp: "Autopistas Axx: elija el sentido de circulación (Sentido 1 por defecto o Sentido 2). La selección es obligatoria y se mantiene durante la búsqueda.",
-            colombiaHelp: "Colombia BETA: introduce el Código de vía visible en WME (p. ej. 4005 o 6510) y el PR en formato 65+500. El cálculo se recalibra entre las referencias oficiales que lo enmarcan sobre la geometría de WME.",
-            colombiaStatus: "Modo Colombia BETA: introduce el Código de vía y el PR que deseas localizar.",
-            franceStatus: "Elige el tipo de vía, el eje y el primer PR.",
-            unavailable: "Los datos de Colombia no están disponibles temporalmente en la base del Localizador de PR. Vuelve a intentarlo.",
         }),
         en: Object.freeze({
             title: "PR Locator",
@@ -3491,13 +3527,11 @@
             back: "Back",
             detach: "Detach",
             attach: "Attach",
-            country: "Country",
             language: "Language",
             selectionEmpty: "Selected segment: optional",
             department: "Department",
             manager: "Manager / territory",
             axisFR: "Road",
-            axisCO: "Road code",
             side: "Carriageway / direction — optional",
             sideRequired: "Carriageway / direction — required",
             firstPr: "First PR — required",
@@ -3506,11 +3540,10 @@
             textSearchPlaceholder: "E.g. D1084 — works from PR 35+250 to PR 37+800",
             textSearchAction: "Parse and search",
             sourceInfoTitle: "Sources and privacy",
-            franceSourceInfo: "France: IGN BD TOPO® v3, road reference point class. Etalab Open Licence 2.0, © IGN. Batches imported into Supabase on 6 and 7 August 2026; exact IGN edition date was not retained. The author corrected six A40 coordinates (PR 120–122, sides D/G). This adaptation is not an official IGN service.",
-            colombiaSourceInfo: "Colombia BETA: INVÍAS / Red Vial data hosted by the author. Written clarification of the original extraction, derived data and reuse terms has been requested from INVÍAS; a response is pending. No specific authorization is claimed. The copy also contains IGAC and Google Maps attributions requiring clarification.",
-            sourceServerInfo: "Service: Liste PR France project, hosted on Supabase and managed by the author. HTTPS requests send search criteria (road, PR, department and optional manager) or the visible WME map extent for the PR layer. No Waze usernames or WME object IDs are added. The script reads data using a public key.",
-            connectionPrivacyInfo: "Connection data: Supabase technically receives the IP address and requests needed to provide the service. Search criteria are sent in HTTPS request bodies without cookies. The host may keep technical logs according to its configuration; no specific retention period or anonymization is guaranteed here.",
-            localPrivacyInfo: "Local storage: Tampermonkey stores panel, layer, country and language preferences and the version-check cache. The Locator does not maintain a search history. External requests do not send cookies. GreasyFork updates are checked only when the installation has a recognized GreasyFork URL, at most once every 24 hours. WME map notes are created only on user action.",
+            franceSourceInfo: "France: IGN BD TOPO® v3 reference points, read directly from the official data.geopf.fr WFS. Etalab Open Licence 2.0, © IGN. Source coordinates are not modified. A40 (01), PR 120 to 122 and intermediate positions between 119 and 123: the layer, location results and map notes use a corrected position estimated on WME; the original IGN coordinates remain available in the result details. Intermediate positions and WME projections are calculated locally. This script is not an official IGN service.",
+            sourceServerInfo: "Road data: direct access to the official IGN API. Requests contain search criteria or map bounds, without Waze usernames or WME object IDs.",
+            connectionPrivacyInfo: "Connection: IGN receives the IP address and required criteria in HTTPS URLs. Cookies are omitted and redirects rejected. IGN may retain logs under its own policies.",
+            localPrivacyInfo: "Local storage: Tampermonkey stores panel, layer and language preferences and the version-check cache. The Locator does not maintain a search history. External requests do not send cookies. GreasyFork updates are checked only when the installation has a recognized GreasyFork URL, at most once every 24 hours. WME map notes are created only on user action.",
             sourceIgnLink: "Official IGN source — BD TOPO®",
             sourceLicenseLink: "Open Licence 2.0",
             autoSelect: "Automatically select the PR segment or all segments in the zone",
@@ -3523,10 +3556,7 @@
             clearResult: "Clear result",
             franceHelp: "Direction can force a carriageway; otherwise the nearest coherent branch is chosen. A second PR displays a zone on the same road.",
             motorwayHelp: "Axx motorways: select a direction (Direction 1 by default or Direction 2). A direction is required and remains selected during the search.",
-            colombiaHelp: "Colombia BETA: enter the road code shown in WME (for example 4005 or 6510) and a PR such as 65+500. The result is recalibrated between the surrounding official references on WME geometry.",
-            colombiaStatus: "Colombia BETA mode: enter the road code and PR to locate.",
             franceStatus: "Choose the road type, road and first PR.",
-            unavailable: "Colombia data is temporarily unavailable in the PR Locator database. Please try again later.",
         }),
     });
 
@@ -3562,38 +3592,6 @@
             publicKey: "Clé publique / anon", secretWarning: "Toute clé secrète/service_role est refusée : elle doit rester réservée à l’importeur hors de WME.",
             saveAndTest: "Enregistrer et tester", savedStatus: "Personnalisation enregistrée et appliquée.", resetStatus: "Personnalisation réinitialisée aux valeurs d’origine.",
             openCustomization: "Ouvrir le panneau de personnalisation", closeCustomization: "Revenir au localisateur"
-        }),
-        es: Object.freeze({
-            heading: "Los ajustes sustituyen temporalmente el panel de búsqueda. Usa « Volver » para regresar al localizador.",
-            interface: "Interfaz", panelDisplay: "Visualización del panel", displayMode: "Modo de visualización",
-            sidebar: "Panel lateral de WME", floating: "Ventana flotante",
-            floatingHelp: "La ventana flotante se puede mover y redimensionar. Su posición y tamaño quedan guardados.",
-            searchResult: "Resultado de búsqueda", onMap: "En el mapa", targetMarker: "Marcador objetivo",
-            originPr: "PR entero de origen", calculatedPath: "Trayecto calculado", zoneBetween: "Zona entre dos PR",
-            markerSize: "Tamaño del marcador", lineWidth: "Grosor del trazado", opacity: "Opacidad",
-            showResultLabel: "Mostrar la etiqueta del resultado", labelStyle: "Estilo de la etiqueta",
-            compactCartouche: "Cartucho vial compacto", simpleText: "Texto simple", resultOffset: "Separación respecto al punto buscado",
-            showSense: "Mostrar SENTIDO 1 / SENTIDO 2", showMotorwayDestination: "Mostrar el destino de las autopistas",
-            motorwayBand: "Banda de autopista", departmentBand: "Banda departamental", cartoucheSize: "Tamaño del cartucho",
-            cartoucheOpacity: "Opacidad del cartucho", textColor: "Color del texto", outlineColor: "Color del contorno",
-            labelTextSize: "Tamaño de la etiqueta / texto del cartucho", simpleOutlineWidth: "Grosor del contorno del texto simple",
-            infoBlock: "Bloque de información", background: "Fondo", border: "Borde", titleColor: "Título", detailsColor: "Detalles",
-            infoHelp: "Estos colores se aplican al bloque de resultado mostrado debajo de la búsqueda.",
-            generalPrLayer: "Capa general de PR", pointsCartouches: "Puntos y cartuchos", motorways: "Autopistas (A)",
-            nationalRoads: "Rutas nacionales (N)", intercommunalRoads: "Vías intercomunales", otherAxes: "Otros ejes, incluidos D",
-            pointSize: "Tamaño de los puntos", prLabelStyle: "Estilo de las etiquetas PR", cartoucheRoad: "Cartucho vial compacto",
-            labels: "Etiquetas", display: "Visualización", accordingZoom: "Según el nivel de zoom", always: "Siempre", never: "Nunca",
-            showFromZoom: "Mostrar a partir del zoom", labelSize: "Tamaño de las etiquetas", labelOffset: "Separación de las etiquetas respecto a la vía",
-            textOutlineWidth: "Grosor del contorno del texto", motorwayDestinations: "Destinos de autopistas",
-            referenceOverrides: "Referencia y ajustes locales",
-            referenceHelp: "Referencia nacional integrada: {count} pares vía/ámbito, versión {version}. Los anillos y ramales sin un destino único muestran solo el número.",
-            localOverrides: "Ajustes locales de destinos",
-            overrideHelp: "Opcional: Vía[@departamento] | destino Sentido 1 | destino Sentido 2. Un ajuste local sustituye la referencia nacional.",
-            saveDisplay: "Guardar visualización", defaults: "Valores predeterminados", dataConnection: "Conexión de datos",
-            integratedConnection: "Conexión integrada en el script: no es necesario introducir URL ni clave.", projectUrl: "URL del proyecto",
-            publicKey: "Clave pública / anon", secretWarning: "Se rechazan las claves secretas/service_role: deben permanecer reservadas al importador fuera de WME.",
-            saveAndTest: "Guardar y probar", savedStatus: "Personalización guardada y aplicada.", resetStatus: "Personalización restablecida a los valores predeterminados.",
-            openCustomization: "Abrir el panel de personalización", closeCustomization: "Volver al localizador"
         }),
         en: Object.freeze({
             heading: "Settings temporarily replace the search panel. Use “Back” to return to the locator.",
@@ -3759,30 +3757,24 @@
         ui.displayToggle.setAttribute("aria-label", label);
     }
 
-    function applyCountryAndLanguageUi() {
+    function applyLanguageUi() {
         if (!ui) return;
         updatePrIndexStartupNoticeLanguage();
-        const country = COUNTRY_CONFIG[currentCountry] || COUNTRY_CONFIG.FR;
         if (ui.panelTitle && ui.customizationToggle?.getAttribute("aria-expanded") !== "true") {
             ui.panelTitle.textContent = tr("title");
         }
-        if (ui.countryLabel) ui.countryLabel.textContent = tr("country");
         if (ui.languageLabel) ui.languageLabel.textContent = tr("language");
-        if (ui.subtitle) ui.subtitle.textContent = country.source;
+        if (ui.subtitle) ui.subtitle.textContent = "France · IGN BD TOPO";
         if (ui.dataInfoTitle) ui.dataInfoTitle.textContent = tr("sourceInfoTitle");
-        if (ui.dataOrigin) ui.dataOrigin.textContent = currentCountry === "FR"
-            ? tr("franceSourceInfo")
-            : tr("colombiaSourceInfo");
+        updateSourcePanel();
         if (ui.dataServer) ui.dataServer.textContent = tr("sourceServerInfo");
         if (ui.dataNetwork) ui.dataNetwork.textContent = tr("connectionPrivacyInfo");
         if (ui.dataLocal) ui.dataLocal.textContent = tr("localPrivacyInfo");
         if (ui.dataIgnLink) {
             ui.dataIgnLink.textContent = tr("sourceIgnLink");
-            ui.dataIgnLink.parentElement.hidden = currentCountry !== "FR";
         }
         if (ui.dataLicenseLink) {
             ui.dataLicenseLink.textContent = tr("sourceLicenseLink");
-            ui.dataLicenseLink.parentElement.hidden = currentCountry !== "FR";
         }
         updateDisplayToggleUi();
         if (ui.customizationToggle && ui.customizationToggle.getAttribute("aria-expanded") !== "true") {
@@ -3790,8 +3782,8 @@
         }
         setLabelText(ui.departmentField, tr("department"));
         setLabelText(ui.managerField, tr("manager"));
-        setLabelText(ui.axisField, currentCountry === "CO" ? tr("axisCO") : tr("axisFR"));
-        setLabelText(ui.sideField, tr(currentCountry === "FR" && searchRouteType === "A" ? "sideRequired" : "side"));
+        setLabelText(ui.axisField, tr("axisFR"));
+        setLabelText(ui.sideField, tr(searchRouteType === "A" ? "sideRequired" : "side"));
         setLabelText(ui.prField, tr("firstPr"));
         setLabelText(ui.pr2Field, tr("secondPr"));
         if (ui.textSearchLabel) ui.textSearchLabel.textContent = tr("textSearch");
@@ -3807,61 +3799,61 @@
         if (ui.clearResult) ui.clearResult.textContent = tr("clearResult");
         applyCustomizationLanguageUi();
 
-        const isFrance = currentCountry === "FR";
-        if (ui.routeTabsContainer) ui.routeTabsContainer.hidden = !isFrance;
-        if (ui.departmentField) ui.departmentField.hidden = !isFrance || !routeTypeUsesDepartment(searchRouteType);
-        if (ui.managerField) ui.managerField.hidden = !isFrance || !routeTypeUsesManager(searchRouteType);
-        if (ui.sideField) ui.sideField.hidden = !isFrance;
-        if (ui.axisFilterActions) ui.axisFilterActions.hidden = !isFrance;
-        if (ui.axisFilterBanner && !isFrance) ui.axisFilterBanner.hidden = true;
-        if (ui.pr2Field) ui.pr2Field.hidden = !isFrance;
-        if (ui.textSearchBlock) ui.textSearchBlock.hidden = !isFrance || searchRouteType !== "D";
+        if (ui.routeTabsContainer) ui.routeTabsContainer.hidden = false;
+        if (ui.departmentField) ui.departmentField.hidden = !routeTypeUsesDepartment(searchRouteType);
+        if (ui.managerField) ui.managerField.hidden = !routeTypeUsesManager(searchRouteType);
+        if (ui.sideField) ui.sideField.hidden = false;
+        if (ui.axisFilterActions) ui.axisFilterActions.hidden = false;
+        if (ui.pr2Field) ui.pr2Field.hidden = false;
+        if (ui.textSearchBlock) ui.textSearchBlock.hidden = searchRouteType !== "D";
         if (ui.autoSelectLabel) ui.autoSelectLabel.hidden = false;
         if (ui.axis) {
-            ui.axis.placeholder = isFrance ? ({ D: "D62", N: "N79", A: "A40", I: "M7" }[searchRouteType] || "D62") : "4005";
-            ui.axis.setAttribute("list", isFrance && searchRouteType === "I" ? "wme-pr-intercommunal-axis-list" : "");
+            ui.axis.placeholder = { D: "D62", N: "N79", A: "A40", I: "M7" }[searchRouteType] || "D62";
+            ui.axis.setAttribute("list", searchRouteType === "I" ? "wme-pr-intercommunal-axis-list" : "");
         }
-        if (ui.searchHelp) ui.searchHelp.textContent = isFrance && searchRouteType === "A" ? tr("motorwayHelp") : (isFrance ? tr("franceHelp") : tr("colombiaHelp"));
-        if (ui.locate) ui.locate.classList.toggle("wme-pr-button-beta", !isFrance);
-        if (ui.country) ui.country.value = currentCountry;
+        if (ui.searchHelp) ui.searchHelp.textContent = searchRouteType === "A" ? tr("motorwayHelp") : tr("franceHelp");
         if (ui.language) ui.language.value = currentLanguage;
-        if (ui.status && !locateInProgress) setStatus(isFrance ? tr("franceStatus") : tr("colombiaStatus"), "info");
-        if (ui.prIndexStatus && !isFrance) setPrIndexStatus(
-            currentLanguage === "es" ? "Colombia BETA — capa de puntos de referencia."
-                : currentLanguage === "en" ? "Colombia BETA — road reference point layer."
-                    : "Colombie BETA — calque des points de repère.",
-            "info",
-        );
+        if (ui.status && !locateInProgress) setStatus(tr("franceStatus"), "info");
     }
 
-    async function setCountry(countryCode, { updateLanguage = false } = {}) {
-        const next = COUNTRY_CONFIG[countryCode] ? countryCode : "FR";
-        const changed = next !== currentCountry;
-        currentCountry = next;
-        if (changed) {
-            // Aucune réponse France ne doit repeindre une vue Colombie, ni inversement.
-            prIndexRefreshGeneration += 1;
-            cancelPrIndexRequests();
-            prIndexCache = null;
-            prIndexRenderedFeatureKey = "";
-            prIndexRenderedLayoutKey = "";
-        }
-        writeSetting(SETTINGS_COUNTRY_KEY, currentCountry);
-        if (updateLanguage) {
-            currentLanguage = COUNTRY_CONFIG[next].defaultLanguage;
-            writeSetting(SETTINGS_LANGUAGE_KEY, currentLanguage);
-        }
-        await clearResult();
-        applyCountryAndLanguageUi();
-        updatePrIndexAxisFilterUi();
-        if (changed || !prIndexLayerEnabled) await clearPrIndexFeatures();
-        if (prIndexLayerEnabled) schedulePrIndexRefresh(0, true);
+
+    function normalizeLanguage(languageCode) {
+        return String(languageCode || "fr").toLowerCase() === "en" ? "en" : "fr";
+    }
+
+    function loadLanguageSetting() {
+        const language = normalizeLanguage(readSetting(SETTINGS_LANGUAGE_KEY));
+        writeSetting(SETTINGS_LANGUAGE_KEY, language);
+        return language;
     }
 
     function setLanguage(languageCode) {
-        currentLanguage = ["fr", "es", "en"].includes(languageCode) ? languageCode : "fr";
+        currentLanguage = normalizeLanguage(languageCode);
         writeSetting(SETTINGS_LANGUAGE_KEY, currentLanguage);
-        applyCountryAndLanguageUi();
+        applyLanguageUi();
+    }
+
+    let lastFranceSourcePoints = [];
+    function sourceUiText(fr, en) { return currentLanguage === "en" ? en : fr; }
+    function authorCorrectionBadge() {
+        return currentLanguage === "en" ? ["AUTHOR", "CORRECTION"] : ["CORRECTION", "DE L’AUTEUR"];
+    }
+    function franceSourceSummary(points) {
+        const dates = [...new Set((points || []).map(point => point?.sourceUpdatedAt)
+            .filter(value => value && Number.isFinite(Date.parse(value)))
+            .map(value => new Date(value).toISOString().slice(0, 10)))].sort();
+        const missing = (points || []).filter(point => !point?.sourceUpdatedAt || !Number.isFinite(Date.parse(point.sourceUpdatedAt))).length;
+        const value = dates.length ? (dates[0] === dates.at(-1) ? dates[0] : `${dates[0]} → ${dates.at(-1)}`)
+            : sourceUiText("non renseignée", "not provided");
+        return `IGN BD TOPO — Géoplateforme · ${sourceUiText("Mise à jour des objets", "Object updates")} : ${value}`
+            + (missing && dates.length ? ` · ${missing} ${sourceUiText("sans date", "undated")}` : "");
+    }
+    function updateSourcePanel() {
+        if (ui?.dataOrigin) ui.dataOrigin.textContent = `${tr("franceSourceInfo")}\n${franceSourceSummary(lastFranceSourcePoints)}`;
+    }
+    function rememberFranceSourceDates(points) {
+        lastFranceSourcePoints = (points || []).map(point => ({sourceUpdatedAt: point.sourceUpdatedAt}));
+        updateSourcePanel();
     }
 
     function setStatus(message, type = "info") {
@@ -4221,10 +4213,10 @@
             tab.setAttribute("aria-selected", selected ? "true" : "false");
             tab.tabIndex = selected ? 0 : -1;
         }
-        if (ui?.departmentField) ui.departmentField.hidden = currentCountry !== "FR" || !routeTypeUsesDepartment(searchRouteType);
-        if (ui?.managerField) ui.managerField.hidden = currentCountry !== "FR" || !routeTypeUsesManager(searchRouteType);
-        if (ui?.textSearchBlock) ui.textSearchBlock.hidden = currentCountry !== "FR" || searchRouteType !== "D";
-        if (ui?.sideField) setLabelText(ui.sideField, tr(currentCountry === "FR" && searchRouteType === "A" ? "sideRequired" : "side"));
+        if (ui?.departmentField) ui.departmentField.hidden = !routeTypeUsesDepartment(searchRouteType);
+        if (ui?.managerField) ui.managerField.hidden = !routeTypeUsesManager(searchRouteType);
+        if (ui?.textSearchBlock) ui.textSearchBlock.hidden = searchRouteType !== "D";
+        if (ui?.sideField) setLabelText(ui.sideField, tr(searchRouteType === "A" ? "sideRequired" : "side"));
         if (ui?.axis) {
             const examples = { D: "D62", N: "N79", A: "A75", I: "M7 / RM6007 / 5B" };
             ui.axis.placeholder = examples[searchRouteType] || "D62";
@@ -4382,7 +4374,6 @@
     async function locateFromDepartmentalText() {
         if (locateInProgress) return;
         try {
-            if (currentCountry !== "FR") throw new Error("Cette recherche est disponible uniquement pour la France.");
             const departmentCode = Core.normalizeDepartmentCode(ui?.department?.value);
             const parsed = parseDepartmentalSearchText(ui?.textSearchInput?.value);
 
@@ -4493,98 +4484,6 @@
         }
     }
 
-    function colombiaWmeRouteAliases(roadCode) {
-        const normalized = Core.normalizeAxis(roadCode);
-        const aliases = new Set([normalized]);
-        // Les codes nationaux INVÍAS à 4 chiffres sont affichés dans WME sous la
-        // forme RN<ruta>-<tramo> : 6510 -> RN65-10, 4005 -> RN40-05, etc.
-        const numeric = normalized.match(/^(\d{2})(\d{2})$/);
-        if (numeric) {
-            aliases.add(`RN${numeric[1]}-${numeric[2]}`);
-            aliases.add(`RN${numeric[1]}${numeric[2]}`);
-        }
-        return [...aliases];
-    }
-
-    function colombiaNationalRouteFamilyPattern(roadCode) {
-        const normalized = Core.normalizeAxis(roadCode);
-        const numeric = normalized.match(/^(\d{2})(\d{2})$/);
-        if (!numeric) return null;
-        const routeNumber = numeric[1];
-        return new RegExp(`(^|[^A-Z0-9])(?:RN|N)[\\s._-]*${routeNumber}[\\s._-]*\\d{1,3}($|[^A-Z0-9])`, "i");
-    }
-
-    async function colombiaLoadedRouteFamilySegments(roadCode) {
-        const familyPattern = colombiaNationalRouteFamilyPattern(roadCode);
-        if (!familyPattern) return [];
-        const matchingStreetIds = new Set();
-        for (const street of (await getMapModelSnapshot()).streets) {
-            if (!street?.name) continue;
-            const name = String(street.name).normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-            if (familyPattern.test(name)) matchingStreetIds.add(Number(street.id));
-        }
-        if (!matchingStreetIds.size) return [];
-        return (await getMapModelSnapshot()).segments.filter((segment) =>
-            matchingStreetIds.has(Number(segment.primaryStreetId))
-            || (segment.alternateStreetIds || []).some((id) => matchingStreetIds.has(Number(id)))
-        );
-    }
-
-    async function colombiaLoadedSegmentsNearGuide(coordinate, maximumDistance = 110) {
-        if (!Array.isArray(coordinate) || coordinate.length < 2) return [];
-        const result = [];
-        // Les calculs le long de Red Vial testent de nombreux points de guide :
-        // ne pas reconstruire les descripteurs de toute la carte pour chacun.
-        for (const description of await getMapSegmentDescriptions()) {
-            const projection = Core.projectPointToPolyline(coordinate, description.coordinates);
-            if (!projection || projection.distance > maximumDistance) continue;
-            result.push(description.segment);
-        }
-        return result;
-    }
-
-    async function colombiaLoadedSegmentsByAliases(routeAliases = []) {
-        const aliases = (routeAliases || []).map((value) => String(value || "").trim()).filter(Boolean);
-        if (!aliases.length) return [];
-        const matchers = aliases.map((alias) => Core.axisPattern(alias));
-        const matchingStreetIds = new Set();
-        for (const street of (await getMapModelSnapshot()).streets) {
-            if (!street?.name) continue;
-            const name = String(street.name).normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-            if (matchers.some((matcher) => matcher.test(name))) matchingStreetIds.add(Number(street.id));
-        }
-        if (!matchingStreetIds.size) return [];
-        return (await getMapModelSnapshot()).segments.filter((segment) =>
-            matchingStreetIds.has(Number(segment.primaryStreetId))
-            || (segment.alternateStreetIds || []).some((id) => matchingStreetIds.has(Number(id)))
-        );
-    }
-
-    async function colombiaNationalRouteFamilySegments(roadCode, boundaryPoints, maximumDistance = 1200) {
-        const familyPattern = colombiaNationalRouteFamilyPattern(roadCode);
-        if (!familyPattern) return [];
-        const matchingStreetIds = new Set();
-        for (const street of (await getMapModelSnapshot()).streets) {
-            if (!street?.name) continue;
-            const name = String(street.name).normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-            if (familyPattern.test(name)) matchingStreetIds.add(Number(street.id));
-        }
-        if (!matchingStreetIds.size) return [];
-        const targets = (boundaryPoints || []).map((point) => point?.coordinate).filter(Boolean);
-        const result = [];
-        for (const segment of (await getMapModelSnapshot()).segments) {
-            if (!(matchingStreetIds.has(Number(segment.primaryStreetId))
-                || (segment.alternateStreetIds || []).some((id) => matchingStreetIds.has(Number(id))))) continue;
-            const description = Core.describeSegment(segment);
-            if (!description) continue;
-            const closeEnough = targets.some((coordinate) => {
-                const projection = Core.projectPointToPolyline(coordinate, description.coordinates);
-                return projection && projection.distance <= maximumDistance;
-            });
-            if (closeEnough) result.push(segment);
-        }
-        return result;
-    }
 
     async function collectRouteSnapshot(axis, includeDescriptions = false, routeAliases = null) {
         const normalizedAxis = Core.normalizeAxis(axis);
@@ -4786,26 +4685,96 @@
         });
     }
 
-    function parseServiceJson(response, sourceLabel) {
+    function serviceExceptionDetail(text, payload) {
+        const clean = value => String(value ?? "").replace(/[\u0000-\u001f\u007f]/g, " ").replace(/\s+/g, " ").trim().slice(0, 350);
+        const jsonException = Array.isArray(payload?.exceptions) ? payload.exceptions[0] : null;
+        if (jsonException && typeof jsonException === "object") {
+            return { code: clean(jsonException.code), locator: clean(jsonException.locator),
+                detail: clean(Array.isArray(jsonException.text) ? jsonException.text.join(" ") : jsonException.text) };
+        }
+        // WFS may return an XML exception even when GeoJSON was requested,
+        // including under HTTP 200. Read text only; never insert remote markup.
+        if (!/<(?:[\w.-]+:)?(?:ExceptionReport|ServiceExceptionReport)\b/i.test(text)) return null;
+        const decode = value => String(value || "").replace(/&(#x[0-9a-f]+|#\d+|amp|lt|gt|quot|apos);/gi, (entity, key) => {
+            const names = { amp: "&", lt: "<", gt: ">", quot: '"', apos: "'" };
+            if (key[0] !== "#") return names[key.toLowerCase()] || entity;
+            const number = /^#x/i.test(key) ? parseInt(key.slice(2), 16) : Number(key.slice(1));
+            return number > 0 && number <= 0x10ffff && !(number >= 0xd800 && number <= 0xdfff) ? String.fromCodePoint(number) : "";
+        });
+        const tag = text.match(/<(?:[\w.-]+:)?(?:Exception|ServiceException)\b([^>]*)>/i)?.[1] || "";
+        const attr = name => clean(decode(tag.match(new RegExp("\\b" + name + "\\s*=\\s*([\"'])(.*?)\\1", "i"))?.[2]));
+        const raw = text.match(/<(?:[\w.-]+:)?ExceptionText\b[^>]*>([\s\S]*?)<\/(?:[\w.-]+:)?ExceptionText\s*>/i)?.[1]
+            ?? text.match(/<(?:[\w.-]+:)?ServiceException\b[^>]*>([\s\S]*?)<\/(?:[\w.-]+:)?ServiceException\s*>/i)?.[1] ?? "";
+        return { code: attr("exceptionCode") || attr("code"), locator: attr("locator"),
+            detail: clean(decode(raw.replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g, "$1").replace(/<[^>]*>/g, " "))) };
+    }
+
+    function parseServiceJson(response, sourceLabel, options = {}) {
+        let text = "", byteLength = null, reader = "responseText", decodeError = null;
+        const body = response.response;
+        if (options.responseType === "arraybuffer") {
+            // Use the complete binary body delivered by onload. Avoid the text
+            // chunk assembly path of the userscript manager; never salvage JSON.
+            let bytes = null;
+            if (Object.prototype.toString.call(body) === "[object ArrayBuffer]") bytes = new Uint8Array(body);
+            else if (ArrayBuffer.isView(body)) bytes = new Uint8Array(body.buffer, body.byteOffset, body.byteLength);
+            if (bytes) {
+                byteLength = bytes.byteLength;
+                reader = "arraybuffer UTF-8";
+                try { text = new TextDecoder("utf-8", { fatal: true }).decode(bytes); }
+                catch (error) { decodeError = error; reader += " invalide, préfixe " + Array.from(bytes.slice(0, 8), b => b.toString(16).padStart(2, "0")).join(" "); }
+            } else {
+                reader = "repli texte (réponse binaire absente)";
+                text = typeof response.responseText === "string" ? response.responseText : typeof body === "string" ? body : "";
+            }
+        } else text = String(response.responseText || "");
+        text = text.replace(/^\uFEFF/, "");
+        let payload = null, parsed = false, parseError = null;
+        try { payload = text.trim() ? JSON.parse(text) : null; parsed = Boolean(text.trim()); }
+        catch (error) { parseError = error; }
+        if (options.serviceExceptions) {
+            const exception = serviceExceptionDetail(text.slice(0, 32768), payload);
+            if (exception) {
+                const error = new Error(`Le ${sourceLabel} signale une erreur WFS${exception.code ? ` (${exception.code})` : ""}${exception.detail ? ` : ${exception.detail}` : "."}`);
+                Object.assign(error, { isWfsException: true, wfsExceptionCode: exception.code,
+                    remoteDetail: exception.detail, remoteLocator: exception.locator, httpStatus: response.status });
+                throw error;
+            }
+        }
         if (response.status < 200 || response.status >= 300) {
             let detail = "";
-            try {
-                const payload = JSON.parse(response.responseText || "{}");
+            if (parsed) {
                 const nested = payload?.error;
                 detail = [payload?.message, payload?.hint, nested?.message,
                     typeof nested === "string" ? nested : "", nested?.code]
                     .find(value => typeof value === "string" && value.trim()) || "";
-            } catch (error) { /* Le statut suffit si la réponse n'est pas JSON. */ }
+            }
             const requestError = new Error(`Le ${sourceLabel} a répondu avec le statut ${response.status}${detail ? ` : ${detail}` : ""}.`);
             requestError.httpStatus = response.status;
             requestError.remoteDetail = detail;
             throw requestError;
         }
-        try {
-            return response.responseText ? JSON.parse(response.responseText) : null;
-        } catch (error) {
-            const requestError = new Error(`La réponse du ${sourceLabel} est illisible.`);
+        if (parsed || (!text && !options.serviceExceptions && !decodeError)) return payload;
+        {
+            const format = decodeError ? "encodage UTF-8 invalide" : !text.trim() ? "vide" : /^\s*(?:<!doctype\s+html|<html)\b/i.test(text) ? "HTML au lieu de JSON"
+                : /^\s*</.test(text) ? "XML au lieu de JSON" : "JSON invalide ou tronqué";
+            const requestError = new Error(`La réponse du ${sourceLabel} est inexploitable (${format}, HTTP ${response.status}).`);
             requestError.isInvalidResponse = true;
+            requestError.responseFormat = format;
+            requestError.httpStatus = response.status;
+            if (options.serviceExceptions) {
+                const headers = String(response.responseHeaders || "");
+                const contentType = headers.match(/^content-type\s*:\s*([^\r\n]+)/im)?.[1]?.slice(0, 100) || "non fourni";
+                const position = Number(String(parseError?.message || "").match(/position\s+(\d+)/i)?.[1]);
+                const diagnostic = { reader, byteLength, characters: text.length, contentType,
+                    error: String((decodeError || parseError)?.message || "Corps absent").slice(0, 240),
+                    start: text.slice(0, 100), end: text.slice(-100),
+                    ...(Number.isFinite(position) ? { position, context: text.slice(Math.max(0, position - 60), position + 60) } : {}) };
+                requestError.responseDiagnostic = diagnostic;
+                requestError.message += ` Lecture : ${reader} ; ${byteLength === null ? text.length + " caractères" : byteLength + " octets"} ; type : ${contentType}. Détail : ${diagnostic.error}`;
+                // Only public IGN response excerpts; no cookies or request headers.
+                console.warn(`${SCRIPT_NAME}: diagnostic réponse IGN ${JSON.stringify(diagnostic)}`);
+            }
             throw requestError;
         }
     }
@@ -4822,6 +4791,8 @@
                 url,
                 headers: { Accept: "application/json", ...(options.headers || {}) },
                 data: options.body,
+                ...(options.responseType ? { responseType: options.responseType } : {}),
+                ...(options.nocache ? { nocache: true } : {}),
                 timeout: options.timeout || PR_REQUEST_TIMEOUT_MS,
                 signal: options.signal,
                 rejectRedirects: options.rejectRedirects,
@@ -4829,7 +4800,7 @@
                 onreadystatechange: options.onreadystatechange,
                 onload: (response) => {
                     try {
-                        resolve(parseServiceJson(response, sourceLabel));
+                        resolve(parseServiceJson(response, sourceLabel, options));
                     } catch (error) {
                         reject(error);
                     }
@@ -4858,54 +4829,13 @@
 
     function prRequestFailureReason(error) {
         if (error?.isTimeout) return "délai dépassé";
+        if (error?.isWfsException) return `erreur WFS ${error.wfsExceptionCode || "IGN"}`;
+        if (error?.isInvalidResponse) return error.responseFormat || "réponse invalide";
         if (error?.httpStatus) return `HTTP ${error.httpStatus}`;
         if (error?.isNetworkError) return "erreur réseau";
         return "réponse invalide";
     }
 
-    async function requestSupabaseJson(url, options) {
-        const sourceLabel = "API Supabase PR";
-        // Appelé seulement par la liste fixe de RPC ci-dessous. Aucune URL de
-        // page, redirection ou configuration externe ne peut recevoir la clé.
-        const address = new URL(url);
-        if (address.origin !== SUPABASE_URL || address.username || address.password || address.search || address.hash
-            || !/^\/rest\/v1\/rpc\/[a-z0-9_]+$/.test(address.pathname)) {
-            throw new Error("Adresse Supabase invalide.");
-        }
-        if (options.signal?.aborted) throw prRequestAbortError();
-        const started = Date.now();
-        let startMs = null;
-        let headersMs = null;
-        const timing = () => ({
-            rpc: address.pathname.split("/").pop(),
-            transport: "Tampermonkey sans redirection",
-            totalElapsedMs: Date.now() - started,
-            startMs, headersMs,
-        });
-        try {
-            // WME n'autorise pas Supabase dans son connect-src : un fetch de page
-            // échoue immédiatement. Une seule requête via l'API autorisée du
-            // gestionnaire suffit ; aucun changement de CSP ni relais supplémentaire.
-            const result = await requestJson(url, sourceLabel, {
-                ...options,
-                rejectRedirects: true,
-                onloadstart: () => { if (startMs === null) startMs = Date.now() - started; },
-                onreadystatechange: (response) => {
-                    if (headersMs === null && response.readyState >= 2 && response.status > 0) {
-                        headersMs = Date.now() - started;
-                    }
-                },
-            });
-            console.debug(`${SCRIPT_NAME}: réponse API PR ${JSON.stringify(timing())}`);
-            return result;
-        } catch (error) {
-            if (options.signal?.aborted || error.isAbortError) throw prRequestAbortError();
-            Object.assign(error, timing(), {
-                phase: headersMs === null ? "attente de réponse" : "réception du corps",
-            });
-            throw error;
-        }
-    }
 
     function readSetting(key) {
         try {
@@ -4932,7 +4862,7 @@
     function comparePublicVersions(leftValue, rightValue) {
         const normalize = (value) => String(value || "")
             .trim()
-            .replace(/\.(?:dev|temp)\d+.*$/i, "")
+            .replace(/\.(?:dev|temp)\d*.*$/i, "")
             .split(".")
             .map((part) => {
                 const match = String(part).match(/^\d+/);
@@ -4968,6 +4898,9 @@
             info = null;
         }
         const scriptInfo = info?.script || {};
+        if (scriptInfo.updateURL === "none" || scriptInfo.downloadURL === "none") {
+            return { scriptId: "590425", pageUrl: GREASYFORK_PAGE_URL, metaUrl: "", exact: true };
+        }
         const candidateUrls = [
             info?.scriptUpdateURL,
             info?.scriptDownloadURL,
@@ -5038,7 +4971,7 @@
 
     function updateGreasyForkButtonState({ latestVersion = "", checked = false, error = false } = {}) {
         if (!ui?.greasyForkButton) return;
-        const currentPublicVersion = String(VERSION).replace(/\.(?:dev|temp)\d+.*$/i, "");
+        const currentPublicVersion = String(VERSION).replace(/\.(?:dev|temp)\d*.*$/i, "");
         const updateAvailable = Boolean(
             latestVersion && comparePublicVersions(latestVersion, currentPublicVersion) > 0
         );
@@ -5067,6 +5000,7 @@
     let greasyForkUpdateInProgress = false;
 
     async function checkGreasyForkUpdate() {
+        if (/\.(?:dev|temp)\d*\b/i.test(VERSION)) return;
         const installation = getGreasyForkInstallationInfo();
         if (ui?.greasyForkButton) {
             ui.greasyForkButton.dataset.pageUrl = installation.pageUrl;
@@ -5166,108 +5100,371 @@
         writeSetting(SETTINGS_MOTORWAY_DESTINATION_OVERRIDES_KEY, JSON.stringify(motorwayDestinationOverrides));
     }
 
-    // Same data envelope as DEV3; only the transport changes to Supabase RPC.
-    // The fixed mode map prevents arbitrary RPC names or caller-provided URLs.
-    async function requestPrData(mode, params = {}, country = "FR", options = {}) {
-        const supported = country === "FR"
-            ? new Set(["lookup", "bbox", "managers", "axes", "scopes"])
-            : country === "CO" ? new Set(["bbox", "target", "guides"]) : new Set();
-        if (!supported.has(mode)) throw new Error("Mode ou pays Supabase invalide.");
-        const textOrNull = value => String(value ?? "").trim() || null;
-        const integer = (value, label, min = 0, max = 2147483647) => {
-            const number = Number(value);
-            if (value === null || value === undefined || value === "" || !Number.isSafeInteger(number)
-                || number < min || number > max) throw new Error("Paramètre Supabase invalide : " + label + ".");
-            return number;
-        };
-        let rpc;
-        let body = {};
-        let limit = 1000;
-        let offset = 0;
-        if (mode === "lookup") {
-            rpc = "find_wme_pr_points_v08";
-            const tokens = String(params.numbers ?? "").split(",");
-            if (!tokens.length || tokens.length > 500 || tokens.some(value => !value.trim())) {
-                throw new Error("Liste de PR invalide.");
-            }
-            body = {
-                p_department_code: textOrNull(params.department),
-                p_axis: Core.normalizeAxis(params.axis),
-                p_pr_numbers: [...new Set(tokens.map(value => integer(value.trim(), "PR")))],
-                p_network_type: textOrNull(params.network_type),
-                p_manager: textOrNull(params.manager),
-            };
-        } else if (mode === "bbox") {
-            const rawBbox = String(params.bbox ?? "").split(",");
-            if (rawBbox.length !== 4 || rawBbox.some(value => !value.trim() || !Number.isFinite(Number(value)))) {
-                throw new Error("Emprise Supabase invalide.");
-            }
-            const [minLon, minLat, maxLon, maxLat] = Core.normalizeBbox(rawBbox.map(Number));
-            if (minLon < -180 || maxLon > 180 || minLat < -90 || maxLat > 90) {
-                throw new Error("Emprise Supabase hors limites.");
-            }
-            limit = integer(params.limit ?? 1000, "limite", 1, 1000);
-            offset = integer(params.offset ?? 0, "décalage", 0, 100000);
-            body = { p_min_longitude: minLon, p_min_latitude: minLat,
-                p_max_longitude: maxLon, p_max_latitude: maxLat, p_limit: limit };
-            if (country === "FR") {
-                rpc = "find_wme_pr_points_in_bbox_v121";
-                Object.assign(body, {
-                    p_axis: textOrNull(params.axis),
-                    p_network_type: textOrNull(params.network_type),
-                    p_department_code: textOrNull(params.department),
-                    p_manager: textOrNull(params.manager),
-                    p_offset: offset,
-                });
-            } else {
-                rpc = "find_wme_pr_colombia_points_in_bbox";
-                if (offset !== 0) throw new Error("Pagination Colombie non disponible.");
-            }
-        } else if (mode === "managers") {
-            rpc = "list_wme_pr_intercommunal_managers";
-        } else if (mode === "axes") {
-            rpc = "list_wme_pr_intercommunal_axes";
-            body = { p_manager: textOrNull(params.manager) };
-        } else if (mode === "scopes") {
-            rpc = "find_wme_pr_intercommunal_scopes";
-            body = { p_axis: Core.normalizeAxis(params.axis) };
-        } else if (mode === "target") {
-            rpc = "find_wme_pr_colombia_target";
-            body = { p_road_code: Core.normalizeAxis(params.axis),
-                p_target_chainage: integer(params.chainage, "abscisse") };
-        } else {
-            rpc = "find_wme_pr_colombia_guides";
-            body = { p_road_code: Core.normalizeAxis(params.axis),
-                p_start_chainage: integer(params.start, "début"),
-                p_end_chainage: integer(params.end, "fin") };
-        }
-        const data = await requestSupabaseJson(SUPABASE_URL + "/rest/v1/rpc/" + rpc, {
-            method: "POST",
-            headers: { apikey: SUPABASE_PUBLIC_KEY, "Content-Type": "application/json" },
-            body: JSON.stringify(body),
-            timeout: PR_REQUEST_TIMEOUT_MS,
-            signal: options.signal,
-        });
-        if (!Array.isArray(data) || data.some(row => !row || typeof row !== "object" || Array.isArray(row))) {
-            throw new Error("Réponse Supabase incomplète ou invalide.");
-        }
-        // PostgREST limits row sets to 1000; the historical lookup itself caps at 500.
-        // Refuse potentially incomplete non-map results instead of interpolating through missing data.
-        if (mode !== "bbox" && data.length >= (mode === "lookup" ? 500 : 1000)) {
-            throw new Error("Réponse Supabase potentiellement tronquée : resserrez la recherche.");
-        }
-        if (mode === "bbox" && (data.length > limit || data.some(row => typeof row.is_truncated !== "boolean"))) {
-            throw new Error("Métadonnées du calque Supabase manquantes ou invalides.");
-        }
-        const truncated = mode === "bbox" && data.some(row => row.is_truncated === true);
-        return { data, meta: {
-            is_truncated: truncated,
-            next_offset: truncated ? offset + data.length : null,
-            // This versioned FR RPC applies all filters before LIMIT; missing RPC is an error.
-            filters_applied: mode === "bbox" && country === "FR",
-        }};
+    function ignInteger(value, label, min = 0, max = 2147483647) {
+        const number = Number(value);
+        if (value === null || value === undefined || value === "" || !Number.isSafeInteger(number)
+            || number < min || number > max) throw new Error(`Paramètre IGN invalide : ${label}.`);
+        return number;
     }
 
+    function ignLiteral(value) {
+        const text = String(value ?? "").trim();
+        if (!text || text.length > 200 || /[\u0000-\u001f]/.test(text)) throw new Error("Critère IGN invalide.");
+        return "'" + text.replace(/'/g, "''") + "'";
+    }
+
+    function ignScopeFilter(params, requireAxis = false) {
+        const filters = [];
+        if (requireAxis || params.axis) {
+            const axis = Core.normalizeAxis(params.axis);
+            const aliases = [axis];
+            if (/^[DN]\d/.test(axis)) aliases.push("R" + axis);
+            filters.push(`route IN (${aliases.map(ignLiteral).join(",")})`);
+        }
+        if (params.department) filters.push(`code_insee_du_departement=${ignLiteral(Core.normalizeDepartmentCode(params.department))}`);
+        if (params.manager) filters.push(`gestionnaire=${ignLiteral(params.manager)}`);
+        const network = String(params.network_type || "").trim().toUpperCase();
+        if (network && !["A", "N", "D", "I"].includes(network)) throw new Error("Type de réseau IGN invalide.");
+        if (network === "I") filters.push(IGN_INTERCOMMUNAL_FILTER);
+        else if (network) filters.push(network === "A" ? "route LIKE 'A%'" : `(route LIKE '${network}%' OR route LIKE 'R${network}%')`);
+        return filters;
+    }
+
+    async function requestIgnJson(url, options) {
+        // Retry only the failed read, once. Never rerun map edits or the whole
+        // localization, and never retry a rejected WFS query or an auth/rate limit.
+        for (let attempt = 0; attempt < 2; attempt++) {
+            if (options.signal?.aborted) throw prRequestAbortError();
+            try {
+                return await requestJson(url, "service officiel IGN", { ...options, serviceExceptions: true,
+                    responseType: "arraybuffer", nocache: attempt > 0 });
+            } catch (error) {
+                if (options.signal?.aborted || error.isAbortError) throw prRequestAbortError();
+                const temporary = !error.isWfsException && (error.isNetworkError || error.isTimeout
+                    || (error.isInvalidResponse && error.httpStatus >= 200 && error.httpStatus < 300)
+                    || [502, 503, 504].includes(error.httpStatus));
+                if (attempt || !temporary) {
+                    if (attempt) error.message += " Échec après deux tentatives auprès de l’IGN.";
+                    throw error;
+                }
+                await new Promise((resolve, reject) => {
+                    const done = () => { options.signal?.removeEventListener("abort", abort); resolve(); };
+                    const timer = root.setTimeout(done, 1000);
+                    const abort = () => { root.clearTimeout(timer); options.signal?.removeEventListener("abort", abort); reject(prRequestAbortError()); };
+                    options.signal?.addEventListener("abort", abort, { once: true });
+                    if (options.signal?.aborted) abort();
+                });
+            }
+        }
+    }
+
+    async function requestIgnPage({ filter, count = 5000, offset = 0, properties = IGN_PR_PROPERTIES }, options = {}) {
+        if (options.signal?.aborted) throw prRequestAbortError();
+        const address = new URL(IGN_WFS_URL);
+        // Fixed official destination and layer. No key, proxy, redirect or fallback.
+        for (const [key, value] of Object.entries({
+            SERVICE: "WFS", VERSION: "2.0.0", REQUEST: "GetFeature", TYPENAMES: IGN_PR_LAYER,
+            OUTPUTFORMAT: "application/json", SRSNAME: "CRS:84", SORTBY: "cleabs",
+            PROPERTYNAME: properties, COUNT: count, STARTINDEX: offset,
+            // The locator accepts numbered references. Named-only routes such as
+            // "Voie Sacrée" must not invalidate all managers or the whole map view.
+            CQL_FILTER: `(${filter}) AND strMatches(route, '.*[0-9].*') = true`,
+        })) address.searchParams.set(key, String(value));
+        const started = Date.now();
+        let startMs = null, headersMs = null;
+        const timing = () => ({
+            provider: "IGN WFS", transport: "Tampermonkey sans redirection",
+            totalElapsedMs: Date.now() - started, startMs, headersMs,
+        });
+        try {
+            const payload = await requestIgnJson(address.href, {
+                timeout: PR_REQUEST_TIMEOUT_MS, signal: options.signal, rejectRedirects: true,
+                onloadstart: () => { if (startMs === null) startMs = Date.now() - started; },
+                onreadystatechange: response => {
+                    if (headersMs === null && response.readyState >= 2 && response.status > 0) headersMs = Date.now() - started;
+                },
+            });
+            const features = payload?.features;
+            if (payload?.type !== "FeatureCollection" || !Array.isArray(features) || features.length > count
+                || !Number.isSafeInteger(payload.numberMatched) || payload.numberMatched < 0
+                || payload.numberReturned !== features.length
+                || (features.length && payload.numberMatched < offset + features.length)
+                || features.some(feature => feature?.type !== "Feature" || !feature.properties
+                    || Array.isArray(feature.properties) || !feature.properties.cleabs)) {
+                throw new Error("Réponse IGN incomplète ou invalide.");
+            }
+            const more = offset + features.length < payload.numberMatched;
+            if (!features.length && more) throw new Error("Pagination IGN incomplète.");
+            console.debug(`${SCRIPT_NAME}: réponse API PR ${JSON.stringify(timing())}`);
+            return { features, more, matched: payload.numberMatched };
+        } catch (error) {
+            if (options.signal?.aborted || error.isAbortError) throw prRequestAbortError();
+            Object.assign(error, timing(), { phase: headersMs === null ? "attente de réponse" : "réception du corps" });
+            throw error;
+        }
+    }
+
+    async function requestIgnFeatures(filter, options = {}, properties = IGN_PR_PROPERTIES) {
+        const features = [], identifiers = new Set();
+        let matched = null;
+        for (;;) {
+            const page = await requestIgnPage({ filter, offset: features.length, properties }, options);
+            // Fail explicitly rather than use a partial route or a mixed edition.
+            if (page.matched > 20000 || (matched !== null && page.matched !== matched)) {
+                throw new Error("Recherche IGN trop large ou données modifiées pendant le chargement. Précisez la recherche ou réessayez.");
+            }
+            matched = page.matched;
+            for (const feature of page.features) {
+                const id = feature.properties.cleabs;
+                if (identifiers.has(id)) throw new Error("Pagination IGN incohérente : repère reçu plusieurs fois.");
+                identifiers.add(id);
+                features.push(feature);
+            }
+            if (!page.more) return features;
+        }
+    }
+
+    function ignPointRow(feature) {
+        const p = feature.properties, coordinate = feature.geometry?.coordinates;
+        if (feature.geometry?.type !== "Point" || !Array.isArray(coordinate)
+            || coordinate.length < 2 || !coordinate.slice(0, 2).every(Number.isFinite)
+            || Math.abs(coordinate[0]) > 180 || Math.abs(coordinate[1]) > 90) {
+            throw new Error("Coordonnées IGN invalides.");
+        }
+        const axis = Core.normalizeAxis(p.route);
+        const type = String(p.type_de_pr || "").toUpperCase();
+        if (!["PR", "PR0", "PRF", "DS", "FS"].includes(type)) throw new Error("Type de repère IGN invalide.");
+        const rawNumber = String(p.numero ?? "").trim();
+        const number = /^\d+$/.test(rawNumber) ? Number(rawNumber) : null;
+        if (["PR", "PR0"].includes(type) && !Number.isSafeInteger(number)) throw new Error("Numéro de PR IGN invalide.");
+        const family = Core.routeFamilyFromAxis(axis);
+        const row = {
+            axis, department_code: p.code_insee_du_departement || null,
+            // PRF without a numeric reference is an end marker, never displayed as PR999.
+            pr_number: number ?? (type === "PRF" ? 999 : null), raw_point_number: rawNumber || null,
+            abscissa: p.abscisse, point_order: p.ordre, point_type: type,
+            longitude: coordinate[0], latitude: coordinate[1], side: p.cote || null,
+            branch_id: p.identifiant_de_section || null, route_id: p.lien_vers_route_nommee || null,
+            network_type: ["A", "N", "D"].includes(family) ? family : "I",
+            road_manager: p.gestionnaire || null, source_id: p.cleabs,
+            source_updated_at: p.date_modification || null, source: "IGN BD TOPO — API officielle WFS",
+        };
+        if (!Core.parsePrRecord(row)) throw new Error("Repère IGN inexploitable.");
+        return row;
+    }
+
+    // One session-only directory, loaded only when the intercommunal functions are used.
+    // No export, persistent data cache, or requests to the author's server.
+    let ignIntercommunalDirectory = null;
+    async function loadIgnIntercommunalDirectory() {
+        if (!ignIntercommunalDirectory) {
+            ignIntercommunalDirectory = requestIgnFeatures(
+                `${IGN_INTERCOMMUNAL_FILTER} AND ${IGN_VISIBLE_TYPES}`, {}, "cleabs,route,gestionnaire,geometrie",
+            ).then(features => features.map(feature => {
+                const coordinate = feature.geometry?.coordinates;
+                if (feature.geometry?.type !== "Point" || !Array.isArray(coordinate)
+                    || coordinate.length < 2 || !coordinate.slice(0, 2).every(Number.isFinite)) throw new Error("Territoire IGN invalide.");
+                return { axis: Core.normalizeAxis(feature.properties.route), road_manager: String(feature.properties.gestionnaire || "").trim(), coordinate };
+            }).filter(row => row.road_manager)).catch(error => {
+                ignIntercommunalDirectory = null;
+                throw error;
+            });
+        }
+        return ignIntercommunalDirectory;
+    }
+
+    async function requestFranceIgnData(mode, params, options) {
+        const meta = { is_truncated: false, next_offset: null, filters_applied: mode === "bbox", provider: "IGN WFS" };
+        if (mode === "managers" || mode === "axes" || mode === "scopes") {
+            const axis = mode === "scopes" ? Core.normalizeAxis(params.axis) : null;
+            const manager = mode === "axes" ? String(params.manager || "").trim() : null;
+            if (mode === "axes" && !manager) throw new Error("Sélectionnez un gestionnaire IGN.");
+            const directory = await loadIgnIntercommunalDirectory();
+            let data;
+            if (mode === "managers") data = [...new Set(directory.map(row => row.road_manager))].sort().map(road_manager => ({ road_manager }));
+            else if (mode === "axes") data = [...new Set(directory.filter(row => row.road_manager === manager).map(row => row.axis))].sort().map(axis => ({ axis }));
+            else {
+                const groups = new Map();
+                for (const row of directory.filter(row => row.axis === axis)) {
+                    const item = groups.get(row.road_manager) || { road_manager: row.road_manager, longitude: 0, latitude: 0, point_count: 0 };
+                    item.longitude += row.coordinate[0]; item.latitude += row.coordinate[1]; item.point_count++;
+                    groups.set(row.road_manager, item);
+                }
+                data = [...groups.values()].map(row => ({ ...row, longitude: row.longitude / row.point_count, latitude: row.latitude / row.point_count }));
+            }
+            return { data, meta };
+        }
+        if (mode === "bbox") {
+            const parts = String(params.bbox ?? "").split(",");
+            if (parts.length !== 4 || parts.some(value => !value.trim() || !Number.isFinite(Number(value)))) throw new Error("Emprise IGN invalide.");
+            const [minLon, minLat, maxLon, maxLat] = Core.normalizeBbox(parts.map(Number));
+            if (minLon < -180 || maxLon > 180 || minLat < -90 || maxLat > 90) throw new Error("Emprise IGN hors limites.");
+            const limit = ignInteger(params.limit ?? 1000, "limite", 1, 1000);
+            const offset = ignInteger(params.offset ?? 0, "décalage", 0, 100000);
+            const filter = [...ignScopeFilter(params), IGN_VISIBLE_TYPES,
+                // GeoServer ECQL BBOX explicitly uses longitude, latitude (CRS:84).
+                `BBOX(geometrie,${minLon},${minLat},${maxLon},${maxLat},'CRS:84')`].join(" AND ");
+            const page = await requestIgnPage({ filter, count: limit + 1, offset }, options);
+            const data = page.features.slice(0, limit).map(ignPointRow);
+            const truncated = page.more || page.features.length > limit;
+            return { data, meta: { ...meta, is_truncated: truncated, next_offset: truncated ? offset + data.length : null } };
+        }
+        if (mode !== "lookup") throw new Error("Mode IGN invalide.");
+        const tokens = String(params.numbers ?? "").split(",");
+        if (!tokens.length || tokens.length > 500 || tokens.some(value => !value.trim())) throw new Error("Liste de PR invalide.");
+        const numbers = new Set(tokens.map(value => ignInteger(value.trim(), "PR")));
+        if (Core.normalizeAxis(params.axis) === "A40" && [...numbers].some(number => number >= 119 && number <= 123)) {
+            for (const number of [119, 120, 121, 122, 123]) numbers.add(number);
+        }
+        // Read the scoped route so DS/FS, terminal markers and zero-padded numbers
+        // are not lost by a string comparison of the official numero property.
+        const filter = [...ignScopeFilter(params, true), IGN_POINT_TYPES].join(" AND ");
+        const rows = (await requestIgnFeatures(filter, options)).map(ignPointRow);
+        const references = rows.filter(row => ["PR", "PR0", "PRF"].includes(row.point_type) && numbers.has(row.pr_number));
+        const groups = new Map();
+        const groupKey = row => JSON.stringify([row.department_code, row.network_type, row.road_manager || "", row.route_id || "", row.side === "U" ? "" : row.side || ""]);
+        const finite = value => value !== null && value !== undefined && value !== "" && Number.isFinite(Number(value));
+        for (const row of references) {
+            const key = groupKey(row), range = groups.get(key) || { minOrder: Infinity, maxOrder: -Infinity, minChain: Infinity, maxChain: -Infinity };
+            if (finite(row.point_order)) { range.minOrder = Math.min(range.minOrder, Number(row.point_order)); range.maxOrder = Math.max(range.maxOrder, Number(row.point_order)); }
+            if (finite(row.abscissa)) { range.minChain = Math.min(range.minChain, Number(row.abscissa)); range.maxChain = Math.max(range.maxChain, Number(row.abscissa)); }
+            groups.set(key, range);
+        }
+        const selected = new Map(references.map(row => [row.source_id, row]));
+        for (const row of rows) {
+            if (!["DS", "FS", "PRF"].includes(row.point_type)) continue;
+            const ranges = [groups.get(groupKey(row)), groups.get(groupKey({ ...row, route_id: null }))].filter(Boolean);
+            if (ranges.some(range =>
+                (finite(row.point_order) && row.point_order >= range.minOrder && row.point_order <= range.maxOrder)
+                || (finite(row.abscissa) && row.abscissa >= range.minChain - 2000 && row.abscissa <= range.maxChain + 2000)
+            )) selected.set(row.source_id, row);
+        }
+        return { data: [...selected.values()], meta };
+    }
+
+    // Un seul fournisseur de données routières : le WFS officiel IGN.
+    async function requestPrData(mode, params = {}, country = "FR", options = {}) {
+        if (country !== "FR") throw new Error("Cette version prend en charge la France uniquement.");
+        return requestFranceIgnData(mode, params, options);
+    }
+
+
+    let a40OfficialPoints = null;
+    let a40OfficialPromise = null;
+    let a40CalibrationReady = null;
+    let a40CalibrationWork = null;
+    let a40CalibrationAttempt = "";
+    let a40CalibrationRetryAt = 0;
+
+    function a40Message(kind) {
+        const messages = {
+            applied: { fr: "Correction de l’auteur — estimation WME, PR 119 → 123", en: "Author correction — WME estimate, PR 119 → 123" },
+            explanation: {
+                fr: "Les coordonnées IGN d’origine restent inchangées et consultables dans le détail. Le script utilise une position corrigée, estimée sur le tracé WME, pour l’affichage, la localisation et les notes de carte.",
+                en: "The original IGN coordinates remain unchanged and available in the details. The script uses a corrected position, estimated on the WME road geometry, for display, location results and map notes.",
+            },
+            pending: { fr: "Coordonnée IGN non recalée — afficher le parcours A40 entre les PR 119 et 123", en: "Unadjusted IGN coordinate — show A40 between PR 119 and 123" },
+            unavailable: { fr: "Recalage A40 impossible : les deux chaussées entre les PR 119 et 123 doivent être chargées et identifiées sans ambiguïté. Élargissez la vue puis relancez la recherche.", en: "A40 alignment unavailable: both carriageways between PR 119 and 123 must be loaded and unambiguously identified. Zoom out and retry the search." },
+        };
+        return messages[kind]?.[currentLanguage] || messages[kind]?.fr || kind;
+    }
+
+    function rememberA40References(points) {
+        const scoped = (points || []).filter(Core.isA40CalibrationReference);
+        if (!["D", "G"].every(side => [119, 123].every(number => scoped.some(point => point.side === side && point.number === number)))) return;
+        const signature = rows => JSON.stringify(rows.map(point => [point.id, point.coordinate, point.abscissa, point.branchId, point.routeId, point.roadManager]).sort((a,b) => String(a[0]).localeCompare(String(b[0]))));
+        if (a40OfficialPoints && signature(a40OfficialPoints) !== signature(scoped)) a40CalibrationReady = null;
+        a40OfficialPoints = scoped;
+    }
+
+    async function loadA40References() {
+        if (a40OfficialPoints) return a40OfficialPoints;
+        if (!a40OfficialPromise) {
+            a40OfficialPromise = requestPrData("lookup", {
+                axis: "A40", department: "01", network_type: "A", numbers: "119,120,121,122,123",
+            }, "FR").then(payload => {
+                rememberA40References(Core.parsePrPayload(payload.data));
+                if (!a40OfficialPoints) throw new Error(a40Message("unavailable"));
+                return a40OfficialPoints;
+            }).finally(() => { a40OfficialPromise = null; });
+        }
+        return a40OfficialPromise;
+    }
+
+    function updateA40Calibration(points, segments) {
+        rememberA40References(points);
+        const next = Core.buildA40Calibration(a40OfficialPoints || points, segments);
+        // Retain a complete corridor in session memory when a later view contains
+        // only part of it. Invalidate it if a loaded segment has changed geometry.
+        if (!next && a40CalibrationReady) {
+            const fresh = new Map((segments || []).map(segment => [Number(segment.id), segment]));
+            const changed = Object.values(a40CalibrationReady).some(corridor => corridor.component.some(old => {
+                const current = fresh.get(old.id);
+                return current && (JSON.stringify(current.geometry?.coordinates) !== JSON.stringify(old.coordinates)
+                    || current.fromNodeId !== old.segment.fromNodeId || current.toNodeId !== old.segment.toNodeId);
+            }));
+            if (changed) a40CalibrationReady = null;
+        }
+        if (next) a40CalibrationReady = next;
+        return a40CalibrationReady;
+    }
+
+    function redrawA40Layer() {
+        if (!prIndexLayerEnabled
+            || prIndexActiveRefresh !== null || prIndexRefreshTimer !== null) return;
+        // Positions also change with labels disabled or with an empty raw bbox.
+        observeAsync(drawPrIndexPoints(prIndexCache?.points || []), "recalage des PR A40");
+    }
+
+    function scheduleA40Calibration(points, visibleBbox) {
+        if (!prIndexLayerEnabled || a40CalibrationWork) return;
+        const filter = effectivePrIndexAxisFilter();
+        if (filter && (filter.axis !== "A40" || (filter.departmentCode && filter.departmentCode !== "01"))) return;
+        // A trigger envelope only, never a substitute source of PR coordinates.
+        const bbox = Core.normalizeBbox(visibleBbox);
+        const inArea = bbox[0] <= 5.625 && bbox[2] >= 5.56 && bbox[1] <= 46.15 && bbox[3] >= 46.12;
+        if (!inArea && !points.some(point => Core.needsA40Calibration(point))) return;
+        const attempt = `${routeDataRevision}:${prIndexRefreshGeneration}`;
+        if (a40CalibrationAttempt === attempt || Date.now() < a40CalibrationRetryAt) return;
+        a40CalibrationAttempt = attempt;
+        // Start after the ordinary layer has painted. No network/SDK await is
+        // added to its critical path, and the map is never moved by the layer.
+        a40CalibrationWork = new Promise(resolve => root.setTimeout(resolve, 250)).then(async () => {
+            if (!prIndexLayerEnabled) return;
+            const references = await loadA40References();
+            const snapshot = await collectRouteSnapshot("A40", false);
+            updateA40Calibration(references, snapshot.segments);
+            redrawA40Layer();
+        }).catch(error => {
+            a40CalibrationRetryAt = Date.now() + 10000;
+            console.warn(`${SCRIPT_NAME}: recalage A40`, error);
+        }).finally(() => { a40CalibrationWork = null; });
+    }
+
+    async function waitForA40Calibration(points) {
+        const deadline = Date.now() + WME_ROUTE_LOAD_TIMEOUT_MS;
+        do {
+            const snapshot = await collectRouteSnapshot("A40", false);
+            if (updateA40Calibration(points, snapshot.segments)) return snapshot;
+            await new Promise(resolve => root.setTimeout(resolve, WME_ROUTE_LOAD_POLL_MS));
+        } while (Date.now() < deadline);
+        throw new Error(a40Message("unavailable"));
+    }
+
+    function a40LayerPoints(points) {
+        const merged = new Map((points || []).map(point => [point.id || point, point]));
+        // Include a point whose raw coordinate falls outside the current API bbox
+        // but whose recalculated coordinate lies inside the visible corridor.
+        for (const point of a40OfficialPoints || []) {
+            if (Core.needsA40Calibration(point)) merged.set(point.id || point, point);
+        }
+        return [...merged.values()].map(point => {
+            if (!Core.needsA40Calibration(point)) return point;
+            const result = Core.resolveA40Calibration(a40CalibrationReady, point);
+            return result ? { ...point, coordinate: result.point, sourceCoordinate: point.coordinate.slice(), calibration: result.calibration }
+                : { ...point, calibrationPending: true };
+        });
+    }
 
     async function searchPrPoints({ departmentCode = null, axis, lookupNumbers, requestedNumbers = [], manager = null, networkType = null }) {
         
@@ -5279,6 +5476,8 @@
             network_type: normalizedNetworkType, manager: normalizedManager,
         }, "FR")).data;
         const points = Core.parsePrPayload(payload);
+        rememberA40References(points);
+        rememberFranceSourceDates(points);
         if (!points.length) {
             const scope = normalizedManager
                 ? `${normalizedManager} / ${axis}`
@@ -5304,250 +5503,12 @@
         };
     }
 
-    async function searchColombiaGuides(roadCode, startChainage, endChainage) {
-        
-        const axis = Core.normalizeAxis(roadCode);
-        const payload = (await requestPrData("guides", {
-            axis, start: Math.round(Number(startChainage) || 0), end: Math.round(Number(endChainage) || 0),
-        }, "CO")).data;
-        return (Array.isArray(payload) ? payload : [])
-            .map((row) => ({
-                chainage: Number(row?.chainage),
-                coordinate: [Number(row?.longitude), Number(row?.latitude)],
-            }))
-            .filter((row) => Number.isFinite(row.chainage)
-                && row.coordinate.every(Number.isFinite))
-            .sort((a, b) => a.chainage - b.chainage);
-    }
-
-    async function searchColombiaTarget(roadCode, parsedPr) {
-        
-        const axis = Core.normalizeAxis(roadCode);
-        const targetChainage = parsedPr.base * 1000 + parsedPr.offset;
-        const payload = (await requestPrData("target", { axis, chainage: targetChainage }, "CO")).data;
-        const points = Core.parsePrPayload(payload);
-        if (!points.length) throw new Error(tr("unavailable"));
-        const sameAxis = Core.filterPrPoints(points, axis);
-        const lower = sameAxis.filter((point) => Number.isFinite(point.abscissa) && point.abscissa <= targetChainage)
-            .sort((a, b) => b.abscissa - a.abscissa || (a.pointType === "PR" ? -1 : 1))[0] || null;
-        const upper = sameAxis.filter((point) => Number.isFinite(point.abscissa) && point.abscissa >= targetChainage)
-            .sort((a, b) => a.abscissa - b.abscissa || (a.pointType === "PR" ? -1 : 1))[0] || null;
-        if (!lower || !upper) {
-            throw new Error(
-                currentLanguage === "es" ? `El PR solicitado no está encuadrado por dos referencias conocidas de ${axis}.`
-                    : currentLanguage === "en" ? `The requested PR is not bracketed by two known references on ${axis}.`
-                        : `Le PR demandé n’est pas encadré par deux références connues sur ${axis}.`,
-            );
-        }
-        return { axis, targetChainage, points: sameAxis, lower, upper };
-    }
-
-    function resolveColombiaTargetFromGuides(source, guidePoints, routeSegments) {
-        const { lower, upper, targetChainage } = source;
-        const samples = [
-            { chainage: Number(lower.abscissa), coordinate: lower.coordinate, exact: true },
-            ...(guidePoints || []).map((row) => ({
-                chainage: Number(row?.chainage),
-                coordinate: row?.coordinate,
-                exact: false,
-            })),
-            { chainage: Number(upper.abscissa), coordinate: upper.coordinate, exact: true },
-        ].filter((row) =>
-            Number.isFinite(row.chainage)
-            && Array.isArray(row.coordinate)
-            && row.coordinate.length >= 2
-            && row.coordinate.every(Number.isFinite)
-            && row.chainage >= Number(lower.abscissa)
-            && row.chainage <= Number(upper.abscissa)
-        ).sort((a, b) => a.chainage - b.chainage || Number(b.exact) - Number(a.exact));
-
-        // Dédupliquer par chaînage en donnant la priorité aux références exactes.
-        const byChainage = new Map();
-        for (const sample of samples) {
-            if (!byChainage.has(sample.chainage) || sample.exact) byChainage.set(sample.chainage, sample);
-        }
-        const ordered = [...byChainage.values()].sort((a, b) => a.chainage - b.chainage);
-        if (ordered.length < 2) return null;
-
-        let before = null;
-        let after = null;
-        for (const sample of ordered) {
-            if (sample.chainage <= targetChainage) before = sample;
-            if (sample.chainage >= targetChainage) {
-                after = sample;
-                break;
-            }
-        }
-        if (!before || !after) return null;
-
-        let estimatedCoordinate;
-        if (before.chainage === after.chainage) {
-            estimatedCoordinate = before.coordinate.slice();
-        } else {
-            const ratio = (targetChainage - before.chainage) / (after.chainage - before.chainage);
-            estimatedCoordinate = [
-                before.coordinate[0] + (after.coordinate[0] - before.coordinate[0]) * ratio,
-                before.coordinate[1] + (after.coordinate[1] - before.coordinate[1]) * ratio,
-            ];
-        }
-
-        const descriptions = (routeSegments || []).map(Core.describeSegment).filter(Boolean);
-        if (!descriptions.length) return null;
-        const projected = Core.findBestAnchor(
-            [{ ...lower, coordinate: estimatedCoordinate }],
-            lower.number,
-            descriptions,
-        );
-        if (!projected || projected.distance > 300) return null;
-
-        const guideSpacing = Math.max(0, Number(after.chainage) - Number(before.chainage));
-        const confidence = projected.distance <= 35 && guideSpacing <= 1800
-            ? "haute"
-            : projected.distance <= 100
-                ? "moyenne"
-                : "faible";
-
-        return {
-            point: projected.point,
-            segmentId: projected.segmentId,
-            pathLength: null,
-            referencePathLength: null,
-            referenceFromChainage: lower.abscissa,
-            referenceToChainage: upper.abscissa,
-            chainageClosureError: null,
-            chainageSpan: upper.abscissa - lower.abscissa,
-            startAnchor: null,
-            endAnchor: null,
-            travelledCoordinates: [projected.point],
-            pathSegmentIds: [projected.segmentId],
-            sourcePoint: lower,
-            component: descriptions,
-            calibrated: false,
-            estimated: true,
-            confidence,
-            guideFallback: true,
-            guideProjectionDistance: projected.distance,
-            guideFromChainage: before.chainage,
-            guideToChainage: after.chainage,
-        };
-    }
-
-    async function resolveColombiaTarget(source, routeSegments) {
-        const { lower, upper, targetChainage, axis } = source;
-        let workingSegments = [...(routeSegments || [])];
-        let descriptions = workingSegments.map(Core.describeSegment).filter(Boolean);
-        if (!descriptions.length) throw new Error("Aucun segment exploitable de ce Código de vía n’est chargé dans WME.");
-        const seed = Core.findBestAnchor([lower], lower.number, descriptions)
-            || Core.findBestAnchor([upper], upper.number, descriptions);
-        if (!seed || seed.distance > MAX_ANCHOR_DISTANCE_METERS) {
-            throw new Error(`La référence ${lower.rawPointNumber || lower.number} est trop éloignée du tracé WME chargé.`);
-        }
-        let component = Core.buildComponent(workingSegments, seed.segmentId);
-        if (!component.length) throw new Error("Aucune branche WME continue n’a été trouvée pour ce Código de vía.");
-
-        let lowerAnchor = Core.findBestAnchor([lower], lower.number, component);
-        let upperAnchor = Core.findBestAnchor([upper], upper.number, component);
-        const lowerOk = lowerAnchor && lowerAnchor.distance <= MAX_ANCHOR_DISTANCE_METERS;
-        const upperOk = upperAnchor && upperAnchor.distance <= MAX_ANCHOR_DISTANCE_METERS;
-
-        // Une borne DS/FS peut coïncider avec un changement de Código de vía dans WME.
-        // Ex. 6510 FS107+600 = début de RN65-11. Si le tracé exact RN65-10 ne permet
-        // pas de fermer l'encadrement, étendre localement à la même Ruta nationale.
-        const hasBoundaryAnchor = [lower, upper].some((point) => ["DS", "FS"].includes(point.pointType));
-        if (hasBoundaryAnchor && (!lowerOk || !upperOk)) {
-            // Un côté peut être une borne DS/FS parfaitement rattachée tandis que
-            // l'autre PR se trouve après une coupure de nomenclature WME. Dans ce
-            // cas, élargir quand même à la même Ruta nationale.
-            const boundaryPoints = [lower, upper];
-            const extras = await colombiaNationalRouteFamilySegments(axis, boundaryPoints);
-            if (extras.length) {
-                const byId = new Map(workingSegments.map((segment) => [Number(segment.id), segment]));
-                for (const segment of extras) byId.set(Number(segment.id), segment);
-                workingSegments = [...byId.values()];
-                component = Core.buildComponent(workingSegments, seed.segmentId);
-                lowerAnchor = Core.findBestAnchor([lower], lower.number, component);
-                upperAnchor = Core.findBestAnchor([upper], upper.number, component);
-            }
-        }
-
-        if (!lowerAnchor || !upperAnchor
-            || lowerAnchor.distance > MAX_ANCHOR_DISTANCE_METERS
-            || upperAnchor.distance > MAX_ANCHOR_DISTANCE_METERS) {
-            const lowerDistance = lowerAnchor ? `${Math.round(lowerAnchor.distance)} m` : "non rattachée";
-            const upperDistance = upperAnchor ? `${Math.round(upperAnchor.distance)} m` : "non rattachée";
-            throw new Error(
-                `Une référence d’encadrement n’a pas pu être rattachée correctement au tracé WME. `
-                + `Amont ${lower.rawPointNumber || lower.number}: ${lowerDistance} ; `
-                + `aval ${upper.rawPointNumber || upper.number}: ${upperDistance}. `
-                + `Segments mémorisés: ${workingSegments.length} ; composant connecté: ${component.length}.`,
-            );
-        }
-
-        if (lower.abscissa === upper.abscissa) {
-            const anchor = lower.pointType === "PR" ? lowerAnchor : upperAnchor;
-            return {
-                point: anchor.point,
-                segmentId: anchor.segmentId,
-                pathLength: 0,
-                referencePathLength: 0,
-                referenceFromChainage: lower.abscissa,
-                referenceToChainage: upper.abscissa,
-                chainageClosureError: 0,
-                startAnchor: anchor,
-                endAnchor: anchor,
-                travelledCoordinates: [anchor.point],
-                pathSegmentIds: [anchor.segmentId],
-                sourcePoint: lower,
-                component,
-                calibrated: false,
-                confidence: "haute",
-            };
-        }
-
-        const referencePath = Core.pathBetweenTargets({
-            component,
-            start: { point: lowerAnchor.point, segmentId: lowerAnchor.segmentId },
-            end: { point: upperAnchor.point, segmentId: upperAnchor.segmentId },
-        });
-        if (!referencePath?.coordinates?.length || !(referencePath.distance > 0)) {
-            throw new Error("Aucun chemin WME continu n’a été trouvé entre les deux références d’encadrement.");
-        }
-        const chainageSpan = upper.abscissa - lower.abscissa;
-        const fraction = (targetChainage - lower.abscissa) / chainageSpan;
-        if (!(fraction >= -0.0001 && fraction <= 1.0001)) throw new Error("Le chaînage cible sort de l’intervalle de référence.");
-        const targetDistance = referencePath.distance * Math.max(0, Math.min(1, fraction));
-        const location = Core.pointAtOffset(referencePath.coordinates, targetDistance);
-        if (!location?.point) throw new Error("La position recalée n’a pas pu être calculée sur le tracé WME.");
-        const projected = Core.findBestAnchor([{ ...lower, coordinate: location.point }], lower.number, component);
-        const closureError = referencePath.distance - chainageSpan;
-        const relativeError = Math.abs(closureError) / Math.max(1, chainageSpan);
-        const confidence = relativeError <= 0.03 ? "haute" : relativeError <= 0.08 ? "moyenne" : "faible";
-        return {
-            point: location.point,
-            segmentId: projected?.segmentId ?? null,
-            pathLength: referencePath.distance,
-            referencePathLength: referencePath.distance,
-            referenceFromChainage: lower.abscissa,
-            referenceToChainage: upper.abscissa,
-            chainageClosureError: closureError,
-            chainageSpan,
-            startAnchor: lowerAnchor,
-            endAnchor: upperAnchor,
-            travelledCoordinates: Core.slicePolyline(referencePath.coordinates, 0, targetDistance),
-            pathSegmentIds: referencePath.segmentIds,
-            sourcePoint: lower,
-            component,
-            calibrated: true,
-            estimated: lower.pointType !== "PR" || upper.pointType !== "PR" || chainageSpan > 1100,
-            confidence,
-        };
-    }
 
     async function searchPrLayerPoints(bbox, requestContext = prIndexRequestContext(), options = {}) {
         const [minLongitude, minLatitude, maxLongitude, maxLatitude] = Core.normalizeBbox(bbox);
         const filter = requestContext.filter;
         // Les filtres doivent être appliqués sur le serveur AVANT LIMIT/OFFSET.
-        // La RPC Supabase versionnée préserve ce contrat, y compris pour une page vide.
+        // Le filtre WFS France est envoyé avant la pagination, même pour une page vide.
         const response = await requestPrData("bbox", {
             bbox: [minLongitude, minLatitude, maxLongitude, maxLatitude].join(","),
             limit: PR_INDEX_MAX_FEATURES, offset: 0,
@@ -5561,7 +5522,7 @@
         if (filter && response.meta.filters_applied !== true) {
             // Un ancien backend accepte axis mais ignore ce filtre : ne jamais
             // annoncer un calque complet lorsque la page a été tronquée avant le filtre.
-            throw new Error("Le serveur Supabase ne confirme pas le filtrage des PR.");
+            throw new Error("Le service de données ne confirme pas le filtrage des PR.");
         }
         const payload = response.data;
         if (!Array.isArray(payload)) throw new Error("La réponse du calque des PR est invalide.");
@@ -5586,10 +5547,12 @@
             : "";
         const side = displaySide ? ` · ${displaySide}` : "";
         const displayedPr = Core.formatPrPointForDisplay(point);
-        return `${point.axis} · ${displayedPr === "Fin" ? "Fin d’axe" : `PR${displayedPr}`}${side}`;
+        const alignment = point.calibration ? ` · ≈ ${a40Message("applied")}`
+            : point.calibrationPending ? " · ? IGN" : "";
+        return `${point.axis} · ${displayedPr === "Fin" ? "Fin d’axe" : `PR${displayedPr}`}${side}${alignment}`;
     }
 
-    function prCartoucheDescriptor(axis, prText, side, departmentCode = "", networkType = "") {
+    function prCartoucheDescriptor(axis, prText, side, departmentCode = "", networkType = "", authorCorrection = false) {
         const destination = Core.motorwayDestinationForSide(
             axis,
             side,
@@ -5611,12 +5574,14 @@
             prIndexPointColor({ axis, networkType }),
             destination,
         ].join("|");
-        const cached = prCartoucheDescriptorCache.get(cacheKey);
+        const correctionKey = `${cacheKey}:${authorCorrection ? currentLanguage : ""}`;
+        const cached = prCartoucheDescriptorCache.get(correctionKey);
         if (cached) return cached;
         const descriptor = Core.buildPrCartoucheDescriptor({
             axis,
             prText,
             side,
+            annotation: authorCorrection ? authorCorrectionBadge() : [],
             fontSize: appearanceSettings.prLabelSize,
             showSense: appearanceSettings.prShowSense,
             showMotorwayDestination: appearanceSettings.prShowMotorwayDestination,
@@ -5625,7 +5590,7 @@
             departmentColor: appearanceSettings.prDepartmentCartoucheColor,
             otherColor: prIndexPointColor({ axis, networkType }),
         });
-        prCartoucheDescriptorCache.set(cacheKey, descriptor);
+        prCartoucheDescriptorCache.set(correctionKey, descriptor);
         if (prCartoucheDescriptorCache.size > PR_CARTOUCHE_CACHE_MAX_ENTRIES) {
             const oldestKey = prCartoucheDescriptorCache.keys().next().value;
             if (oldestKey !== undefined) prCartoucheDescriptorCache.delete(oldestKey);
@@ -5977,8 +5942,9 @@
         );
         return Core.buildPrCartoucheDescriptor({
             axis,
-            prText: result?.parsedPr?.formatted || "?",
+            prText: `${result?.calibration ? "≈ " : ""}${result?.parsedPr?.formatted || "?"}`,
             side,
+            annotation: result?.calibration ? authorCorrectionBadge() : [],
             fontSize: appearanceSettings.resultLabelSize,
             showSense: appearanceSettings.resultShowSense,
             showMotorwayDestination: appearanceSettings.resultShowMotorwayDestination,
@@ -6067,6 +6033,12 @@
                 side: point.side,
                 branchId: point.branchId,
                 sourceId: point.id,
+                source: point.source,
+                sourceUpdatedAt: point.sourceUpdatedAt,
+                sourceCoordinate: point.sourceCoordinate || point.coordinate,
+                calibration: point.calibration || null,
+                calibrationPending: Boolean(point.calibrationPending),
+                alignmentInfo: point.calibration ? a40Message("applied") : point.calibrationPending ? a40Message("pending") : "",
             };
             let descriptor = null;
             let cartoucheProperties = null;
@@ -6074,10 +6046,11 @@
             if (cartouchesVisible) {
                 descriptor = prCartoucheDescriptor(
                     point.axis,
-                    Core.formatPrPointForDisplay(point),
+                    `${point.calibration ? "≈ " : point.calibrationPending ? "? " : ""}${Core.formatPrPointForDisplay(point)}`,
                     point.side,
                     point.departmentCode,
                     point.networkType,
+                    Boolean(point.calibration),
                 );
                 cartoucheProperties = cartoucheFeatureProperties(descriptor, baseOffset);
                 anchorPixel = prCoordinateToWorldPixel(point.coordinate, zoomLevel);
@@ -6234,13 +6207,13 @@
     }
 
     function effectivePrIndexAxisFilter() {
-        return currentCountry === "FR" ? prIndexAxisFilter : null;
+        return prIndexAxisFilter;
     }
 
     function prIndexRequestContext() {
         const filter = effectivePrIndexAxisFilter();
         return {
-            country: currentCountry === "CO" ? "CO" : "FR",
+            country: "FR",
             filter: filter ? {
                 routeType: filter.routeType,
                 axis: filter.axis,
@@ -6372,7 +6345,7 @@
             point?.id
             || `${point?.departmentCode || ""}:${point?.axis || ""}:${point?.pointType || ""}:${point?.number || ""}:${point?.abscissa || ""}:${point?.coordinate?.join(",") || ""}`
         ));
-        return stableFeatureHash(identities.join("|"));
+        return stableFeatureHash(identities.map((identity, index) => `${identity}:${points[index]?.coordinate?.join(",")}:${points[index]?.calibration ? "recalibrated" : points[index]?.calibrationPending ? "pending" : "raw"}`).join("|"));
     }
 
     function drawPrIndexPoints(points, view = null) {
@@ -6400,7 +6373,8 @@
                 prIndexRenderedLayoutKey = "";
                 return false;
             }
-            const renderedPoints = prIndexPointsForCurrentView(points, visibleBbox, zoomLevel);
+            scheduleA40Calibration(points, visibleBbox);
+            const renderedPoints = prIndexPointsForCurrentView(a40LayerPoints(points), visibleBbox, zoomLevel);
             if (renderedPoints.length && prIndexLabelsVisibleAtZoom(zoomLevel) && !prLabelSegmentSpatialIndex) {
                 schedulePrLabelIndexRefresh();
             }
@@ -6499,9 +6473,11 @@
     }
 
     function prIndexLoadedStatusMessage(points) {
-        if (!effectivePrIndexAxisFilter()) return `${(points || []).length.toLocaleString("fr-FR")} PR chargés autour de la vue.`;
+        rememberFranceSourceDates(applyPrIndexAxisFilter(points));
+        const attribution = `\n${franceSourceSummary(applyPrIndexAxisFilter(points))}`;
+        if (!effectivePrIndexAxisFilter()) return `${(points || []).length.toLocaleString("fr-FR")} PR chargés autour de la vue.${attribution}`;
         const matching = applyPrIndexAxisFilter(points).length;
-        return `Filtre ${prIndexAxisFilterLabel()} — ${matching.toLocaleString("fr-FR")} PR chargés autour de la vue.`;
+        return `Filtre ${prIndexAxisFilterLabel()} — ${matching.toLocaleString("fr-FR")} PR chargés autour de la vue.${attribution}`;
     }
 
     async function refreshPrIndexLayer(generation, force = false) {
@@ -7353,76 +7329,6 @@
         return { ...view, moved: needsMove };
     }
 
-    async function moveMapToCoordinateAtZoomAndWait(coordinate, zoomLevel = SEARCH_MIN_ZOOM_LEVEL) {
-        if (!Array.isArray(coordinate) || coordinate.length < 2) return;
-        const lon = Number(coordinate[0]);
-        const lat = Number(coordinate[1]);
-        if (!Number.isFinite(lon) || !Number.isFinite(lat)) return;
-        const loaded = sdk.Events.once({ eventName: "wme-map-data-loaded" });
-        await sdk.Map.setMapCenter({ lonLat: { lon, lat }, zoomLevel });
-        await Promise.race([
-            loaded,
-            new Promise((resolve) => root.setTimeout(resolve, 8000)),
-        ]);
-        await waitForMapUpdate();
-    }
-
-    async function loadColombiaRouteSpan(source, routeAliases, guidePoints = []) {
-        const lowerCoordinate = source?.lower?.coordinate;
-        const upperCoordinate = source?.upper?.coordinate;
-        if (!Array.isArray(lowerCoordinate) || !Array.isArray(upperCoordinate)) {
-            return { segments: [], sampleCount: 0 };
-        }
-
-        let coordinates = (guidePoints || []).map((row) => row?.coordinate).filter((coordinate) =>
-            Array.isArray(coordinate) && coordinate.length >= 2 && coordinate.every(Number.isFinite)
-        );
-
-        if (coordinates.length < 2) {
-            const straightDistance = Core.haversine(lowerCoordinate, upperCoordinate);
-            const interval = 1500;
-            const steps = Math.max(1, Math.min(12, Math.ceil(straightDistance / interval)));
-            coordinates = [];
-            for (let index = 0; index <= steps; index += 1) {
-                const ratio = steps > 0 ? index / steps : 0;
-                coordinates.push([
-                    lowerCoordinate[0] + (upperCoordinate[0] - lowerCoordinate[0]) * ratio,
-                    lowerCoordinate[1] + (upperCoordinate[1] - lowerCoordinate[1]) * ratio,
-                ]);
-            }
-        }
-
-        coordinates.unshift(lowerCoordinate);
-        coordinates.push(upperCoordinate);
-
-        const deduped = [];
-        const seen = new Set();
-        for (const coordinate of coordinates) {
-            const key = `${Number(coordinate[0]).toFixed(6)},${Number(coordinate[1]).toFixed(6)}`;
-            if (seen.has(key)) continue;
-            seen.add(key);
-            deduped.push(coordinate);
-        }
-
-        const merged = new Map();
-        for (const coordinate of deduped) {
-            await moveMapToCoordinateAtZoomAndWait(coordinate, SEARCH_MIN_ZOOM_LEVEL);
-
-            for (const segment of await colombiaLoadedSegmentsByAliases(routeAliases)) {
-                merged.set(Number(segment.id), segment);
-            }
-            for (const segment of await colombiaLoadedRouteFamilySegments(source.axis)) {
-                merged.set(Number(segment.id), segment);
-            }
-            // Les noms/cartouches WME ne sont pas uniformes sur tous les tramos colombiens.
-            // Le guide Red Vial constitue alors la référence : conserver aussi les segments
-            // géographiquement proches du tracé officiel, indépendamment de leur nom WME.
-            for (const segment of await colombiaLoadedSegmentsNearGuide(coordinate)) {
-                merged.set(Number(segment.id), segment);
-            }
-        }
-        return { segments: [...merged.values()], sampleCount: deduped.length };
-    }
 
     async function getSearchPreferredCoordinate() {
         const selectedSegmentId = await getSelectedSegmentId();
@@ -7457,13 +7363,19 @@
             throw new Error(`Les PR${parsedPr.base} et PR${parsedPr.base + 1} n’ont pas pu être associés sur une même chaussée de ${axis}${sideLabel}.`);
         }
         const preferred = candidates[0];
+        const a40Recalibration = Core.needsA40Calibration(preferred.start, parsedPr.offset);
+        const calibrationPoints = a40Recalibration ? prPoints.filter(Core.isA40CalibrationReference) : [];
+        if (a40Recalibration) {
+            preferred.chainagePoints = calibrationPoints.filter(point => point.number === 119 || point.number === 123);
+        }
         return {
+            a40Recalibration, calibrationPoints,
             parsedPr,
             candidates,
             preferred,
             start: preferred.start || preferred.end || preferred.from,
             end: preferred.end || preferred.reference || preferred.to || null,
-            estimated: Boolean(preferred.estimated),
+            estimated: a40Recalibration || Boolean(preferred.estimated),
         };
     }
 
@@ -7490,6 +7402,14 @@
     }
 
     function resolveTarget(target, routeSegments) {
+        if (target.a40Recalibration) {
+            const calibration = updateA40Calibration(target.calibrationPoints, routeSegments);
+            const result = Core.resolveA40Calibration(calibration, target.preferred.start, target.parsedPr.offset);
+            if (!result) throw new Error(a40Message("unavailable"));
+            result.estimationNote = a40Message("applied");
+            redrawA40Layer();
+            return result;
+        }
         if (!routeSegments?.length) {
             if (target.parsedPr.offset > 0) {
                 throw new Error(`La géométrie WME de l’axe est nécessaire pour calculer +${target.parsedPr.offset} m.`);
@@ -7501,6 +7421,7 @@
             candidates: target.candidates,
             basePr: target.parsedPr.base,
             offset: target.parsedPr.offset,
+            language: currentLanguage,
         });
     }
 
@@ -7560,181 +7481,9 @@
         await task;
     }
 
-    async function locateColombia() {
-        if (locateInProgress) return;
-        locateInProgress = true;
-        ui.locate.disabled = true;
-        ui.result.hidden = true;
-        if (ui.resultActions) ui.resultActions.hidden = true;
-        if (ui.mapCommentEditor) ui.mapCommentEditor.hidden = true;
-        latestResult = null;
-        try {
-            const axis = Core.normalizeAxis(ui.axis.value);
-            const parsedPr = Core.parsePr(ui.pr.value);
-            setStatus(
-                currentLanguage === "es" ? `Buscando ${axis} / PR ${parsedPr.formatted}…`
-                    : currentLanguage === "en" ? `Searching ${axis} / PR ${parsedPr.formatted}…`
-                        : `Recherche ${axis} / PR ${parsedPr.formatted}…`,
-                "info",
-            );
-            const source = await searchColombiaTarget(axis, parsedPr);
-            const loadingCoordinates = [...new Map(source.points.map((point) => [
-                `${point.coordinate[0].toFixed(7)},${point.coordinate[1].toFixed(7)}`, point.coordinate,
-            ])).values()];
-            setStatus(
-                currentLanguage === "es" ? `Referencias encontradas. Cargando la geometría WME de ${axis}…`
-                    : currentLanguage === "en" ? `References found. Loading WME geometry for ${axis}…`
-                        : `Références trouvées. Chargement de la géométrie WME de ${axis}…`,
-                "info",
-            );
-            await moveMapAndWait(loadingCoordinates);
-            const routeAliases = colombiaWmeRouteAliases(axis);
-            const anchorStraightDistance = Core.haversine(source.lower.coordinate, source.upper.coordinate);
-            let routeSegments;
-            let guidePoints = [];
-            if (anchorStraightDistance > 3500) {
-                setStatus(
-                    currentLanguage === "es" ? `Referencias distantes: cargando el corredor WME por etapas…`
-                        : currentLanguage === "en" ? `Distant references: loading the WME corridor in stages…`
-                            : `Références éloignées : chargement progressif du corridor WME…`,
-                    "info",
-                );
-                try {
-                    guidePoints = await searchColombiaGuides(
-                        axis,
-                        source.lower.abscissa,
-                        source.upper.abscissa,
-                    );
-                } catch (guideError) {
-                    console.warn(`${SCRIPT_NAME}: guides Colombia indisponibles`, guideError);
-                }
-                const spanSnapshot = await loadColombiaRouteSpan(source, routeAliases, guidePoints);
-                routeSegments = spanSnapshot.segments;
-                if (!routeSegments.length) {
-                    throw new Error("Aucun segment du corridor colombien n’a pu être mémorisé pendant le chargement progressif.");
-                }
-            } else {
-                const routeSnapshot = await waitForRouteData(axis, source.lower, routeAliases);
-                routeSegments = routeSnapshot.segments;
-            }
-            let resolved;
-            try {
-                resolved = await resolveColombiaTarget(source, routeSegments);
-            } catch (primaryError) {
-                const fallback = guidePoints.length
-                    ? resolveColombiaTargetFromGuides(source, guidePoints, routeSegments)
-                    : null;
-                if (!fallback) throw primaryError;
-                console.warn(`${SCRIPT_NAME} Colombia: bouclage complet impossible, fallback guides Red Vial`, primaryError);
-                resolved = fallback;
-            }
-            const label = `${axis} — PR ${parsedPr.formatted}${resolved.estimated ? " — BETA" : ""}`;
-            const result = {
-                ...resolved,
-                parsedPr,
-                axis,
-                displaySide: "",
-                label,
-            };
-            await drawResult([result], label, null, []);
-            await moveMapAndWait([result.point]);
-            const automaticallySelectedSegmentIds = await applyAutomaticResultSelection([result], null);
-            const permalink = await sdk.Map.getPermalink({ includeLayers: false });
-            latestResult = {
-                results: [result], zonePath: null, label, axis,
-                departmentCode: null, roadManager: source.lower.roadManager || source.upper.roadManager || null,
-                networkType: "CO", permalink, zoneCrossesDiscontinuity: false,
-                zoneDiscontinuities: [], automaticallySelectedSegmentIds,
-            };
-            ui.resultTitle.textContent = label;
-            const fmtChain = (value) => {
-                const n = Math.floor(value / 1000); const off = Math.round(value - n * 1000);
-                return `${n}+${String(off).padStart(3, "0")}`;
-            };
-            const resultText = (fr, es, en) =>
-                currentLanguage === "es" ? es : currentLanguage === "en" ? en : fr;
-            const reliabilityText = (value) => {
-                const normalized = String(value || "").toLowerCase();
-                if (normalized === "haute") return resultText("haute", "alta", "high");
-                if (normalized === "moyenne") return resultText("moyenne", "media", "medium");
-                if (normalized === "faible") return resultText("faible", "baja", "low");
-                return value;
-            };
-            const details = [
-                `${resultText("Code de voie", "Código de vía", "Road code")} : ${axis}`,
-                `PR : ${parsedPr.formatted}`,
-                `${resultText("Coordonnées", "Coordenadas", "Coordinates")} : ${result.point[1].toFixed(6)}, ${result.point[0].toFixed(6)}`,
-                `${resultText("Références", "Referencias", "References")} : ${fmtChain(source.lower.abscissa)} → ${fmtChain(source.upper.abscissa)}`,
-            ];
-            if (resolved.calibrated) {
-                details.push(
-                    `${resultText("Longueur WME entre références", "Longitud WME entre referencias", "WME length between references")} : ${Math.round(resolved.referencePathLength)} m`,
-                    `${resultText("Chaînage officiel entre références", "Longitud oficial de encadenamiento", "Official chainage span")} : ${Math.round(resolved.chainageSpan)} m`,
-                    `${resultText("Défaut de fermeture", "Error de cierre", "Closure error")} : ${resolved.chainageClosureError >= 0 ? "+" : ""}${Math.round(resolved.chainageClosureError)} m`,
-                );
-            } else if (resolved.guideFallback) {
-                details.push(
-                    `${resultText("Méthode", "Método", "Method")} : Red Vial → projection WME`,
-                    `${resultText("Guides d’encadrement", "Guías de encuadre", "Bounding guides")} : ${fmtChain(resolved.guideFromChainage)} → ${fmtChain(resolved.guideToChainage)}`,
-                    `${resultText("Écart au tracé WME", "Distancia al trazado WME", "Distance to WME geometry")} : ${Math.round(resolved.guideProjectionDistance)} m`,
-                );
-            }
-            details.push(`${resultText("Source", "Fuente", "Source")} : INVÍAS / Red Vial — Colombia BETA`);
-
-            ui.resultDetails.replaceChildren();
-            for (const detail of details) {
-                ui.resultDetails.append(document.createTextNode(`${detail}\n`));
-            }
-
-            const reliabilityLine = document.createElement("span");
-            reliabilityLine.append(document.createTextNode(
-                `${resultText("Fiabilité", "Fiabilidad", "Reliability")} : `,
-            ));
-            const reliabilityBadge = document.createElement("span");
-            reliabilityBadge.textContent = reliabilityText(resolved.confidence);
-            const normalizedReliability = String(resolved.confidence || "").toLowerCase();
-            const reliabilityStyle = normalizedReliability === "haute"
-                ? { background: "#e7f6e7", color: "#207a20", border: "#8fd08f" }
-                : normalizedReliability === "moyenne"
-                    ? { background: "#fff3d9", color: "#a35d00", border: "#e7b75e" }
-                    : { background: "#fde7e7", color: "#a72626", border: "#e39a9a" };
-            Object.assign(reliabilityBadge.style, {
-                display: "inline-block",
-                padding: "1px 6px",
-                borderRadius: "5px",
-                border: `1px solid ${reliabilityStyle.border}`,
-                background: reliabilityStyle.background,
-                color: reliabilityStyle.color,
-                fontWeight: "700",
-                lineHeight: "1.35",
-            });
-            reliabilityLine.append(reliabilityBadge);
-            ui.resultDetails.append(reliabilityLine);
-            ui.resultDetails.append(document.createTextNode("\n"));
-            ui.permalink.href = permalink;
-            if (ui.resultActions) ui.resultActions.hidden = false;
-            ui.result.hidden = false;
-            setStatus(
-                currentLanguage === "es" ? "PR localizado en WME — Colombia BETA."
-                    : currentLanguage === "en" ? "PR located in WME — Colombia BETA."
-                        : "PR localisé dans WME — Colombie BETA.",
-                resolved.confidence === "faible" ? "info" : "success",
-            );
-        } catch (error) {
-            console.error(`${SCRIPT_NAME} Colombia:`, error);
-            setStatus(error?.message || String(error), "error");
-        } finally {
-            locateInProgress = false;
-            ui.locate.disabled = false;
-        }
-    }
 
     async function locate(options = null) {
         const external = options?.external === true;
-        if (external && currentCountry !== "FR") {
-            throw Object.assign(new Error("Sélectionnez la France dans Localiser PR avant l’appel externe."), { code: "UNSUPPORTED_COUNTRY" });
-        }
-        if (currentCountry === "CO") return locateColombia();
         if (locateInProgress) {
             if (external) throw Object.assign(new Error("Une recherche PR est déjà en cours."), { code: "BUSY" });
             return;
@@ -7815,9 +7564,11 @@
                 || Boolean(mapView?.moved);
             let routeSnapshot = { segments: [], descriptions: [] };
             try {
-                routeSnapshot = geometryRequired
-                    ? await waitForRouteData(axis, firstSource.start)
-                    : await collectRouteSnapshot(axis, false);
+                routeSnapshot = firstSource.a40Recalibration || secondSource?.a40Recalibration
+                    ? await waitForA40Calibration(prSource.points)
+                    : geometryRequired
+                        ? await waitForRouteData(axis, firstSource.start)
+                        : await collectRouteSnapshot(axis, false);
             } catch (error) {
                 if (geometryRequired) throw error;
                 console.warn(`${SCRIPT_NAME}: localisation directe sans projection sur un segment`, error);
@@ -7953,9 +7704,13 @@
                     + (result.segmentId ? ` — segment ${result.segmentId}` : " — coordonnée source")
                     + (result.estimated ? ` — estimation ${result.confidence}` : "")
                 )),
-                `Source : index PR (${prSource.points.length} point(s) candidat(s))`,
+                franceSourceSummary(results.flatMap(result => [result.sourcePoint, result.startAnchor?.prPoint, result.endAnchor?.prPoint, ...(result.candidate?.chainagePoints || [])]).filter(Boolean)),
             ];
             for (const result of results) {
+                if (result.calibration) {
+                    resultDetails.push(a40Message("applied"), a40Message("explanation"),
+                        `IGN : ${result.sourceCoordinate[1].toFixed(6)}, ${result.sourceCoordinate[0].toFixed(6)} · WME 119 → 123 : ${Math.round(result.referencePathLength)} m`);
+                }
                 if (result.parsedPr.offset > 0) {
                     if (result.estimated) {
                         resultDetails.push(
@@ -8099,7 +7854,10 @@
         ui.mapCommentExpiration.value = "30";
         ui.mapCommentCustomDate.value = "";
         ui.mapCommentCustomDateField.hidden = true;
-        ui.mapCommentGeometryInfo.textContent = mapCommentGeometryDescription(latestResult);
+        ui.mapCommentGeometryInfo.textContent = [
+            mapCommentGeometryDescription(latestResult),
+            latestResult.results.some(item => item.calibration) ? a40Message("explanation") : "",
+        ].filter(Boolean).join("\n");
         ui.mapCommentEditor.hidden = false;
         ui.mapCommentSubject.focus();
     }
@@ -8210,7 +7968,6 @@
             .wme-pr-context-row { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-top: 8px; }
             .wme-pr-context-field { display: grid; grid-template-columns: auto minmax(0,1fr); align-items: center; gap: 5px; color: #5f6368; font-size: 10px; }
             .wme-pr-context-field select { min-width: 0; width: 100%; border: 1px solid #b9c1c8; border-radius: 5px; background: #fff; color: #202124; padding: 5px 6px; font: inherit; font-size: 11px; }
-            .wme-pr-button-beta { background: #fff7e0 !important; border-color: #d8a328 !important; color: #755000 !important; }
             .wme-pr-subtitle { color: #6b7280; font-size: 11px; }
             .wme-pr-header-actions { display: flex; flex: 0 0 auto; align-items: center; gap: 4px; white-space: nowrap; }
             .wme-pr-header-button { border: 1px solid #b9c1c8; border-radius: 5px; background: #fff; padding: 3px 6px; color: #202124; font: inherit; font-size: 10px; cursor: pointer; }
@@ -8553,16 +8310,9 @@
                         </div>
                     </div>
                     <div class="wme-pr-context-row">
-                        <label class="wme-pr-context-field"><span id="wme-pr-country-label">Pays</span>
-                            <select id="wme-pr-country">
-                                <option value="FR">🇫🇷 France</option>
-                                <option value="CO">🇨🇴 Colombia — BETA</option>
-                            </select>
-                        </label>
                         <label class="wme-pr-context-field"><span id="wme-pr-language-label">Langue</span>
                             <select id="wme-pr-language">
                                 <option value="fr">Français</option>
-                                <option value="es">Español</option>
                                 <option value="en">English</option>
                             </select>
                         </label>
@@ -8837,8 +8587,6 @@
             root: tabPane.querySelector("#wme-pr-root"),
             panelTitle: tabPane.querySelector("#wme-pr-panel-title"),
             subtitle: tabPane.querySelector("#wme-pr-subtitle"),
-            countryLabel: tabPane.querySelector("#wme-pr-country-label"),
-            country: tabPane.querySelector("#wme-pr-country"),
             languageLabel: tabPane.querySelector("#wme-pr-language-label"),
             language: tabPane.querySelector("#wme-pr-language"),
             displayToggle: tabPane.querySelector("#wme-pr-display-toggle"),
@@ -8968,16 +8716,14 @@
             mapCommentCancel: tabPane.querySelector("#wme-pr-map-comment-cancel"),
         };
         fillAppearanceControls(appearanceSettings);
-        // DEV Supabase : projet et clé publique intégrés ; aucun identifiant à saisir.
+        // Accès direct au WFS officiel IGN. Aucun identifiant à saisir.
         displayMode = readSetting(SETTINGS_DISPLAY_MODE_KEY) === "floating" ? "floating" : "sidebar";
         ui.displayMode.value = displayMode;
-        currentCountry = COUNTRY_CONFIG[String(readSetting(SETTINGS_COUNTRY_KEY) || "FR").toUpperCase()] ? String(readSetting(SETTINGS_COUNTRY_KEY) || "FR").toUpperCase() : "FR";
-        const savedLanguage = String(readSetting(SETTINGS_LANGUAGE_KEY) || COUNTRY_CONFIG[currentCountry].defaultLanguage).toLowerCase();
-        currentLanguage = ["fr", "es", "en"].includes(savedLanguage) ? savedLanguage : COUNTRY_CONFIG[currentCountry].defaultLanguage;
+        currentLanguage = loadLanguageSetting();
         const savedRouteType = String(readSetting(SETTINGS_SEARCH_ROUTE_TYPE_KEY) || "D").toUpperCase();
         searchRouteType = ["A", "D", "N", "I"].includes(savedRouteType) ? savedRouteType : "D";
         setSearchRouteType(searchRouteType, { preserveAxis: true });
-        ui.autoSelect.checked = readSetting(SETTINGS_AUTO_SELECT_KEY) !== "0";
+        ui.autoSelect.checked = readSetting(SETTINGS_AUTO_SELECT_KEY) === "1";
         try {
             const savedAxisFilter = JSON.parse(readSetting(SETTINGS_PR_INDEX_AXIS_FILTER_KEY) || "null");
             prIndexAxisFilter = normalizePrIndexAxisFilter(savedAxisFilter);
@@ -8991,9 +8737,8 @@
                 : `Calque général des PR : désactivé. Activez « ${PR_INDEX_CHECKBOX} » dans les calques WME.`,
             "info",
         );
-        ui.country.addEventListener("change", () => observeAsync(setCountry(ui.country.value, { updateLanguage: false }), "changement de pays"));
         ui.language.addEventListener("change", () => setLanguage(ui.language.value));
-        applyCountryAndLanguageUi();
+        applyLanguageUi();
         for (const routeTab of ui.routeTabs) {
             routeTab.addEventListener("click", () => setSearchRouteType(routeTab.dataset.routeType));
         }
@@ -9024,7 +8769,7 @@
             const showCustomization = ui.customizationToggle.getAttribute("aria-expanded") !== "true";
             ui.customizationToggle.setAttribute("aria-expanded", showCustomization ? "true" : "false");
             ui.panelTitle.textContent = showCustomization
-                ? ({ fr: "Personnalisation", es: "Personalización", en: "Customization" }[currentLanguage] || "Personnalisation")
+                ? ({ fr: "Personnalisation", en: "Customization" }[currentLanguage] || "Personnalisation")
                 : tr("title");
             ui.customizationToggle.textContent = showCustomization ? tr("back") : tr("customize");
             ui.customizationToggle.title = showCustomization
@@ -9130,11 +8875,9 @@
         });
         ui.axis.addEventListener("input", () => {
             if (ui.axis.value.trim().toUpperCase() !== ui.axis.dataset.autoValue) delete ui.axis.dataset.autoValue;
-            if (currentCountry === "FR") {
-                const typedType = routeTypeFromAxis(ui.axis.value);
-                if (typedType && typedType !== searchRouteType) setSearchRouteType(typedType, { preserveAxis: true });
-                refreshSearchSideOptions();
-            }
+            const typedType = routeTypeFromAxis(ui.axis.value);
+            if (typedType && typedType !== searchRouteType) setSearchRouteType(typedType, { preserveAxis: true });
+            refreshSearchSideOptions();
         });
         applyDisplayMode(displayMode);
         await refreshSelectionSummary();
@@ -9177,7 +8920,7 @@
         // lecture locale accessible aux versions de développement.
         // Le diagnostic est un instantané obtenu après avoir attendu les
         // Promises SDK (y compris getSDKVersion / getWMEVersion).
-        ...( /\.(?:dev|temp)\d+\b/i.test(scriptVersion) ? {
+        ...( /\.(?:dev|temp)\d*\b/i.test(scriptVersion) ? {
           sdkDiagnostic: () => sdkDiagnostic(),
         } : {} ),
         status() {

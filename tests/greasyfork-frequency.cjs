@@ -12,7 +12,7 @@ const actualImplementation = source.slice(start, end);
 const DAY = 24 * 60 * 60 * 1000;
 const BASE = 2_000_000_000_000;
 
-function env({ now = BASE, existing = null, failsToStore = false, network = async () => '// @version      1.1.5\n', metaUrl = 'https://update.greasyfork.org/scripts/590425/a.meta.js' } = {}) {
+function env({ dev = false, now = BASE, existing = null, failsToStore = false, network = async () => '// @version      1.1.5\n', metaUrl = 'https://update.greasyfork.org/scripts/590425/a.meta.js' } = {}) {
     const settings = existing || new Map();
     const history = { requests: 0, writes: 0, errors: 0 };
     let current = now;
@@ -24,7 +24,7 @@ function env({ now = BASE, existing = null, failsToStore = false, network = asyn
         SETTINGS_GREASYFORK_UPDATE_KEY: 'wme_localisateur_pr_fr:greasyfork-update-check-v1',
         GREASYFORK_UPDATE_CHECK_INTERVAL_MS: DAY,
         SCRIPT_NAME: 'Localisateur de PR France',
-        VERSION: '1.2.0.temp2',
+        VERSION: dev ? '1.2.1.dev1' : '1.2.1',
         Date: { now: () => current },
         console: { warn: () => { history.errors++; } },
         ui: { greasyForkButton: button },
@@ -40,6 +40,8 @@ function env({ now = BASE, existing = null, failsToStore = false, network = asyn
 }
 
 (async () => {
+    const development = env({dev:true}); await development.check();
+    assert.equal(development.history.requests,0);
     // One success: no repeated request on panel reopen or after 23h59m.
     let a = env();
     await a.check();

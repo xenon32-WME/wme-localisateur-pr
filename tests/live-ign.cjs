@@ -1,13 +1,17 @@
 'use strict';
-// Explicit live read-only RPC checks. Never called by the offline test runner.
+// Explicit live read-only official IGN checks. Never called by the offline test runner.
 const assert=require('node:assert/strict'),fs=require('node:fs');
 const {harness,fetchRequest}=require('./harness.cjs');
 const apiCalls=[];
 async function measuredFetch(url,options){
- const started=Date.now(),entry={rpc:new URL(url).pathname.split('/').at(-1)};apiCalls.push(entry);
+ assert.equal(new URL(url).origin,'https://data.geopf.fr');
+ const started=Date.now(),entry={provider:'IGN WFS',operation:new URL(url).searchParams.get('REQUEST')};apiCalls.push(entry);
  try{
   const response=await fetch(url,options);entry.status=response.status;entry.headers_ms=Date.now()-started;
-  return {status:response.status,headers:response.headers,text:async()=>{
+  return {status:response.status,headers:response.headers,arrayBuffer:async()=>{
+   try{const body=await response.arrayBuffer();entry.bytes=body.byteLength;entry.total_ms=Date.now()-started;return body;}
+   catch(e){entry.error=e.name;entry.total_ms=Date.now()-started;throw e;}
+  },text:async()=>{
    try{const text=await response.text();entry.bytes=Buffer.byteLength(text);entry.total_ms=Date.now()-started;return text;}
    catch(e){entry.error=e.name;entry.total_ms=Date.now()-started;throw e;}
   }};
@@ -15,11 +19,12 @@ async function measuredFetch(url,options){
 }
 const t=harness(options=>fetchRequest(options,measuredFetch),{fetch:measuredFetch,AbortController});
 async function run(){
- const report={tested_at:new Date().toISOString(),version:'1.2.0',environment:'Node.js, not WME; network times include this execution environment',checks:[],api_calls:apiCalls};
+ const report={tested_at:new Date().toISOString(),version:require('./harness.cjs').source.match(/const VERSION = "([^"]+)"/)[1],environment:'Node.js, not WME; network times include this execution environment',checks:[],api_calls:apiCalls};
  async function check(name,run){const started=Date.now();await run();report.checks.push({name,pass:true,ms:Date.now()-started});console.log(name+': PASS');}
  await check('A40 both sides',async()=>{
   const r=await t.requestPrData('lookup',{axis:'A40',department:'01',numbers:'120,121,122,123,124,125',network_type:'A'},'FR');
-  assert.equal(r.data.filter(x=>x.side==='D').length,6);assert.equal(r.data.filter(x=>x.side==='G').length,6);
+  assert(r.data.some(x=>x.source_updated_at));assert(/\d{4}-\d{2}-\d{2}/.test(t.franceSourceSummary(t.Core.parsePrPayload(r.data))));
+  assert.equal(r.data.filter(x=>x.side==='D'&&x.point_type==='PR').length,7);assert.equal(r.data.filter(x=>x.side==='G'&&x.point_type==='PR').length,7);
  });
  await check('D1 terminal PRF38+392',async()=>{
   const r=await t.requestPrData('lookup',{axis:'D1',department:'01',numbers:'38,39',network_type:'D'},'FR');
@@ -42,21 +47,15 @@ async function run(){
  await check('Intercommunal managers axes scopes and bbox',async()=>{
   const managers=await t.requestPrData('managers');
   assert(managers.data.length>0);
-  const manager=managers.data[0].road_manager;
+  const manager="Métropole Nice Côte d'Azur";
+  assert(managers.data.some(x=>x.road_manager===manager));
   const axes=await t.requestPrData('axes',{manager});assert(axes.data.length>0);
-  const axis=axes.data[0].axis;
+  const axis='M1';assert(axes.data.some(x=>x.axis===axis));
   const scopes=await t.requestPrData('scopes',{axis});assert(scopes.data.some(x=>x.road_manager===manager));
   const r=await t.requestPrData('bbox',{bbox:'-6,41,10,52',axis,manager,network_type:'I'},'FR');
   assert(r.data.length>0);assert(r.data.every(x=>x.axis===axis&&x.road_manager===manager&&x.network_type==='I'));
  });
- await check('CO target, guides and layer',async()=>{
-  const target=await t.searchColombiaTarget('4005',t.Core.parsePr('65+500'));assert(target.lower&&target.upper);
-  const guides=await t.searchColombiaGuides('4005',55000,64000);assert(guides.length>0);
-  const [lon,lat]=target.lower.coordinate;
-  const r=await t.requestPrData('bbox',{bbox:[lon-.1,lat-.1,lon+.1,lat+.1].join(',')},'CO');
-  assert(r.data.length>0);
- });
  if(process.env.PR_REPORT_PATH)fs.writeFileSync(process.env.PR_REPORT_PATH,JSON.stringify(report,null,2)+'\n');
- console.log('Live read-only Supabase checks: '+report.checks.length+' PASS');
+ console.log('Live read-only IGN checks: '+report.checks.length+' PASS');
 }
 run().catch(e=>{console.error(e);process.exitCode=1});

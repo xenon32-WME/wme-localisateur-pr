@@ -10,10 +10,10 @@ function part(start,end){
 }
 const translated=part('    const UI_TRANSLATIONS = Object.freeze({','    const CUSTOMIZATION_TRANSLATIONS = Object.freeze({');
 const translations=vm.runInNewContext(translated+'UI_TRANSLATIONS');
-for(const lang of ['fr','es','en']){
+for(const lang of ['fr','en']){
  const t=translations[lang];
- assert(t.sourceServerInfo.includes('Supabase'),lang+' hosting');
- assert(t.connectionPrivacyInfo.includes('Supabase'),lang+' provider');
+ assert(t.sourceServerInfo.includes('IGN'),lang+' hosting');
+ assert(t.connectionPrivacyInfo.includes('IGN'),lang+' provider');
  assert(!t.connectionPrivacyInfo.includes('MariaDB'),lang+' no obsolete database assurance');
  assert(t.localPrivacyInfo.includes('Tampermonkey'),lang+' local storage');
  assert(t.localPrivacyInfo.includes('GreasyFork'),lang+' updates');
@@ -75,6 +75,6 @@ let resolved=0;
 sandbox.req(()=>Promise.resolve({status:200}),{timeout:900,onload:()=>resolved++});
 (async()=>{await Promise.resolve();await Promise.resolve();
  assert.equal(resolved,1);assert.equal(scheduled.size,0);
- console.log('TEMP2 cookie-free requests / watchdog / HTTPS GreasyFork allowlist / FR-ES-EN privacy: PASS.');
+ console.log('TEMP2 cookie-free requests / watchdog / HTTPS GreasyFork allowlist / FR-EN privacy: PASS.');
 })().catch(e=>{console.error(e);process.exitCode=1});
 
